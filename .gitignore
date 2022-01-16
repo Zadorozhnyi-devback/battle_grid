@@ -1,0 +1,13 @@
+.idea
+__pycache__
+
+# Files to ignore
+test
+downloads
+
+
+# Environment files
+.env
+keys
+virtualenv
+venv
