@@ -1,4 +1,6 @@
-from grid.const import Y_INDENT_BETWEEN_CARDS, Y_AXIS, B_BOYS
+from grid.const import (
+    Y_INDENT_BETWEEN_CARDS, Y_AXIS, B_BOYS, COORDS_LEFT_8, COORDS_RIGHT_8
+)
 from grid.handlers.my_handlers import (
     get_image, get_draw, get_fonts, save_image, get_card
 )
@@ -17,15 +19,15 @@ class BattleGrid:
         self._people = B_BOYS
         self.main()
 
-    def _create_cards(self):
-        coordinates = [0, 0]  # x, y
-        for person in self._people:
+    def _create_cards(self) -> None:
+        for index, person in enumerate(self._people):
+            coords = COORDS_LEFT_8 if index < 8 else COORDS_RIGHT_8
             card = get_card(
                 main_image=self._main_image, fonts=self._fonts,
-                person=person, coordinates=coordinates
+                person=person, coords=coords
             )
             setattr(self, f"_{person.get('name')}_card", card)
-            coordinates[Y_AXIS] += Y_INDENT_BETWEEN_CARDS
+            coords[Y_AXIS] += Y_INDENT_BETWEEN_CARDS
 
     def main(self) -> None:
         self._create_cards()

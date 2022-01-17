@@ -2,34 +2,22 @@
 FIELDS_FONT_SIZES = {'name': 40, 'crew': 30, 'city': 30}
 FONT_PATH = 'static/fonts/Gidole-Regular.ttf'
 Y_INDENT_BETWEEN_CARDS = 155
+COORDS_RIGHT_8 = {'y_axis': 0, 'x_axis': 1400}
+COORDS_LEFT_8 = {'y_axis': 0, 'x_axis': 0}
+RECTANGLE_COORDS = (10, 15, 340, 155)
+TEXT_XY = (20, 20)
+IMAGE = (340, 154)
+
 
 # aliases
-Y_AXIS = 1
-X_AXIS = 0
+Y_AXIS = 'y_axis'
+X_AXIS = 'x_axis'
+X = 0
+Y = 1
 
 # for test
-boy1 = {
-    'name': 'Kizyak', 'crew': 'Sopel style', 'city': 'Gopa city'
-}
-boy2 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-boy3 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-boy4 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-boy5 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-boy6 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-boy7 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-boy8 = {
-    'name': 'Huilo', 'crew': 'Huli ne huilo', 'city': 'Huli hu city'
-}
-B_BOYS = [boy1, boy2, boy3, boy4, boy5, boy6, boy7,  boy8]
+B_BOYS = list()
+for index in range(1, 17):
+    B_BOYS.append(
+        {'name': f'boy{index}', 'crew': 'some crew', 'city': 'Cicity'}
+    )
