@@ -3,7 +3,7 @@ __pycache__
 
 # Files to ignore
 test
-downloads
+output_grids
 
 
 # Environment files
