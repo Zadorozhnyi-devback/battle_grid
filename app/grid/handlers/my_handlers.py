@@ -1,10 +1,13 @@
 import os
-from typing import Dict, Union, Tuple
+from typing import Dict, Union, Tuple, List
 
 from PIL import Image, ImageDraw, ImageFont
 
 from grid.const import (
-    FONT_PATH, FONT_SIZE_16, FONT_SIZE_8, FONT_SIZE_32, Y_AXIS, X_AXIS
+    FONT_PATH, FONT_SIZE_16, FONT_SIZE_8, FONT_SIZE_32, Y_AXIS, X_AXIS,
+    DEFAULT_EVENT_IMAGE_PATH, EVENT_IMAGE_COORDS_16,
+    EVENT_IMAGE_SIZE_32, EVENT_IMAGE_SIZE_16, EVENT_IMAGE_SIZE_8,
+    EVENT_IMAGE_COORDS_32, EVENT_IMAGE_COORDS_8
 )
 from grid.handlers.for_16 import (
     get_coords_for_16, get_indent_for_16, get_params_for_16
@@ -29,30 +32,55 @@ def get_indent(index: int, grid_size: int, squares: str) -> int:
 
 def get_coords(index: int, grid_size: int, squares: str) -> Dict[str, int]:
     if grid_size == 32:
-        coords = get_coords_for_32(index=index, squares=squares)
+        return get_coords_for_32(index=index, squares=squares)
     elif grid_size == 16:
-        coords = get_coords_for_16(index=index, squares=squares)
+        return get_coords_for_16(index=index, squares=squares)
     else:  # for 8
-        coords = get_coords_for_8(index=index, squares=squares)
-    return coords
+        return get_coords_for_8(index=index, squares=squares)
 
 
 def get_params(grid_size: int, squares: str) -> (
     Tuple[Dict[str, Union[Tuple[int], int, str]]]
 ):
     if grid_size == 32:
-        (
-            image_params, rectangle_params, text_params
-        ) = get_params_for_32(squares=squares)
+        return get_params_for_32(squares=squares)
     elif grid_size == 16:
-        (
-            image_params, rectangle_params, text_params
-        ) = get_params_for_16(squares=squares)
+        return get_params_for_16(squares=squares)
     else:  # 8
-        (
-            image_params, rectangle_params, text_params
-        ) = get_params_for_8(squares=squares)
-    return image_params, rectangle_params, text_params
+        return get_params_for_8(squares=squares)
+
+
+def get_event_image_size(grid_size: int) -> Tuple[int]:
+    if grid_size == 32:
+        image_size = EVENT_IMAGE_SIZE_32
+    elif grid_size == 16:
+        image_size = EVENT_IMAGE_SIZE_16
+    else:  # 8
+        image_size = EVENT_IMAGE_SIZE_8
+    return image_size
+
+
+def get_event_image_coords(grid_size: int) -> Tuple[int]:
+    if grid_size == 32:
+        coords = EVENT_IMAGE_COORDS_32
+    elif grid_size == 16:
+        coords = EVENT_IMAGE_COORDS_16
+    else:  # 8
+        coords = EVENT_IMAGE_COORDS_8
+    return coords
+
+
+def paste_event_image(
+    grid_size: int, main_image: Image, path: str = DEFAULT_EVENT_IMAGE_PATH
+) -> None:
+    event_image = Image.open(path)
+    event_image_coords = get_event_image_coords(grid_size=grid_size)
+    event_image_size = get_event_image_size(grid_size=grid_size)
+    event_image.thumbnail(event_image_size)
+
+    main_image.paste(
+        event_image, event_image_coords, event_image.convert('RGBA')
+    )
 
 
 def create_blank(
@@ -65,6 +93,20 @@ def create_blank(
     my_draw = ImageDraw.Draw(card_image)
     my_draw.rounded_rectangle(**rectangle_params)
     main_image.paste(card_image, (coords[X_AXIS], coords[Y_AXIS]))
+
+
+def create_blanks(
+    people: List[Dict[str, str]], grid_size: int,
+    main_image: Image, squares: str = 'blanks'
+) -> None:
+    for index in range(len(people) - 1):
+        coords = get_coords(index=index, grid_size=grid_size, squares=squares)
+        create_blank(
+            main_image=main_image, squares=squares,
+            coords=coords, grid_size=grid_size
+        )
+        indent = get_indent(index=index, grid_size=grid_size, squares=squares)
+        coords[Y_AXIS] += indent
 
 
 def create_card(
@@ -85,11 +127,26 @@ def create_card(
             for field, value in person.items()
         ]
     )
-    # text = 'yoyoyo'
     # text margin: x left, y top in TEXT_PARAMS['xy']: Tuple[int]
     my_draw.text(text=text, font=font, **text_params)
 
     main_image.paste(card_image, (coords[X_AXIS], coords[Y_AXIS]))
+
+
+def create_cards(
+    people: List[Dict[str, str]], grid_size: int, main_image: Image,
+    font: ImageFont, squares: str = 'cards'
+) -> None:
+    for index, person in enumerate(people):
+        coords = get_coords(index=index, grid_size=grid_size, squares=squares)
+        create_card(
+            main_image=main_image, font=font, squares=squares,
+            person=person, coords=coords, grid_size=grid_size
+        )
+        # maybe don't need
+        # setattr(self, f"_{person.get('name')}_card", card)
+        indent = get_indent(index=index, grid_size=grid_size, squares=squares)
+        coords[Y_AXIS] += indent
 
 
 def save_image(image: Image, image_path: str) -> None:

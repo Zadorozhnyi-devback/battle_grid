@@ -17,6 +17,7 @@ def get_boys(grid_size: int) -> List[Dict[str, str]]:  # for test
 
 
 # settings
+DEFAULT_EVENT_IMAGE_PATH = 'static/5p logo.jpg'
 IMAGE_PATH = 'output_grids/output.jpg'
 FONT_PATH = 'static/fonts/Gidole-Regular.ttf'
 
@@ -26,6 +27,8 @@ SMALL_IMAGE_16 = (200, 130)
 FONT_SIZE_16 = 35
 TEXT_XY_16 = (20, 20)
 TEXT_PARAMS_16 = {'xy': TEXT_XY_16, 'fill': 'black'}
+EVENT_IMAGE_SIZE_16 = (420, 220)
+EVENT_IMAGE_COORDS_16 = (710, 30)
 
 Y_INDENT_BETWEEN_CARDS_16_8 = 155
 Y_INDENT_BETWEEN_BLANKS_16_4 = 310
@@ -97,6 +100,10 @@ RECTANGLE_COORDS_32 = (0, 0, 200, 70)
 FONT_SIZE_32 = 18
 TEXT_XY_32 = (5, 3)
 TEXT_PARAMS_32 = {'xy': TEXT_XY_32, 'fill': 'black'}
+EVENT_IMAGE_SIZE_32 = (400, 240)
+EVENT_IMAGE_COORDS_32 = (690, 30)
+EVENT_IMAGE_SIZE_8 = (440, 260)
+EVENT_IMAGE_COORDS_8 = (675, 30)
 
 Y_INDENT_BETWEEN_CARDS_32_16 = 77
 Y_INDENT_BETWEEN_BLANKS_32_8 = 153
