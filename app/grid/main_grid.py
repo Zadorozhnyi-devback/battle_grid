@@ -1,11 +1,10 @@
-from grid.const import IMAGE_PATH, get_boys
+from grid.const import get_boys
 from grid.handlers.my_handlers import (
     get_created_image, get_created_draw, get_created_font,
     save_image, create_cards, create_blanks, paste_event_image
 )
+from settings.default import IMAGE_PATH
 
-
-event_name = '5 Points'
 category = 'Brkrzz'
 
 

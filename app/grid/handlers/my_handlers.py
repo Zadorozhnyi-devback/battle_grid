@@ -3,12 +3,6 @@ from typing import Dict, Union, Tuple, List
 
 from PIL import Image, ImageDraw, ImageFont
 
-from grid.const import (
-    FONT_PATH, FONT_SIZE_16, FONT_SIZE_8, FONT_SIZE_32, Y_AXIS, X_AXIS,
-    DEFAULT_EVENT_IMAGE_PATH, EVENT_IMAGE_COORDS_16,
-    EVENT_IMAGE_SIZE_32, EVENT_IMAGE_SIZE_16, EVENT_IMAGE_SIZE_8,
-    EVENT_IMAGE_COORDS_32, EVENT_IMAGE_COORDS_8
-)
 from grid.handlers.for_16 import (
     get_coords_for_16, get_indent_for_16, get_params_for_16
 )
@@ -18,6 +12,16 @@ from grid.handlers.for_32 import (
 from grid.handlers.for_8 import (
     get_coords_for_8, get_indent_for_8, get_params_for_8
 )
+from grid.const import StrAlias
+from settings.configs.for_16 import (
+    EVENT_IMAGE_SIZE_16, EVENT_IMAGE_COORDS_16, FONT_SIZE_16
+)
+from settings.configs.for_32 import (
+    EVENT_IMAGE_SIZE_32, EVENT_IMAGE_SIZE_8,
+    EVENT_IMAGE_COORDS_32, EVENT_IMAGE_COORDS_8, FONT_SIZE_32
+)
+from settings.configs.for_8 import FONT_SIZE_8
+from settings.default import DEFAULT_EVENT_IMAGE_PATH, FONT_PATH
 
 
 def get_indent(index: int, grid_size: int, squares: str) -> int:
@@ -92,7 +96,9 @@ def create_blank(
     card_image = get_created_image(**image_params)
     my_draw = ImageDraw.Draw(card_image)
     my_draw.rounded_rectangle(**rectangle_params)
-    main_image.paste(card_image, (coords[X_AXIS], coords[Y_AXIS]))
+    main_image.paste(
+        card_image, (coords[StrAlias.X_AXIS], coords[StrAlias.Y_AXIS])
+    )
 
 
 def create_blanks(
@@ -106,7 +112,7 @@ def create_blanks(
             coords=coords, grid_size=grid_size
         )
         indent = get_indent(index=index, grid_size=grid_size, squares=squares)
-        coords[Y_AXIS] += indent
+        coords[StrAlias.Y_AXIS] += indent
 
 
 def create_card(
@@ -130,7 +136,9 @@ def create_card(
     # text margin: x left, y top in TEXT_PARAMS['xy']: Tuple[int]
     my_draw.text(text=text, font=font, **text_params)
 
-    main_image.paste(card_image, (coords[X_AXIS], coords[Y_AXIS]))
+    main_image.paste(
+        card_image, (coords[StrAlias.X_AXIS], coords[StrAlias.Y_AXIS])
+    )
 
 
 def create_cards(
@@ -146,7 +154,7 @@ def create_cards(
         # maybe don't need
         # setattr(self, f"_{person.get('name')}_card", card)
         indent = get_indent(index=index, grid_size=grid_size, squares=squares)
-        coords[Y_AXIS] += indent
+        coords[StrAlias.Y_AXIS] += indent
 
 
 def save_image(image: Image, image_path: str) -> None:
