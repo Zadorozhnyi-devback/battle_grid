@@ -6,7 +6,7 @@ SMALL_IMAGE_32 = (200, 75)
 SMALL_RECTANGLE_COORDS_32 = (0, 0, 200, 75)
 RECTANGLE_COORDS_32 = (0, 0, 200, 70)
 FONT_SIZE_32 = 18
-TEXT_XY_32 = (5, 3)
+TEXT_XY_32 = (25, 5)
 TEXT_PARAMS_32 = {'xy': TEXT_XY_32, 'fill': 'black'}
 EVENT_IMAGE_SIZE_32 = (400, 240)
 EVENT_IMAGE_COORDS_32 = (690, 30)
@@ -28,6 +28,10 @@ COORDS_RIGHT_32_4 = {'y_axis': 127, 'x_axis': 1115}
 COORDS_LEFT_32_2 = {'y_axis': 282, 'x_axis': 658}
 COORDS_RIGHT_32_2 = {'y_axis': 282, 'x_axis': 900}
 COORDS_CENTER_32 = {'y_axis': 400, 'x_axis': 780}
+
+# person, location, crew
+ICON_SIZES_32 = [[(25, 20)], [(25, 20)], [(25, 20)]]
+ICONS_COORDS_32 = [(6, 5), (5, 25), (7, 45)]
 
 SMALL_RECTANGLE_PARAMS_32 = {
     'xy': SMALL_RECTANGLE_COORDS_32, 'width': 5, 'radius': 10,

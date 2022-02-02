@@ -12,7 +12,8 @@ class BattleGrid:
     def __init__(self) -> None:
         self._main_image = get_created_image(x=1754, y=1249, color='white')
         self._draw = get_created_draw(image=self._main_image)
-        self._grid_size = 8
+        self._grid_size = 32
+        self._sex = 'm'  # and 'f'
         self._font = get_created_font(grid_size=self._grid_size)
         self._people = get_boys(grid_size=self._grid_size)
         self.main()
@@ -20,7 +21,7 @@ class BattleGrid:
     def main(self) -> None:
         create_cards(
             people=self._people, grid_size=self._grid_size,
-            main_image=self._main_image, font=self._font
+            main_image=self._main_image, font=self._font, sex=self._sex
         )
         create_blanks(
             people=self._people, grid_size=self._grid_size,

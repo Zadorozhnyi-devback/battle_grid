@@ -3,8 +3,8 @@ from grid.const import IntAlias
 
 IMAGE_16 = (340, 154)
 SMALL_IMAGE_16 = (200, 130)
-FONT_SIZE_16 = 35
-TEXT_XY_16 = (20, 20)
+FONT_SIZE_16 = 38
+TEXT_XY_16 = (60, 29)
 TEXT_PARAMS_16 = {'xy': TEXT_XY_16, 'fill': 'black'}
 EVENT_IMAGE_SIZE_16 = (420, 220)
 EVENT_IMAGE_COORDS_16 = (710, 30)
@@ -21,6 +21,9 @@ COORDS_RIGHT_16_4 = {'y_axis': 95, 'x_axis': 1185}
 COORDS_LEFT_16_2 = {'y_axis': 240, 'x_axis': 570}
 COORDS_RIGHT_16_2 = {'y_axis': 244, 'x_axis': 975}
 COORDS_CENTER_16 = {'y_axis': 374, 'x_axis': 775}
+
+ICON_SIZES_16 = [[(50, 45)], [(50, 45)], [(50, 43)]]
+ICONS_COORDS_16 = [(17, 20), (15, 65), (21, 107)]
 
 RECTANGLE_COORDS_16 = (10, 15, 340, 155)  # (size: 330x140)
 SMALL_RECTANGLE_COORDS_16 = (10, 15, 200, 130)

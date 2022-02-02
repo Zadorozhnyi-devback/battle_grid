@@ -5,8 +5,8 @@ IMAGE_8 = (340, 154)
 SMALL_IMAGE_8 = (300, 150)
 SMALL_RECTANGLE_COORDS_8 = (10, 15, 300, 150)
 RECTANGLE_COORDS_8 = (10, 15, 340, 155)
-FONT_SIZE_8 = 35
-TEXT_XY_8 = (20, 20)
+FONT_SIZE_8 = 39
+TEXT_XY_8 = (57, 28)
 TEXT_PARAMS_8 = {'xy': TEXT_XY_8, 'fill': 'black'}
 
 Y_INDENT_BETWEEN_CARDS_8_4 = 300
@@ -18,6 +18,9 @@ COORDS_RIGHT_8_4 = {'y_axis': 100, 'x_axis': 1400}
 COORDS_RIGHT_8_2 = {'y_axis': 256, 'x_axis': 1094}
 COORDS_LEFT_8_2 = {'y_axis': 256, 'x_axis': 350}
 COORDS_CENTER_8 = {'y_axis': 325, 'x_axis': 720}
+
+ICON_SIZES_8 = [[(50, 45)], [(50, 45)], [(50, 43)]]
+ICONS_COORDS_8 = [(17, 20), (15, 65), (21, 107)]
 
 SMALL_RECTANGLE_PARAMS_8 = {
     'xy': SMALL_RECTANGLE_COORDS_8, 'width': 5, 'radius': 10,
