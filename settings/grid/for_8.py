@@ -1,4 +1,4 @@
-from grid.const import IntAlias
+from app.grid.const import IntAlias
 
 # 8
 IMAGE_8 = (340, 154)

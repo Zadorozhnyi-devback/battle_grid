@@ -1,6 +1,6 @@
 from typing import Dict, Tuple, Union
 
-from settings.configs.for_16 import (
+from settings.grid.for_16 import (
     CARD_IMAGE_PARAMS_16, RECTANGLE_PARAMS_16,
     SMALL_IMAGE_PARAMS_16, SMALL_RECTANGLE_PARAMS_16, TEXT_PARAMS_16,
     Y_INDENT_BETWEEN_CARDS_16_8, Y_INDENT_BETWEEN_BLANKS_16_4,

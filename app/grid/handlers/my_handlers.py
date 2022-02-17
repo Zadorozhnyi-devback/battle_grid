@@ -3,29 +3,29 @@ from typing import Dict, Union, Tuple, List
 
 from PIL import Image, ImageDraw, ImageFont
 
-from grid.handlers.for_16 import (
+from app.grid.handlers.for_16 import (
     get_coords_for_16, get_indent_for_16, get_params_for_16
 )
-from grid.handlers.for_32 import (
+from app.grid.handlers.for_32 import (
     get_coords_for_32, get_indent_for_32, get_params_for_32
 )
-from grid.handlers.for_8 import (
+from app.grid.handlers.for_8 import (
     get_coords_for_8, get_indent_for_8, get_params_for_8
 )
-from grid.const import StrAlias, IntAlias
-from settings.configs.for_16 import (
+from app.grid.const import StrAlias, IntAlias
+from settings.grid.for_16 import (
     EVENT_IMAGE_SIZE_16, EVENT_IMAGE_COORDS_16, FONT_SIZE_16, ICON_SIZES_16,
     ICONS_COORDS_16
 )
-from settings.configs.for_32 import (
+from settings.grid.for_32 import (
     EVENT_IMAGE_SIZE_32, EVENT_IMAGE_SIZE_8,
     EVENT_IMAGE_COORDS_32, EVENT_IMAGE_COORDS_8, FONT_SIZE_32, ICON_SIZES_32,
     ICONS_COORDS_32
 )
-from settings.configs.for_8 import (
+from settings.grid.for_8 import (
     FONT_SIZE_8, ICON_SIZES_8, ICONS_COORDS_8
 )
-from settings.default import (
+from settings.grid.common import (
     DEFAULT_EVENT_IMAGE_PATH, FONT_PATH, ICONS_PATHS, PERSON_ICON_PATHS
 )
 

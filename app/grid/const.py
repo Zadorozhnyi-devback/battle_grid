@@ -26,5 +26,4 @@ def get_boys(grid_size: int) -> List[Dict[str, str]]:  # for test
                 'crew': 'Ruffneck Attack'
             }
         )
-
     return bboys

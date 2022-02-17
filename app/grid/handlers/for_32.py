@@ -1,6 +1,6 @@
 from typing import Dict, Tuple, Union
 
-from settings.configs.for_32 import (
+from settings.grid.for_32 import (
     CARD_IMAGE_PARAMS_32, RECTANGLE_PARAMS_32,
     SMALL_IMAGE_PARAMS_32, SMALL_RECTANGLE_PARAMS_32, TEXT_PARAMS_32,
     Y_INDENT_BETWEEN_CARDS_32_16, Y_INDENT_BETWEEN_BLANKS_32_8,

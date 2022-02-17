@@ -1,5 +1,5 @@
 # 32
-from grid.const import IntAlias
+from app.grid.const import IntAlias
 
 IMAGE_32 = (200, 70)
 SMALL_IMAGE_32 = (200, 75)
