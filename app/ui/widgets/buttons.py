@@ -90,12 +90,13 @@ def clicked_add_tab(cls):
 
 def clicked_remove_tab(cls) -> None:
     selected_tab = cls._tab_control.select()
-    tab_name = cls._tab_control.tab(selected_tab, 'text')
+    category = cls._tab_control.tab(selected_tab, 'text')
     answer = messagebox.askyesno(
-        message=f"delete category '{tab_name}'?"
+        message=f"delete category '{category}'?"
     )
     if answer:
         cls._tab_control.forget(selected_tab)
+        cls._categories.pop(category)
 
 
 def get_remove_tab_button(cls) -> Button:
