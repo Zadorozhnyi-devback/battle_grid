@@ -20,7 +20,7 @@ from app.ui.widgets.labels import change_text_canvas
 
 
 def validate_category_existing(cls) -> bool:
-    if not cls._new_category.get() in cls._categories.keys():
+    if not cls._category_input.get() in cls._categories.keys():
         change_text_canvas(canvas=cls._main_canvas, text='added new tab')
         return True
     else:

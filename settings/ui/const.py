@@ -10,6 +10,7 @@ GRID_SIZE_CANVAS_TEXT = 'grid:'
 DESTINATION_BUTTON_TITLE = 'choose folder'
 CREATE_BUTTON_TITLE = 'register'
 ADD_TAB_BUTTON_TEXT = 'add tab'
+REMOVE_TAB_BUTTON_TEXT = 'remove tab'
 
 
 # errors
@@ -33,10 +34,13 @@ CREATE_BUTTON_COORDS = {'row': 7, 'column': 6}
 
 ADD_TAB_BUTTON_SIZE = '10'
 ADD_TAB_BUTTON_COORDS = {'row': 13, 'column': 1}
+REMOVE_TAB_BUTTON_SIZE = '10'
+REMOVE_TAB_BUTTON_COORDS = {'row': 13, 'column': 2}
+
 
 SEX_RADIO_FRAME_COORDS = {'row': 4, 'column': 1}
 GRID_SIZE_RADIO_FRAME_COORDS = {'row': 9, 'column': 1}
-CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 13, 'column': 2}
+CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 13, 'column': 3}
 
 
 MAIN_CANVAS_KWARGS = {

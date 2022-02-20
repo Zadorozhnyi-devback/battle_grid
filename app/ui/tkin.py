@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from app.ui.widgets.buttons import (
-    get_create_button, get_add_tab_button, get_destination_button
+    get_create_button, get_add_tab_button, get_destination_button,
+    get_remove_tab_button
 )
 from app.ui.widgets.common import create_empty_strings
 from app.ui.widgets.inputs import get_input
@@ -66,7 +67,7 @@ class BattleGridUI:
         self._nick = get_input(main_window=self._window, **NICK_INPUT_COORDS)
         self._city = get_input(main_window=self._window, **CITY_INPUT_COORDS)
         self._crew = get_input(main_window=self._window, **CREW_INPUT_COORDS)
-        self._new_category = get_input(
+        self._category_input = get_input(
             main_window=self._window, **NEW_CATEGORY_INPUT_COORDS
         )
 
@@ -75,7 +76,7 @@ class BattleGridUI:
         self._people = dict()
         self._tab_control = get_tab_control(main_window=self._window)
         self._add_tab_button = get_add_tab_button(cls=self)
-
+        self._remove_tab_button = get_remove_tab_button(cls=self)
 
         self._destination_path = str(Path(DEFAULT_DOWNLOAD_PATH).resolve())
         self._curr_path_label = get_curr_path_label(

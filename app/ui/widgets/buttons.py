@@ -1,6 +1,6 @@
 import getpass
 from pathlib import Path
-from tkinter import Tk, Label, Button, Frame, filedialog
+from tkinter import Tk, Label, Button, Frame, filedialog, messagebox
 
 from app.ui.validators import validate_category_existing
 from settings.ui.const import (
@@ -8,6 +8,7 @@ from settings.ui.const import (
     CREATE_BUTTON_SIZE, CREATE_BUTTON_COORDS, DESTINATION_BUTTON_COORDS,
     ADD_TAB_BUTTON_TEXT, ADD_TAB_BUTTON_SIZE, ADD_TAB_BUTTON_COORDS,
     DESTINATION_BUTTON_TITLE, DEFAULT_DOWNLOAD_PATH, CURR_PATH,
+    REMOVE_TAB_BUTTON_TEXT, REMOVE_TAB_BUTTON_SIZE, REMOVE_TAB_BUTTON_COORDS,
 )
 
 
@@ -67,7 +68,7 @@ def get_create_button(cls) -> Button:
 
 def clicked_add_tab(cls):
     if validate_category_existing(cls=cls):
-        category = cls._new_category.get()
+        category = cls._category_input.get()
         frame = Frame(master=cls._window)
         cls._tab_control.add(frame, text=category)
         cls._categories[category] = {
@@ -85,6 +86,27 @@ def clicked_add_tab(cls):
 #         'people': list(dict())
 #     }
 # }
+
+
+def clicked_remove_tab(cls) -> None:
+    selected_tab = cls._tab_control.select()
+    tab_name = cls._tab_control.tab(selected_tab, 'text')
+    answer = messagebox.askyesno(
+        message=f"delete category '{tab_name}'?"
+    )
+    if answer:
+        cls._tab_control.forget(selected_tab)
+
+
+def get_remove_tab_button(cls) -> Button:
+    button = Button(
+        master=cls._window, text=REMOVE_TAB_BUTTON_TEXT,
+        width=REMOVE_TAB_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        command=lambda c=cls: clicked_remove_tab(cls=c)
+    )
+    button.grid(REMOVE_TAB_BUTTON_COORDS)
+    return button
+
 
 def get_add_tab_button(cls) -> Button:
     button = Button(
