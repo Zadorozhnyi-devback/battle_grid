@@ -1,5 +1,5 @@
 from app.grid.const import get_boys
-from app.grid.handlers.my_handlers import (
+from app.grid.handlers.common import (
     get_created_image, get_created_draw, get_created_font,
     save_image, create_cards, create_blanks, paste_event_image
 )
