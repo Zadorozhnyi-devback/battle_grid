@@ -7,8 +7,8 @@ from app.ui.widgets.common import create_empty_strings
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels import get_canvas, get_curr_path_label
 from app.ui.widgets.radio import (
-    get_selected_sex, create_and_get_sex_radiobuttons, get_selected_size,
-    create_and_get_grid_size_radiobuttons
+    create_sex_radio, create_grid_size_radio,
+    get_default_radio, create_category_type_radio
 )
 from app.ui.widgets.windows import get_window, get_tab_control
 from settings.ui.const import (
@@ -23,18 +23,31 @@ class BattleGridUI:
     def __init__(self) -> None:
         self._window = get_window()
 
-        self._selected_sex = get_selected_sex(main_window=self._window)
-        self._sex_radiobuttons = create_and_get_sex_radiobuttons(
+        self._selected_sex = get_default_radio(
+            window=self._window, value='male'
+        )
+        create_sex_radio(
             main_window=self._window, selected_sex=self._selected_sex
         )
 
         self._grid_size_canvas = get_canvas(
             main_window=self._window, **GRID_SIZE_CANVAS_KWARGS
         )
-        self._selected_size = get_selected_size(main_window=self._window)
-        self._grid_size = create_and_get_grid_size_radiobuttons(
-            main_window=self._window, selected_size=self._selected_size
+        self._selected_grid_size = get_default_radio(
+            window=self._window, value='8'
         )
+        create_grid_size_radio(
+            main_window=self._window, selected_size=self._selected_grid_size
+        )
+
+        self._categories = dict()
+        self._selected_category_type = get_default_radio(
+            window=self._window, value='single'
+        )
+        create_category_type_radio(
+            window=self._window, selected_type=self._selected_category_type
+        )
+
         create_empty_strings(main_window=self._window, rows=[5, 8, 10])
 
         self._main_canvas = get_canvas(
@@ -57,8 +70,9 @@ class BattleGridUI:
             main_window=self._window, **NEW_CATEGORY_INPUT_COORDS
         )
 
-        self._create_button = get_create_button(main_window=self._window)
+        self._create_button = get_create_button(cls=self)
 
+        self._people = dict()
         self._tab_control = get_tab_control(main_window=self._window)
         self._add_tab_button = get_add_tab_button(cls=self)
 

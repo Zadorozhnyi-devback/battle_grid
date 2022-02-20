@@ -36,6 +36,7 @@ ADD_TAB_BUTTON_COORDS = {'row': 13, 'column': 1}
 
 SEX_RADIO_FRAME_COORDS = {'row': 4, 'column': 1}
 GRID_SIZE_RADIO_FRAME_COORDS = {'row': 9, 'column': 1}
+CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 13, 'column': 2}
 
 
 MAIN_CANVAS_KWARGS = {

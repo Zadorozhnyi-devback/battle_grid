@@ -17,12 +17,10 @@ def get_curr_path_label(main_window: Tk, destination_path: str) -> Label:
     return curr_path_label
 
 
-# def change_text_canvas(main_canvas, text: str, main_text_id) -> None:
-#     # first set coords to default
-#     main_canvas.coords(main_text_id, 5, 5)
-#     main_canvas.itemconfig(
-#         tagOrId=main_text_id, text=text
-#     )
+def change_text_canvas(canvas, text: str) -> None:
+    # first set coords to default
+    canvas.coords('1', 5, 5)
+    canvas.itemconfig(tagOrId='1', text=text)
 
 
 def get_canvas(

@@ -2,6 +2,7 @@ import getpass
 from pathlib import Path
 from tkinter import Tk, Label, Button, Frame, filedialog
 
+from app.ui.validators import validate_category_existing
 from settings.ui.const import (
     BUTTON_TEXT_COLOR, CREATE_BUTTON_TITLE, DESTINATION_BUTTON_SIZE,
     CREATE_BUTTON_SIZE, CREATE_BUTTON_COORDS, DESTINATION_BUTTON_COORDS,
@@ -49,23 +50,41 @@ def get_destination_button(
     return button
 
 
-def clicked_generate_grid() -> None:
-    pass
+def clicked_generate_grid(cls) -> None:
+    tab_control = cls._tab_control
+    current_tab = tab_control.tab(tab_control.select(), 'text')
 
 
-def get_create_button(main_window: Tk) -> Button:
+def get_create_button(cls) -> Button:
     button = Button(
-        master=main_window, text=CREATE_BUTTON_TITLE, width=CREATE_BUTTON_SIZE,
-        fg=BUTTON_TEXT_COLOR, command=clicked_generate_grid
+        master=cls._window, text=CREATE_BUTTON_TITLE, width=CREATE_BUTTON_SIZE,
+        fg=BUTTON_TEXT_COLOR,
+        command=lambda c=cls: clicked_generate_grid(cls=c)
     )
     button.grid(CREATE_BUTTON_COORDS)
     return button
 
 
 def clicked_add_tab(cls):
-    frame1 = Frame(master=cls._window)
-    cls._tab_control.add(frame1, text=cls._new_category.get())
+    if validate_category_existing(cls=cls):
+        category = cls._new_category.get()
+        frame = Frame(master=cls._window)
+        cls._tab_control.add(frame, text=category)
+        cls._categories[category] = {
+            'grid_size': cls._selected_grid_size.get(),
+            'type': cls._selected_category_type.get(),  # crew or single
+            'people': list()
+        }
+        print(cls._categories[category])
 
+
+# categories = {
+#     'breaking': {
+#         'grid_size': int,
+#         'type': str,  # crew or single
+#         'people': list(dict())
+#     }
+# }
 
 def get_add_tab_button(cls) -> Button:
     button = Button(
