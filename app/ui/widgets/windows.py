@@ -1,5 +1,5 @@
 import os
-from tkinter import Tk, PhotoImage, Frame, Label
+from tkinter import Tk, PhotoImage
 from tkinter.ttk import Style, Notebook
 
 from app.ui.widgets.events import closer
@@ -10,11 +10,7 @@ from settings.ui.const import (
 
 def get_tab_control(main_window: Tk) -> Notebook:
     tab_control = Notebook(master=main_window, **TAB_CONTROL_WINDOW_SIZE)
-    # frame = Frame(tab_control)
-    # tab_control.add(frame, text=tab_name)
     tab_control.grid(column=0, row=14, columnspan=10, sticky='W')
-    # label1 = Label(frame, text='Thats first tab')
-    # label1.grid(column=0, row=0)
     return tab_control
 
 
@@ -24,8 +20,7 @@ def get_window() -> Tk:
     # binds
     window.bind(
         '<Escape>',
-        lambda event, main_window=window:
-        closer(event, main_window=main_window)
+        lambda event, w=window: closer(event, main_window=w)
     )
 
     style = Style(master=window)

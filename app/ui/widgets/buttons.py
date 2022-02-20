@@ -76,16 +76,6 @@ def clicked_add_tab(cls):
             'type': cls._selected_category_type.get(),  # crew or single
             'people': list()
         }
-        print(cls._categories[category])
-
-
-# categories = {
-#     'breaking': {
-#         'grid_size': int,
-#         'type': str,  # crew or single
-#         'people': list(dict())
-#     }
-# }
 
 
 def clicked_remove_tab(cls) -> None:
