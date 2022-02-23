@@ -21,7 +21,7 @@ def get_boys(grid_size: int) -> List[Dict[str, str]]:  # for test
     for index in range(1, grid_size + 1):
         bboys.append(
             {
-                'name': f'girl{index}',
+                'name': f'Vladyslav Zadorozhnyi',
                 'city': 'Cicity',
                 'crew': 'Ruffneck Attack'
             }

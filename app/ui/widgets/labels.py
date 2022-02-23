@@ -1,4 +1,5 @@
-from tkinter import Tk, Canvas, Label
+from tkinter import Tk, Canvas, Label, Frame
+from typing import Union
 
 from settings.ui.const import (
     MY_FONT, CURR_PATH_LABEL_COORDS, CURR_PATH, DEFAULT_FONT_SIZE
@@ -24,16 +25,16 @@ def change_text_canvas(canvas, text: str) -> None:
 
 
 def get_canvas(
-    main_window: Tk, column: int, row: int,
-    padding_top: int, text: str, font_size: int
+    window: Union[Frame, Tk], column: int, row: int, column_span: int,
+    padding_top: int, text: str, font_size: int, bonus_width: int = 0
 ) -> Canvas:
-    canvas = Canvas(master=main_window)
-    canvas.grid(column=column, row=row, sticky='W')
+    canvas = Canvas(master=window)
+    canvas.grid(column=column, row=row, sticky='W', columnspan=column_span)
     txt = canvas.create_text(
         5, padding_top, text=text,
         font=(MY_FONT, font_size), anchor='nw'
     )
     bbox = canvas.bbox(txt)
     # size without padding on y bottom and long width
-    canvas.configure(height=bbox[3], width=bbox[2])
+    canvas.configure(height=bbox[3], width=bbox[2] + bonus_width)
     return canvas

@@ -1,4 +1,5 @@
 from tkinter import StringVar, Tk, Radiobutton, Frame
+from typing import Union
 
 from settings.ui.const import (
     GRID_SIZE_RADIO_FRAME_COORDS, SEX_RADIO_FRAME_COORDS,
@@ -6,7 +7,7 @@ from settings.ui.const import (
 )
 
 
-def get_default_radio(window: Tk, value: str) -> StringVar:
+def get_default_radio(window: Union[Tk, Frame], value: str) -> StringVar:
     return StringVar(master=window, value=value)
 
 
@@ -27,12 +28,12 @@ def create_grid_size_radio(
         master=radio_frame, text='32', value='32',
         variable=selected_size
     )
-    radiobutton_4_angles = Radiobutton(
-        master=radio_frame, text='4 angles', value='4_angles',
-        variable=selected_size
-    )
     radiobutton_selection = Radiobutton(
         master=radio_frame, text='selection', value='selection',
+        variable=selected_size
+    )
+    radiobutton_4_angles = Radiobutton(
+        master=radio_frame, text='4 angles', value='4_angles',
         variable=selected_size
     )
     radiobutton_8.grid(column=0, row=0, sticky='W')
@@ -43,7 +44,7 @@ def create_grid_size_radio(
 
 
 def create_sex_radio(
-    main_window: Tk, selected_sex: StringVar
+    main_window: Union[Tk, Frame], selected_sex: StringVar
 ) -> None:
     radio_frame = Frame(master=main_window)
     radio_frame.grid(**SEX_RADIO_FRAME_COORDS, sticky='W')
