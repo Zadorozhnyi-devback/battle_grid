@@ -1,9 +1,12 @@
 import os
-from tkinter import Tk, PhotoImage, Frame, Grid
-from tkinter.ttk import Style, Notebook
+from tkinter import (
+    Tk, PhotoImage, Frame, Scrollbar, Text, NONE, VERTICAL, DISABLED
+)
+from tkinter.ttk import Style, Notebook, Separator
 
-from app.ui.widgets.buttons.tab_control_getters import get_registration_button
-from app.ui.widgets.common import create_empty_strings
+from app.ui.widgets.buttons.tab_control_getters import get_register_button, \
+    get_unregister_button
+from app.ui.widgets.common import create_empty_strings, get_selected_tab_title
 from app.ui.widgets.events import closer
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels import get_canvas
@@ -15,14 +18,39 @@ from settings.ui.const import (
 )
 
 
+def get_category_people_list(cls, window: Frame) -> Text:
+    separator = Separator(master=window, orient=VERTICAL)
+    separator.grid(
+        column=2, row=0, rowspan=100, sticky='ens', pady=(6, 6), padx=(0, 4)
+    )
+
+    scrollbar = Scrollbar(master=window)
+    scrollbar.grid(column=4, row=0, rowspan=100, pady=(4, 4), sticky='ns')
+
+    text = Text(
+        master=window,
+        width=50, heigh=18.5,
+        yscrollcommand=scrollbar.set, wrap=NONE,
+        font=('Helvetica', 13), state=DISABLED
+    )
+    text.grid(column=3, row=0, rowspan=100, sticky='W', pady=(4, 4))
+
+    scrollbar.config(command=text.yview)
+    window.columnconfigure(2, weight=1)
+    return text
+
+
 def create_new_tab(cls) -> None:
     category = cls._category_input.get()
     selected_category_type = cls._selected_category_type.get()
     frame = Frame(master=cls._window)
+
+    participants = get_category_people_list(cls=cls, window=frame)
     cls._categories[category] = {
         'grid_size': cls._selected_grid_size.get(),
         'type': selected_category_type,  # crew or single
-        'participants': list()
+        'participants': list(),
+        'text_widget': participants
     }
 
     create_empty_strings(window=frame, rows=[4])
@@ -39,7 +67,9 @@ def create_new_tab(cls) -> None:
     cls._crew = get_input(window=frame, **CREW_INPUT_COORDS)
     cls._city = get_input(window=frame, **CITY_INPUT_COORDS)
 
-    cls._create_button = get_registration_button(cls=cls, window=frame)
+    cls._register_button = get_register_button(cls=cls, window=frame)
+    cls._unregister_button = get_unregister_button(cls=cls, window=frame)
+
     cls._tab_control.add(frame, text=category)
 
 

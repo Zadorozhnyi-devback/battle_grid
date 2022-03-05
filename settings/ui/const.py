@@ -9,7 +9,8 @@ GRID_SIZE_CANVAS_TEXT = 'grid:'
 
 # buttons
 DESTINATION_BUTTON_TITLE = 'choose folder'
-CREATE_BUTTON_TITLE = 'register'
+REGISTER_BUTTON_TITLE = 'register'
+UNREGISTER_BUTTON_TITLE = 'unregister'
 ADD_TAB_BUTTON_TEXT = 'add category'
 REMOVE_TAB_BUTTON_TEXT = 'remove category'
 
@@ -54,14 +55,16 @@ NEW_CATEGORY_CANVAS_KWARGS = {
 
 MAIN_CANVAS_KWARGS = {
     'row': 1, 'column': 2, 'font_size': 24, 'padding_top': 8,
-    'text': MAIN_CANVAS_TEXT, 'column_span': 10, 'bonus_width': 30
+    'text': MAIN_CANVAS_TEXT, 'column_span': 20, 'bonus_width': 30
 }
 
 # tab control
 DEFAULT_SEX = 'male'
 
-REGISTRATION_BUTTON_SIZE = '7'
-REGISTRATION_BUTTON_COORDS = {'row': 5, 'column': 1}
+REGISTER_BUTTON_SIZE = '7'
+UNREGISTER_BUTTON_SIZE = '8'
+REGISTER_BUTTON_COORDS = {'row': 5, 'column': 1}
+UNREGISTER_BUTTON_COORDS = {'row': 6, 'column': 1}
 
 SEX_RADIO_FRAME_COORDS = {'row': 1, 'column': 1}
 

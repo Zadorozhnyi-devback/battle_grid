@@ -3,6 +3,7 @@ from pathlib import Path
 from tkinter import messagebox, Tk, Label, filedialog
 
 from app.ui.validators import validate_category_existing
+from app.ui.widgets.common import get_selected_tab_title
 from app.ui.widgets.windows import create_new_tab
 from settings.ui.const import DEFAULT_DOWNLOAD_PATH, CURR_PATH
 
@@ -14,7 +15,7 @@ def clicked_add_tab(cls):
 
 def clicked_remove_tab(cls) -> None:
     selected_tab = cls._tab_control.select()
-    category = cls._tab_control.tab(selected_tab, 'text')
+    category = get_selected_tab_title(cls=cls)
     answer = messagebox.askyesno(
         message=f"delete category '{category}'?"
     )

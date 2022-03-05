@@ -20,3 +20,5 @@ must have:
 
     1 таб - одна сетка/один файл по названию категории и сегодняшней дате
 
+    validate same nickname +
+    validate trying to remove non existing participant +

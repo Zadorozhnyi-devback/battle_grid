@@ -1,17 +1,30 @@
 from tkinter import Button, Frame
 
-from app.ui.widgets.buttons.tab_control_clicked import register_new_participant
+from app.ui.widgets.buttons.tab_control_clicked import (
+    register_new_participant, unregister_participant
+)
 from settings.ui.const import (
-    CREATE_BUTTON_TITLE, BUTTON_TEXT_COLOR,
-    REGISTRATION_BUTTON_SIZE, REGISTRATION_BUTTON_COORDS
+    REGISTER_BUTTON_TITLE, UNREGISTER_BUTTON_TITLE, BUTTON_TEXT_COLOR,
+    REGISTER_BUTTON_SIZE, UNREGISTER_BUTTON_SIZE, REGISTER_BUTTON_COORDS,
+    UNREGISTER_BUTTON_COORDS
 )
 
 
-def get_registration_button(window: Frame, cls) -> Button:
+def get_register_button(window: Frame, cls) -> Button:
     button = Button(
-        master=window, text=CREATE_BUTTON_TITLE,
-        width=REGISTRATION_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        master=window, text=REGISTER_BUTTON_TITLE,
+        width=REGISTER_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
         command=lambda c=cls: register_new_participant(cls=c)
     )
-    button.grid(REGISTRATION_BUTTON_COORDS, sticky='W')
+    button.grid(REGISTER_BUTTON_COORDS, sticky='W')
+    return button
+
+
+def get_unregister_button(window: Frame, cls) -> Button:
+    button = Button(
+        master=window, text=UNREGISTER_BUTTON_TITLE,
+        width=UNREGISTER_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        command=lambda c=cls: unregister_participant(cls=c)
+    )
+    button.grid(UNREGISTER_BUTTON_COORDS, sticky='W')
     return button
