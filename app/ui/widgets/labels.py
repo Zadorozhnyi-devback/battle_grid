@@ -2,7 +2,7 @@ from tkinter import Tk, Canvas, Label, Frame
 from typing import Union
 
 from settings.ui.const import (
-    MY_FONT, CURR_PATH_LABEL_COORDS, CURR_PATH, DEFAULT_FONT_SIZE
+    MY_FONT, CURR_PATH_LABEL_COORDS, CURRENT_PATH, DEFAULT_FONT_SIZE
 )
 
 
@@ -10,7 +10,7 @@ def get_curr_path_label(main_window: Tk, destination_path: str) -> Label:
     curr_path_label = Label(
         master=main_window,
         font=(MY_FONT, DEFAULT_FONT_SIZE),
-        text=f'{CURR_PATH}: {destination_path}'
+        text=f'{CURRENT_PATH}: {destination_path}'
     )
     curr_path_label.grid(
         **CURR_PATH_LABEL_COORDS, sticky='W', columnspan=100

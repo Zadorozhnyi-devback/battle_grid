@@ -2,8 +2,12 @@
 __pycache__
 
 # Files to ignore
+cache.txt
+
+# Dirs to ignore
 test
 output_grids
+events
 
 
 # Environment files

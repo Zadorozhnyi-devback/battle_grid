@@ -1,6 +1,9 @@
 from tkinter import END, NORMAL, DISABLED
 
-from app.ui.handlers import get_participant_fields, clean_participant_inputs
+from app.ui.handlers import (
+    get_participant_fields, clean_participant_inputs,
+    save_category_participants
+)
 from app.ui.validators import (
     validate_input, validate_participant_exists, validate_required_field
 )
@@ -8,80 +11,80 @@ from app.ui.widgets.labels import change_text_canvas
 
 
 def unregister_participant(cls) -> None:
-    current_tab = cls._tab_control.tab(cls._tab_control.select(), 'text')
-    tab_type = cls._categories[current_tab]['type']
+    category = cls._tab_control.tab(cls._tab_control.select(), 'text')
+    tab_type = cls._categories[category]['type']
     fields = get_participant_fields(tab_type=tab_type)
     field_to_remove = 'nick' if tab_type == 'single' else 'crew'
-    value = cls._nick.get() if tab_type == 'single' else cls._crew.get()
+    value = getattr(cls, f'_{category}_{field_to_remove}_input').get()
 
     if validate_participant_exists(
-        cls=cls, current_tab=current_tab,
+        cls=cls, category=category,
         field_to_remove=field_to_remove, value=value
     ):
-        for participant in cls._categories[current_tab]['participants']:
+        for participant in cls._categories[category]['participants']:
             if participant[field_to_remove] == value:
                 (
-                    cls._categories[current_tab]['participants']
+                    cls._categories[category]['participants']
                     .remove(participant)
                 )
                 break
 
-        cls._categories[current_tab]['text_widget'].configure(state=NORMAL)
-        cls._categories[current_tab]['text_widget'].delete('1.0', END)
+        cls._categories[category]['text_widget'].configure(state=NORMAL)
+        cls._categories[category]['text_widget'].delete('1.0', END)
 
         for index, participant in enumerate(
-            cls._categories[current_tab]['participants']
+            cls._categories[category]['participants']
         ):
             participant_string = ', '.join(
                 [participant[field] for field in fields if participant[field]]
             )
-            cls._categories[current_tab]['text_widget'].insert(
+            cls._categories[category]['text_widget'].insert(
                 END, f'{index + 1}. {participant_string}\n'
             )
 
-        cls._categories[current_tab]['text_widget'].configure(state=DISABLED)
+        cls._categories[category]['text_widget'].configure(state=DISABLED)
 
-        clean_participant_inputs(cls=cls, inputs=fields)
+        clean_participant_inputs(cls=cls, category=category, inputs=fields)
 
         change_text_canvas(
             canvas=cls._main_canvas, text='removed participant'
         )
+        save_category_participants(cls=cls)
 
 
 def register_new_participant(cls) -> None:
-    current_tab = cls._tab_control.tab(cls._tab_control.select(), 'text')
-    tab_type = cls._categories[current_tab]['type']
+    category = cls._tab_control.tab(cls._tab_control.select(), 'text')
+    tab_type = cls._categories[category]['type']
     fields = get_participant_fields(tab_type=tab_type)
-    if validate_input(cls=cls, current_tab=current_tab, tab_type=tab_type):
-        participant = {'crew': cls._crew.get(), 'city': cls._city.get()}
-        if tab_type == 'single':
-            participant['nick'] = cls._nick.get()
-
+    if validate_input(cls=cls, category=category, tab_type=tab_type):
+        participant = {
+            field: getattr(cls, f'_{category}_{field}_input').get()
+            for field in fields
+        }
+        print('categories', cls._categories)
         if validate_required_field(
             cls=cls, tab_type=tab_type, participant=participant
         ):
+            clean_participant_inputs(cls=cls, category=category, inputs=fields)
+
             participant = {
                 field: (value if value else '')
                 for field, value in participant.items()
             }
+            cls._categories[category]['participants'].append(participant)
 
-            clean_participant_inputs(cls, inputs=fields)
-
-            cls._categories[current_tab]['participants'].append(participant)
-
-            index = len(cls._categories[current_tab]['participants'])
+            index = len(cls._categories[category]['participants'])
             participant_string = ', '.join(
                 [participant[field] for field in fields if participant[field]]
             )
-            cls._categories[current_tab]['text_widget'].configure(state=NORMAL)
-            cls._categories[current_tab]['text_widget'].insert(
+            cls._categories[category]['text_widget'].configure(state=NORMAL)
+            cls._categories[category]['text_widget'].insert(
                 END, f'{index}. {participant_string}\n'
             )
-            cls._categories[current_tab]['text_widget'].configure(
-                state=DISABLED
-            )
+            cls._categories[category]['text_widget'].configure(state=DISABLED)
 
             change_text_canvas(
                 canvas=cls._main_canvas, text='added new participant'
             )
-    print('categories', cls._categories)
+
+            save_category_participants(cls=cls)

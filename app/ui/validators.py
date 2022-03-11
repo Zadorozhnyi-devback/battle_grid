@@ -5,27 +5,52 @@ from app.ui.widgets.labels import change_text_canvas
 
 
 def validate_category_existing(cls) -> bool:
-    if not cls._category_input.get() in cls._categories.keys():
-        change_text_canvas(canvas=cls._main_canvas, text='added new tab')
-        return True
-    else:
+    category = cls._category_input.get()
+    if not category:
+        change_text_canvas(
+            canvas=cls._main_canvas, text="category can't be empty"
+        )
+        return False
+    if category in cls._categories.keys():
         change_text_canvas(canvas=cls._main_canvas, text='category exist')
         return False
+    else:
+        change_text_canvas(canvas=cls._main_canvas, text='added new tab')
+        return True
 
 
-def validate_input(cls, current_tab: str, tab_type: str) -> bool:
-    entries = get_participant_fields(tab_type=tab_type)
+def validate_event_input(cls) -> bool:
+    event = cls._event_name_input.get()
+    if not event:
+        change_text_canvas(
+            canvas=cls._main_canvas, text="event name can't be empty"
+        )
+        return False
+    return True
+
+
+def validate_event_name_exist(cls) -> bool:
+    if not hasattr(cls, '_event_name'):
+        change_text_canvas(
+            canvas=cls._main_canvas, text="event name can't be empty"
+        )
+        return False
+    return True
+
+
+def validate_input(cls, category: str, tab_type: str) -> bool:
+    fields = get_participant_fields(tab_type=tab_type)
     max_length = 16 if cls._selected_grid_size.get() in (8, 16) else 21
-    for entry in entries:
-        if len(getattr(cls, f'_{entry}').get()) > max_length:
+    for field in fields:
+        if len(getattr(cls, f'_{category}_{field}_input').get()) > max_length:
             change_text_canvas(
-                canvas=cls._main_canvas, text=f'{entry} input is too long'
+                canvas=cls._main_canvas, text=f'{field} input is too long'
             )
             return False
 
     field = 'nick' if tab_type == 'single' else 'crew'
-    field_value = getattr(cls, f'_{field}').get()
-    for participant in cls._categories[current_tab]['participants']:
+    field_value = getattr(cls, f'_{category}_{field}_input').get()
+    for participant in cls._categories[category]['participants']:
         if participant[field] == field_value:
             change_text_canvas(
                 canvas=cls._main_canvas,
@@ -39,7 +64,6 @@ def validate_required_field(
     cls, tab_type: str, participant: Dict[str, str]
 ) -> bool:
     required_field = 'nick' if tab_type == 'single' else 'crew'
-    # if required_field in participant.keys():
     if not participant[required_field]:
         change_text_canvas(
             canvas=cls._main_canvas,
@@ -50,11 +74,11 @@ def validate_required_field(
 
 
 def validate_participant_exists(
-    cls, current_tab: str, field_to_remove: str, value: str
+    cls, category: str, field_to_remove: str, value: str
 ) -> bool:
     if not any([
             participant[field_to_remove]
-            for participant in cls._categories[current_tab]['participants']
+            for participant in cls._categories[category]['participants']
             if participant[field_to_remove] == value
     ]):
         change_text_canvas(

@@ -4,21 +4,23 @@ from tkinter import (
 )
 from tkinter.ttk import Style, Notebook, Separator
 
-from app.ui.widgets.buttons.tab_control_getters import get_register_button, \
-    get_unregister_button
-from app.ui.widgets.common import create_empty_strings, get_selected_tab_title
+from app.ui.handlers import clean_category_input
+from app.ui.widgets.buttons.tab_control_getters import (
+    get_register_button, get_unregister_button
+)
+from app.ui.widgets.common import create_empty_strings
 from app.ui.widgets.events import closer
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels import get_canvas
 from app.ui.widgets.radio import get_default_radio, create_sex_radio
 from settings.ui.const import (
-    WINDOW_TITLE, WINDOW_SIZE, TAB_CONTROL_WINDOW_SIZE, NICKNAME_CANVAS_KWARGS,
+    WINDOW_TITLE, WINDOW_SIZE, TAB_CONTROL_WINDOW_SIZE, NICK_CANVAS_KWARGS,
     CITY_CANVAS_KWARGS, CREW_CANVAS_KWARGS, NICK_INPUT_COORDS,
     CITY_INPUT_COORDS, CREW_INPUT_COORDS, DEFAULT_SEX
 )
 
 
-def get_category_people_list(cls, window: Frame) -> Text:
+def get_category_people_list(window: Frame) -> Text:
     separator = Separator(master=window, orient=VERTICAL)
     separator.grid(
         column=2, row=0, rowspan=100, sticky='ens', pady=(6, 6), padx=(0, 4)
@@ -42,10 +44,11 @@ def get_category_people_list(cls, window: Frame) -> Text:
 
 def create_new_tab(cls) -> None:
     category = cls._category_input.get()
+    print('category', category)
     selected_category_type = cls._selected_category_type.get()
     frame = Frame(master=cls._window)
 
-    participants = get_category_people_list(cls=cls, window=frame)
+    participants = get_category_people_list(window=frame)
     cls._categories[category] = {
         'grid_size': cls._selected_grid_size.get(),
         'type': selected_category_type,  # crew or single
@@ -55,22 +58,30 @@ def create_new_tab(cls) -> None:
 
     create_empty_strings(window=frame, rows=[4])
 
-    cls._city_canvas = get_canvas(window=frame, **CITY_CANVAS_KWARGS)
-    cls._crew_canvas = get_canvas(window=frame, **CREW_CANVAS_KWARGS)
-
     if selected_category_type == 'single':
-        cls._nick_canvas = get_canvas(window=frame, **NICKNAME_CANVAS_KWARGS)
-        cls._nick = get_input(window=frame, **NICK_INPUT_COORDS)
-        cls._selected_sex = get_default_radio(window=frame, value=DEFAULT_SEX)
-        create_sex_radio(main_window=frame, selected_sex=cls._selected_sex)
+        cls._nick_canvas = get_canvas(window=frame, **NICK_CANVAS_KWARGS)
 
-    cls._crew = get_input(window=frame, **CREW_INPUT_COORDS)
-    cls._city = get_input(window=frame, **CITY_INPUT_COORDS)
+        nick_input = get_input(window=frame, **NICK_INPUT_COORDS)
+        setattr(cls, f'_{category}_nick_input', nick_input)
+
+        selected_sex = get_default_radio(window=frame, value=DEFAULT_SEX)
+        setattr(cls, f'_{category}_selected_sex', selected_sex)
+        create_sex_radio(main_window=frame, selected_sex=selected_sex)
+
+    cls._crew_canvas = get_canvas(window=frame, **CREW_CANVAS_KWARGS)
+    cls._city_canvas = get_canvas(window=frame, **CITY_CANVAS_KWARGS)
+
+    crew_input = get_input(window=frame, **CREW_INPUT_COORDS)
+    setattr(cls, f'_{category}_crew_input', crew_input)
+
+    city_input = get_input(window=frame, **CITY_INPUT_COORDS)
+    setattr(cls, f'_{category}_city_input', city_input)
 
     cls._register_button = get_register_button(cls=cls, window=frame)
     cls._unregister_button = get_unregister_button(cls=cls, window=frame)
 
     cls._tab_control.add(frame, text=category)
+    clean_category_input(cls=cls)
 
 
 def get_tab_control(main_window: Tk) -> Notebook:

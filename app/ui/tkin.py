@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from app.ui.widgets.buttons.main_window_getters import (
-    get_add_tab_button, get_remove_tab_button, get_destination_button
+    get_add_tab_button, get_remove_tab_button, get_destination_button,
+    get_save_event_name_button, get_open_event_button
 )
 from app.ui.widgets.common import create_empty_strings
 from app.ui.widgets.inputs import get_input
@@ -11,11 +12,9 @@ from app.ui.widgets.radio import (
 )
 from app.ui.widgets.windows import get_window, get_tab_control
 from settings.ui.const import (
-    MAIN_CANVAS_KWARGS,
-    DEFAULT_DOWNLOAD_PATH,
-    GRID_SIZE_CANVAS_KWARGS,
-    NEW_CATEGORY_INPUT_COORDS, DEFAULT_GRID_SIZE, DEFAULT_CATEGORY_TYPE,
-    NEW_CATEGORY_CANVAS_KWARGS,
+    MAIN_CANVAS_KWARGS, DEFAULT_DOWNLOAD_PATH, GRID_SIZE_CANVAS_KWARGS,
+    DEFAULT_GRID_SIZE, NEW_CATEGORY_INPUT_COORDS, NEW_CATEGORY_CANVAS_KWARGS,
+    DEFAULT_CATEGORY_TYPE, EVENT_NAME_INPUT_COORDS, EVENT_NAME_CANVAS_KWARGS
 )
 
 
@@ -33,6 +32,19 @@ class BattleGridUI:
         self._destination_button = get_destination_button(
             main_window=self._window, destination_path=self._destination_path,
             current_path_label=self._curr_path_label
+        )
+
+        self._event_name_canvas = get_canvas(
+            window=self._window, **EVENT_NAME_CANVAS_KWARGS
+        )
+        self._event_name_input = get_input(
+            window=self._window, **EVENT_NAME_INPUT_COORDS
+        )
+        self._save_event_name_button = get_save_event_name_button(
+            cls=self, main_window=self._window
+        )
+        self._open_event_button = get_open_event_button(
+            cls=self, main_window=self._window
         )
 
         self._grid_size_canvas = get_canvas(
