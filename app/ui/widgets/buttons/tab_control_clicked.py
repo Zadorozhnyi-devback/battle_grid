@@ -1,4 +1,7 @@
+import os
 from tkinter import END, NORMAL, DISABLED
+from os import listdir
+from os.path import isfile, join
 
 from app.ui.handlers import (
     get_participant_fields, clean_participant_inputs,
@@ -52,6 +55,19 @@ def unregister_participant(cls) -> None:
         save_category_participants(cls=cls)
 
 
+def remove_old_saves_if_exist(event_name: str) -> None:
+    event_saves = [
+        obj for obj in listdir('events/')
+        if (
+            isfile(join('events/', obj))
+            and obj.startswith(event_name)
+            and obj.endswith('.json')
+        )
+    ]
+    for event_save in event_saves:
+        os.remove(f'events/{event_save}')
+
+
 def register_new_participant(cls) -> None:
     category = cls._tab_control.tab(cls._tab_control.select(), 'text')
     tab_type = cls._categories[category]['type']
@@ -72,7 +88,8 @@ def register_new_participant(cls) -> None:
                 for field, value in participant.items()
             }
             cls._categories[category]['participants'].append(participant)
-
+            print('participants', cls._categories[category]['participants'])
+            print('participant', participant)
             index = len(cls._categories[category]['participants'])
             participant_string = ', '.join(
                 [participant[field] for field in fields if participant[field]]
@@ -87,4 +104,5 @@ def register_new_participant(cls) -> None:
                 canvas=cls._main_canvas, text='added new participant'
             )
 
+            remove_old_saves_if_exist(event_name=cls._event_name)
             save_category_participants(cls=cls)

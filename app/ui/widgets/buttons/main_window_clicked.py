@@ -90,6 +90,7 @@ def clicked_save_event_name(cls) -> None:
 def create_loaded_categories(
     cls, json_data: Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]
 ) -> None:
+    print('json_data', json_data)
     print('create_loaded_categories')
     for category, data in json_data.items():
         cls._category_input.insert(BEGINNING, category)
@@ -97,6 +98,8 @@ def create_loaded_categories(
         cls._selected_grid_size.set(data['grid_size'])
 
         create_new_tab(cls=cls)
+
+        cls._categories[category]['participants'] = data['participants']
 
         participants = [i for i in data['text_widget'].split('\n') if i]
 
