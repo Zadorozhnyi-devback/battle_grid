@@ -2,7 +2,7 @@ import getpass
 import json
 from pathlib import Path
 from tkinter import (
-    messagebox, Tk, Label, filedialog, NORMAL, DISABLED, END
+    messagebox, Tk, Label, filedialog, NORMAL, DISABLED, END, TclError
 )
 from typing import Dict, Union, List
 
@@ -11,8 +11,8 @@ from app.ui.handlers import remove_old_categories, clean_category_input
 from app.ui.validators import (
     validate_category_existing, validate_event_name_exist, validate_event_input
 )
-from app.ui.widgets.buttons.after_click_getters import (
-    get_create_new_event_button
+from app.ui.widgets.buttons.after_click_creators import (
+    create_make_new_event_button, create_rename_event_button
 )
 from app.ui.widgets.common import get_selected_tab_title
 from app.ui.widgets.inputs import get_input
@@ -76,9 +76,8 @@ def clicked_save_event_name(cls) -> None:
         cls._event_name_input.destroy()
         cls._save_event_name_button.destroy()
 
-        cls._create_new_event_button = get_create_new_event_button(
-            main_window=cls._window, cls=cls
-        )
+        create_make_new_event_button(cls=cls, frame=cls._buttons_frame)
+        create_rename_event_button(cls=cls, frame=cls._buttons_frame)
 
         change_text_canvas(
             canvas=cls._main_canvas,
@@ -90,8 +89,6 @@ def clicked_save_event_name(cls) -> None:
 def create_loaded_categories(
     cls, json_data: Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]
 ) -> None:
-    print('json_data', json_data)
-    print('create_loaded_categories')
     for category, data in json_data.items():
         cls._category_input.insert(BEGINNING, category)
         cls._selected_category_type.set(data['type'])
@@ -122,7 +119,11 @@ def clicked_open_event(cls) -> None:
     if event_json:
         clean_category_input(cls=cls)
         if hasattr(cls, '_event_name_title'):
-            cls._event_name_title.destroy()
+            try:
+                cls._event_name_title.destroy()
+            except TclError:
+                pass
+            delattr(cls, '_event_name_title')
         cls._event_name_input.destroy()
         cls._event_name_input = get_input(
             window=cls._window, **EVENT_NAME_INPUT_COORDS

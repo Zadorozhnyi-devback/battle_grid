@@ -1,4 +1,4 @@
-from tkinter import Tk, Canvas, Label, Frame
+from tkinter import Tk, Canvas, Label, Frame, Toplevel
 from typing import Union
 
 from settings.ui.const import (
@@ -25,16 +25,17 @@ def change_text_canvas(canvas, text: str) -> None:
 
 
 def get_canvas(
-    window: Union[Frame, Tk], column: int, row: int, column_span: int,
-    padding_top: int, text: str, font_size: int, bonus_width: int = 0
+    window: Union[Frame, Tk, Toplevel], column: int, row: int, font_size: int,
+    column_span: int, padding_top: int, text: str, bonus_width: int = 0,
+    sticky: str = 'W'
 ) -> Canvas:
     canvas = Canvas(master=window)
-    canvas.grid(column=column, row=row, sticky='W', columnspan=column_span)
-    txt = canvas.create_text(
+    canvas.grid(column=column, row=row, sticky=sticky, columnspan=column_span)
+    text = canvas.create_text(
         5, padding_top, text=text,
         font=(MY_FONT, font_size), anchor='nw'
     )
-    bbox = canvas.bbox(txt)
+    bbox = canvas.bbox(text)
     # size without padding on y bottom and long width
     canvas.configure(height=bbox[3], width=bbox[2] + bonus_width)
     return canvas

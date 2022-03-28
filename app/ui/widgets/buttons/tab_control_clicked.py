@@ -1,16 +1,54 @@
-import os
-from tkinter import END, NORMAL, DISABLED
-from os import listdir
-from os.path import isfile, join
+from tkinter import END, NORMAL, DISABLED, Toplevel
 
 from app.ui.handlers import (
     get_participant_fields, clean_participant_inputs,
-    save_category_participants
+    save_category_participants, remove_old_saves_if_exist
 )
 from app.ui.validators import (
     validate_input, validate_participant_exists, validate_required_field
 )
+from app.ui.widgets.buttons.after_click_creators import (
+    create_save_new_category_grid_size_button
+)
+
+from app.ui.widgets.common import create_empty_strings
+from app.ui.widgets.events import bind_esc_for_close
 from app.ui.widgets.labels import change_text_canvas
+from app.ui.widgets.radio import create_grid_size_radio
+from settings.ui.const import CHANGE_GRID_SIZE_RADIO_FRAME_COORDS
+
+
+def open_change_category_grid_size_frame(cls, category: str) -> None:
+    setattr(
+        cls,
+        f'_{category}_change_grid_window',
+        Toplevel(master=cls._window)
+    )
+    change_grid_window = getattr(cls, f'_{category}_change_grid_window')
+    change_grid_window.title(string='change grid')
+    change_grid_window.focus_force()
+    change_grid_window.resizable(False, False)
+
+    bind_esc_for_close(
+        cls=cls, frame=change_grid_window,
+        window_title=f'_{category}_change_grid_window'
+    )
+
+    create_empty_strings(window=change_grid_window, rows=[1])
+
+    create_grid_size_radio(
+        window=change_grid_window,
+        selected_size=cls._selected_grid_size,
+        coords=CHANGE_GRID_SIZE_RADIO_FRAME_COORDS
+    )
+
+    create_save_new_category_grid_size_button(
+        cls=cls, frame=change_grid_window, category=category
+    )
+
+    change_grid_window.transient(master=cls._window)
+    change_grid_window.grab_set()
+    cls._window.wait_window(window=change_grid_window)
 
 
 def unregister_participant(cls) -> None:
@@ -53,19 +91,6 @@ def unregister_participant(cls) -> None:
             canvas=cls._main_canvas, text='removed participant'
         )
         save_category_participants(cls=cls)
-
-
-def remove_old_saves_if_exist(event_name: str) -> None:
-    event_saves = [
-        obj for obj in listdir('events/')
-        if (
-            isfile(join('events/', obj))
-            and obj.startswith(event_name)
-            and obj.endswith('.json')
-        )
-    ]
-    for event_save in event_saves:
-        os.remove(f'events/{event_save}')
 
 
 def register_new_participant(cls) -> None:

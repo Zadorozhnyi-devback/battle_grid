@@ -1,6 +1,9 @@
 import datetime
 import json
+import os
 from collections import defaultdict
+from os import listdir
+from os.path import isfile, join
 from tkinter import Text, END
 from typing import List, Dict, Union
 
@@ -31,6 +34,19 @@ def remove_old_categories(cls) -> None:
         cls._categories.pop(category)
 
 
+def remove_old_saves_if_exist(event_name: str) -> None:
+    event_saves = [
+        obj for obj in listdir('events/')
+        if (
+            isfile(join('events/', obj))
+            and obj.startswith(event_name)
+            and obj.endswith('.json')
+        )
+    ]
+    for event_save in event_saves:
+        os.remove(f'events/{event_save}')
+
+
 def get_serialized_categories(
     categories: Dict[str, Dict[str, Union[str, List[Dict[str, str]], Text]]]
 ) -> Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]:
@@ -44,7 +60,7 @@ def get_serialized_categories(
     return serialized_categories
 
 
-def save_category_participants(cls):
+def save_category_participants(cls) -> None:
     date_time = datetime.date.today().strftime('%d_%m_%y')
     path = f'events/{cls._event_name}_{date_time}.json'
     categories = get_serialized_categories(categories=cls._categories)
