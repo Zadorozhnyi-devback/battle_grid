@@ -99,7 +99,9 @@ def register_new_participant(cls) -> None:
     fields = get_participant_fields(tab_type=tab_type)
     if validate_input(cls=cls, category=category, tab_type=tab_type):
         participant = {
-            field: getattr(cls, f'_{category}_{field}_input').get()
+            field: getattr(
+                cls, f'_{category}_{field}_input'
+            ).get().capitalize()
             for field in fields
         }
         print('categories', cls._categories)

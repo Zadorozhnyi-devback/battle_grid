@@ -49,7 +49,9 @@ def validate_input(cls, category: str, tab_type: str) -> bool:
             return False
 
     field = 'nick' if tab_type == 'single' else 'crew'
-    field_value = getattr(cls, f'_{category}_{field}_input').get()
+    field_value = (
+        getattr(cls, f'_{category}_{field}_input').get().capitalize()
+    )
     for participant in cls._categories[category]['participants']:
         if participant[field] == field_value:
             change_text_canvas(

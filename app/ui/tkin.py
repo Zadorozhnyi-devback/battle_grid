@@ -2,9 +2,11 @@ from pathlib import Path
 from tkinter import Frame
 
 from app.ui.widgets.buttons.main_window_creators import (
-    create_add_tab_button, create_remove_tab_button, create_destination_button,
-    get_save_event_name_button, create_open_event_button
+    create_add_tab_button, create_remove_tab_button,
+    create_destination_button, create_open_event_button
 )
+from app.ui.widgets.buttons.main_window_getters import \
+    get_save_event_name_button
 from app.ui.widgets.common import create_empty_strings
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels import get_canvas, get_curr_path_label
