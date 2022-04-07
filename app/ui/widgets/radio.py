@@ -1,9 +1,9 @@
 from tkinter import StringVar, Tk, Radiobutton, Frame, Toplevel
-from typing import Union, Dict
+from typing import Union
 
 from settings.ui.const import (
-    GRID_SIZE_RADIO_FRAME_COORDS, SEX_RADIO_FRAME_COORDS,
-    CATEGORY_TYPE_RADIO_FRAME_COORDS
+    SEX_RADIO_FRAME_COORDS, CATEGORY_TYPE_RADIO_FRAME_COORDS,
+    GRID_SIZE_RADIO_FRAME_COORDS
 )
 
 
@@ -12,11 +12,10 @@ def get_default_radio(window: Union[Tk, Frame], value: str) -> StringVar:
 
 
 def create_grid_size_radio(
-    window: Union[Tk, Toplevel], selected_size: StringVar,
-    coords: Dict[str, Union[str, int]]
+    window: Union[Tk, Toplevel], selected_size: StringVar
 ) -> None:
     radio_frame = Frame(master=window)
-    radio_frame.grid(**coords)
+    radio_frame.grid(**GRID_SIZE_RADIO_FRAME_COORDS)
     radiobutton_8 = Radiobutton(
         master=radio_frame, text='8', value='8',
         variable=selected_size
@@ -44,10 +43,10 @@ def create_grid_size_radio(
     radiobutton_4_angles.grid(column=1, row=1)
 
 
-def create_sex_radio(
-    main_window: Union[Tk, Frame], selected_sex: StringVar
-) -> None:
-    radio_frame = Frame(master=main_window)
+def get_sex_radio(
+    frame: Union[Tk, Frame], selected_sex: StringVar
+) -> Frame:
+    radio_frame = Frame(master=frame)
     radio_frame.grid(**SEX_RADIO_FRAME_COORDS, sticky='W')
     radiobutton_male = Radiobutton(
         master=radio_frame, text='male', value='male',
@@ -60,10 +59,14 @@ def create_sex_radio(
     radiobutton_male.grid(column=0, row=0)
     radiobutton_female.grid(column=1, row=0)
 
+    return radio_frame
 
-def create_category_type_radio(window, selected_type: StringVar) -> None:
-    radio_frame = Frame(master=window)
-    radio_frame.grid(**CATEGORY_TYPE_RADIO_FRAME_COORDS, sticky='W')
+
+def create_category_type_radio(
+    frame: Toplevel, selected_type: StringVar
+) -> None:
+    radio_frame = Frame(master=frame)
+    radio_frame.grid(**CATEGORY_TYPE_RADIO_FRAME_COORDS)
     radiobutton_single = Radiobutton(
         master=radio_frame, text='single', value='single',
         variable=selected_type

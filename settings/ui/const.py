@@ -1,4 +1,4 @@
-# canvases, labels
+# canvases, labels, inputs
 from tkinter import VERTICAL
 
 CURRENT_PATH = 'load folder'
@@ -6,10 +6,11 @@ MAIN_CANVAS_TEXT = 'welcome to battle grid!'
 EVENT_NAME_CANVAS_TEXT = 'event name:'
 NICKNAME_CANVAS_TEXT = 'nick:'
 CITY_CANVAS_TEXT = 'city:'
-NEW_CATEGORY_CANVAS_TEXT = 'category:'
+CATEGORY_CANVAS_TEXT = 'category:'
 CREW_CANVAS_TEXT = 'crew:'
 GRID_SIZE_CANVAS_TEXT = 'grid:'
 EMPTY_EVENT_INPUT_CANVAS_TEXT = 'empty event name'
+SAME_EVENT_NAME_CANVAS_TEXT = 'same event title'
 
 
 # errors
@@ -21,8 +22,14 @@ DEFAULT_DOWNLOAD_PATH = 'output_grids'
 MAIN_WINDOW_TITLE = 'battle grid'
 MAIN_WINDOW_SIZE = '800x610'
 TAB_CONTROL_WINDOW_SIZE = {'width': 746, 'height': 300}
-MY_FONT = 'Arial Bold'
+
+# temporary
+TEMP_INPUT_COORDS = {'column': 0, 'row': 0, 'sticky': None}
+
+# fonts
 DEFAULT_FONT_SIZE = 14
+ARIAL_BOLD = 'Arial Bold'
+HELVETICA = 'Helvetica'
 
 # main window
 DEFAULT_GRID_SIZE = '8'
@@ -30,39 +37,35 @@ DEFAULT_CATEGORY_TYPE = 'single'
 
 MAIN_CANVAS_KWARGS = {
     'row': 1, 'column': 2, 'font_size': 24, 'padding_top': 8,
-    'text': MAIN_CANVAS_TEXT, 'column_span': 20, 'bonus_width': 200
+    'text': MAIN_CANVAS_TEXT, 'column_span': 20, 'bonus_width': 200,
+    'sticky': 'W'
 }
 
-CURR_PATH_LABEL_COORDS = {'row': 4, 'column': 0}
+CURR_PATH_LABEL_COORDS = {
+    'row': 4, 'column': 0, 'sticky': 'W', 'columnspan': 100
+}
 
 EVENT_NAME_CANVAS_KWARGS = {
     'row': 7, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'text': EVENT_NAME_CANVAS_TEXT, 'column_span': None
+    'text': EVENT_NAME_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 EVENT_NAME_TITLE_CANVAS_KWARGS = {
     'row': 7, 'column': 1, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'column_span': None
+    'column_span': None, 'sticky': 'W'
 }
-EVENT_NAME_INPUT_COORDS = {'row': 7, 'column': 1}
-
-GRID_SIZE_RADIO_FRAME_COORDS = {'row': 8, 'column': 1, 'sticky': 'W'}
-GRID_SIZE_CANVAS_KWARGS = {
-    'row': 8, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'text': GRID_SIZE_CANVAS_TEXT, 'column_span': None
-}
-
-NEW_CATEGORY_INPUT_COORDS = {'row': 9, 'column': 1}
-NEW_CATEGORY_CANVAS_KWARGS = {
-    'row': 9, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'text': NEW_CATEGORY_CANVAS_TEXT, 'column_span': None
-}
-CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 10, 'column': 1}
-
-TAB_CONTROL_WINDOW_COORDS = {
-    'column': 0, 'row': 14, 'columnspan': 40, 'sticky': 'W'
-}
+EVENT_NAME_INPUT_COORDS = {'row': 7, 'column': 1, 'sticky': 'W'}
 
 # tab control
+TAB_CONTROL_WINDOW_COORDS = {
+    'column': 0, 'row': 11, 'columnspan': 40, 'sticky': 'W'
+}
+
+SCROLLBAR_KWARGS = {
+    'column': 6, 'row': 0, 'rowspan': 100, 'pady': (4, 4), 'sticky': 'ens'
+}
+TEXT_WINDOW_KWARGS = {
+    'column': 5, 'row': 0, 'rowspan': 100, 'sticky': 'E', 'pady': (4, 4)
+}
 
 TAB_LEFT_SEPARATOR_KWARGS = {
     'orient': VERTICAL, 'column': 1, 'row': 0, 'row_span': 100,
@@ -74,7 +77,7 @@ TAB_RIGHT_SEPARATOR_KWARGS = {
 }
 
 # registration frame
-CREATE_REGISTRATION_FRAME_COORDS = {
+REGISTRATION_FRAME_COORDS = {
     'row': 0, 'column': 0, 'sticky': 'wn', 'pady': 5
 }
 
@@ -82,41 +85,63 @@ DEFAULT_SEX = 'male'
 
 SEX_RADIO_FRAME_COORDS = {'row': 1, 'column': 1}
 
-NICK_INPUT_COORDS = {'row': 0, 'column': 1}
+NICK_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
 NICK_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'text': NICKNAME_CANVAS_TEXT, 'column_span': None
+    'text': NICKNAME_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 
-CREW_INPUT_COORDS = {'row': 2, 'column': 1}
+CREW_INPUT_COORDS = {'row': 2, 'column': 1, 'sticky': 'W'}
 CREW_CANVAS_KWARGS = {
     'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'text': CREW_CANVAS_TEXT, 'column_span': None
+    'text': CREW_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 
-CITY_INPUT_COORDS = {'row': 3, 'column': 1}
+CITY_INPUT_COORDS = {'row': 3, 'column': 1, 'sticky': 'W'}
 CITY_CANVAS_KWARGS = {
     'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
-    'text': CITY_CANVAS_TEXT, 'column_span': None
+    'text': CITY_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 
-# info frame
-CATEGORY_INFO_FRAME_COORDS = {'row': 0, 'column': 2, 'sticky': 'wn', 'pady': 5}
+# category info frame
+CATEGORY_INFO_FRAME_COORDS = {
+    'row': 0, 'column': 2, 'sticky': 'wn', 'pady': 5, 'columnspan': 20
+}
 
 SELECTED_GRID_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None
+    'padding_top': 5, 'column_span': None, 'sticky': 'W'
+}
+
+SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
+    'row': 1, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
+    'padding_top': 5, 'column_span': None, 'sticky': 'W'
 }
 
 # additional windows
 # change event name
-NEW_EVENT_TITLE_INPUT_COORDS = {'row': 0, 'column': 0}
+NEW_EVENT_TITLE_INPUT_COORDS = {'row': 0, 'column': 0, 'sticky': 'W'}
 
 EMPTY_EVENT_INPUT_CANVAS_KWARGS = {
     'row': 1, 'column': 0, 'font_size': 13, 'padding_top': 1,
     'text': EMPTY_EVENT_INPUT_CANVAS_TEXT, 'column_span': None, 'sticky': None
 }
+SAME_EVENT_NAME_CANVAS_KWARGS = {
+    'row': 1, 'column': 0, 'font_size': 13, 'padding_top': 1,
+    'text': SAME_EVENT_NAME_CANVAS_TEXT, 'column_span': None, 'sticky': None
+}
 
 
-# change grid size
-CHANGE_GRID_SIZE_RADIO_FRAME_COORDS = {'row': 0, 'column': 0, 'sticky': 'W'}
+# category toplevels frame
+CATEGORY_TITLE_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
+CATEGORY_CANVAS_KWARGS = {
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'text': CATEGORY_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
+}
+CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 1, 'column': 1}
+
+GRID_SIZE_RADIO_FRAME_COORDS = {'row': 3, 'column': 1, 'sticky': 'W'}
+GRID_SIZE_CANVAS_KWARGS = {
+    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'text': GRID_SIZE_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
+}

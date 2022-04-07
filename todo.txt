@@ -20,6 +20,12 @@ must have:
     1 таб - одна сетка/один файл по названию категории и сегодняшней дате +
     Added button to rename event. +
     Should open frame with input and button to accept new event name +
+    все инпуты capitalize сделать +
+    в after_click_creators/update_category_data менять название таба в tab_control +
+    validate remove tab button for tab existing +
+    validate same event name in rename input +
+    create_new_tab use in main window only. when category edition - we edit, not create!
+    BUT when edit category title - then all frames/widgets have to be renamed! +
 
 
     randomizer
@@ -31,19 +37,16 @@ must have:
 
     Tab Info block:
         Вывод общего количества участников в категории (male/female)
-        Grid change button
-        Open window to rename category
+        edit category (grid size, title, type) +
+            если уже есть участники - то нельзя поменять тип категории +
 
-
-    валидация на кол-во частников категории в зависимости от сетки
+    валидация на кол-во участников категории в зависимости от сетки
 
     много табов вылазят за пределы экрана если их много
 
     редактировать инфо участника
 
-    все инпуты capitalize сделать
-
     валидация на длину названия ивента
 
-    сделать окно для создания/редактирования категории
-        если уже есть участники - то нельзя поменять тип категории
+    ! set self._tab_frame; set self._registration_frame;
+    if change category type - remove old reg_frame and create new !

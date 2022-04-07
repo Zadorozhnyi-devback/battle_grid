@@ -1,49 +1,59 @@
 import getpass
 import json
 from pathlib import Path
-from tkinter import (
-    messagebox, Tk, Label, filedialog, NORMAL, DISABLED, END, TclError
-)
-from typing import Dict, Union, List
+from tkinter import messagebox, Tk, Label, filedialog, TclError, Toplevel
 
 from app.ui.const import BEGINNING
-from app.ui.handlers import remove_old_categories, clean_category_input
-from app.ui.validators import (
-    validate_category_existing, validate_event_name_exist, validate_event_input
-)
+from app.ui.handlers.cleaners import remove_old_categories
+from app.ui.validators import (validate_event_name_input,
+                               validate_event_name_exists)
 from app.ui.widgets.buttons.after_click_creators import (
-    create_make_new_event_button, create_rename_event_button
+    create_make_new_event_button,
+    create_rename_event_button
 )
-from app.ui.widgets.common import get_selected_tab_title
+from app.ui.widgets.buttons.toplevels.for_main_window.creators import (
+    create_add_category_button
+)
+from app.ui.widgets.common import get_selected_tab_title, create_empty_strings
+from app.ui.widgets.events import (bind_esc_for_close,
+                                   top_level_frame_closer,
+                                   press_exit_cross_signal)
 from app.ui.widgets.inputs import get_input
-from app.ui.widgets.labels import change_text_canvas, get_canvas
-from app.ui.widgets.windows import create_new_tab
-from settings.ui.const import (
-    DEFAULT_DOWNLOAD_PATH, CURRENT_PATH, EVENT_NAME_TITLE_CANVAS_KWARGS,
-    EVENT_NAME_INPUT_COORDS
-)
+from app.ui.widgets.labels.creators import create_canvas
+from app.ui.widgets.labels.getters import get_canvas
+from app.ui.widgets.labels.handlers import change_text_canvas
+from app.ui.widgets.radio import (create_category_type_radio,
+                                  create_grid_size_radio)
+from app.ui.widgets.windows.creators import create_loaded_categories
+from settings.ui.const import (DEFAULT_DOWNLOAD_PATH,
+                               CURRENT_PATH,
+                               EVENT_NAME_TITLE_CANVAS_KWARGS,
+                               EVENT_NAME_INPUT_COORDS,
+                               CATEGORY_TITLE_INPUT_COORDS,
+                               CATEGORY_CANVAS_KWARGS,
+                               GRID_SIZE_CANVAS_KWARGS)
 
 
-def clicked_add_tab(cls):
-    if validate_event_name_exist(cls=cls):
-        if validate_category_existing(cls=cls):
-            create_new_tab(cls=cls)
+def clicked_remove_category(self) -> None:
+    selected_tab = self._tab_control.select()
+    category = get_selected_tab_title(self=self)
+    if category:
+        print('category', category)
+        answer = messagebox.askyesno(
+            message=f"delete category {category!r}?"
+        )
+        if answer is True:
+            self._tab_control.forget(selected_tab)
+            self._categories.pop(category)
+    else:
+        change_text_canvas(
+            canvas=self._main_canvas, text='no categories to remove'
+        )
 
 
-def clicked_remove_tab(cls) -> None:
-    selected_tab = cls._tab_control.select()
-    category = get_selected_tab_title(cls=cls)
-    answer = messagebox.askyesno(
-        message=f"delete category '{category}'?"
-    )
-    if answer:
-        cls._tab_control.forget(selected_tab)
-        cls._categories.pop(category)
-
-
-def clicked_generate_grid(cls) -> None:
+def clicked_generate_grid(self) -> None:
     # TODO: here gonna init BattleGrid class instance
-    tab_control = cls._tab_control
+    tab_control = self._tab_control
     current_tab = tab_control.tab(tab_control.select(), 'text')
 
 
@@ -54,92 +64,106 @@ def clicked_choose_dir(
     directory = filedialog.askdirectory(
         # gonna work on mac, have to check for windows and linux
         # initialdir=os.path.normpath("C://") try on Windows
-        parent=main_window,  # костыль для возврата фокуса в инпут после
-        initialdir=f'/Users/{getpass.getuser()}/'
+        parent=main_window, initialdir=f'/Users/{getpass.getuser()}/'
     )
-    if directory:
+    if directory is not None:
         destination_path = str(Path(directory).resolve())
-    curr_path_label.configure(
-        text=f'{CURRENT_PATH}: {destination_path}'
-    )
+    curr_path_label.configure(text=f'{CURRENT_PATH}: {destination_path}')
 
 
-def clicked_save_event_name(cls) -> None:
-    if validate_event_input(cls=cls):
+def clicked_save_event_name(self) -> None:
+    if validate_event_name_input(self=self) is True:
         print('alright')
-        cls._event_name = cls._event_name_input.get()
+        self._event_name = self._event_name_input.get()
 
-        cls._event_name_title = get_canvas(
-            window=cls._window, **EVENT_NAME_TITLE_CANVAS_KWARGS,
-            text=cls._event_name
+        self._event_name_title = get_canvas(
+            frame=self._window, **EVENT_NAME_TITLE_CANVAS_KWARGS,
+            text=self._event_name
         )
-        cls._event_name_input.destroy()
-        cls._save_event_name_button.destroy()
+        self._event_name_input.destroy()
+        self._save_event_name_button.destroy()
 
-        create_make_new_event_button(cls=cls, frame=cls._buttons_frame)
-        create_rename_event_button(cls=cls, frame=cls._buttons_frame)
+        create_make_new_event_button(self=self, frame=self._buttons_frame)
+        create_rename_event_button(self=self, frame=self._buttons_frame)
 
         change_text_canvas(
-            canvas=cls._main_canvas,
-            text=f"event '{cls._event_name}' was created"
+            canvas=self._main_canvas,
+            text=f"event {self._event_name!r} was created"
         )
         print('finish save event name')
 
 
-def create_loaded_categories(
-    cls, json_data: Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]
-) -> None:
-    for category, data in json_data.items():
-        cls._category_input.insert(BEGINNING, category)
-        cls._selected_category_type.set(data['type'])
-        cls._selected_grid_size.set(data['grid_size'])
-
-        create_new_tab(cls=cls)
-
-        cls._categories[category]['participants'] = data['participants']
-
-        participants = [i for i in data['text_widget'].split('\n') if i]
-
-        text_widget = cls._categories[category]['text_widget']
-        text_widget.configure(state=NORMAL)
-        [text_widget.insert(END, f'{string}\n') for string in participants]
-        text_widget.configure(state=DISABLED)
-
-        clean_category_input(cls=cls)
-    print('created')
-
-
-def clicked_open_event(cls) -> None:
+def clicked_open_event(self) -> None:
     event_json = filedialog.askopenfilename(
-        parent=cls._window,  # для возврата фокуса в инпут после
+        parent=self._window,
         initialdir=(
             f'/Users/{getpass.getuser()}/PycharmProjects/battle_grid/events/'
         )
     )
     if event_json:
-        clean_category_input(cls=cls)
-        if hasattr(cls, '_event_name_title'):
+        if hasattr(self, '_event_name_title'):
             try:
-                cls._event_name_title.destroy()
+                self._event_name_title.destroy()
             except TclError:
                 pass
-            delattr(cls, '_event_name_title')
-        cls._event_name_input.destroy()
-        cls._event_name_input = get_input(
-            window=cls._window, **EVENT_NAME_INPUT_COORDS
+            delattr(self, '_event_name_title')
+        self._event_name_input.destroy()
+        self._event_name_input = get_input(
+            frame=self._window, **EVENT_NAME_INPUT_COORDS
         )
-        cls._event_name_input.insert(
+        self._event_name_input.insert(
             BEGINNING, event_json.split('/')[-1].split('_')[0]
         )
 
-        clicked_save_event_name(cls=cls)
+        clicked_save_event_name(self=self)
         change_text_canvas(
-            canvas=cls._main_canvas,
-            text=f"event '{cls._event_name}' was loaded"
+            canvas=self._main_canvas,
+            text=f"event {self._event_name!r} was loaded"
         )
 
         with open(file=event_json, encoding='utf-8') as event_file:
             file_data = json.load(event_file)
 
-        remove_old_categories(cls=cls)
-        create_loaded_categories(cls=cls, json_data=file_data)
+        remove_old_categories(self=self)
+        create_loaded_categories(self=self, json_data=file_data)
+
+
+def clicked_open_add_category_toplevel(self) -> None:
+    if validate_event_name_exists(self=self) is True:
+        add_category_toplevel = Toplevel(master=self._window)
+        add_category_toplevel.focus_force()
+        add_category_toplevel.resizable(False, False)
+
+        self._category_input = get_input(
+            frame=add_category_toplevel, **CATEGORY_TITLE_INPUT_COORDS
+        )
+
+        create_canvas(frame=add_category_toplevel, **CATEGORY_CANVAS_KWARGS)
+
+        create_category_type_radio(
+            frame=add_category_toplevel,
+            selected_type=self._selected_category_type
+        )
+        create_add_category_button(self=self, frame=add_category_toplevel)
+
+        add_category_toplevel.title(string='add category')
+        setattr(self, '_add_category_toplevel', add_category_toplevel)
+
+        bind_esc_for_close(self=self, frame_title='_add_category_toplevel')
+        kwargs = {
+            'self': self, 'func': top_level_frame_closer,
+            'frame_title': '_add_category_toplevel'
+        }
+        press_exit_cross_signal(**kwargs)
+
+        create_empty_strings(frame=add_category_toplevel, rows=[2, 4])
+
+        create_grid_size_radio(
+            window=add_category_toplevel,
+            selected_size=self._selected_grid_size
+        )
+        create_canvas(frame=add_category_toplevel, **GRID_SIZE_CANVAS_KWARGS)
+
+        add_category_toplevel.transient(master=self._window)
+        add_category_toplevel.grab_set()
+        self._window.wait_window(window=add_category_toplevel)

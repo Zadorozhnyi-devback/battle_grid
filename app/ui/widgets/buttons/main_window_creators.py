@@ -1,35 +1,46 @@
 from tkinter import Button, Tk, Label, Frame
 
 from app.ui.widgets.buttons.main_window_clicked import (
-    clicked_remove_tab, clicked_add_tab,
-    clicked_choose_dir, clicked_open_event
+    clicked_remove_category,
+    clicked_choose_dir,
+    clicked_open_event,
+    clicked_open_add_category_toplevel
 )
 from settings.ui.buttons import (
-    REMOVE_TAB_BUTTON_TEXT, BUTTON_TEXT_COLOR,
-    REMOVE_TAB_BUTTON_SIZE, REMOVE_TAB_BUTTON_COORDS, ADD_TAB_BUTTON_TEXT,
-    ADD_TAB_BUTTON_SIZE, ADD_TAB_BUTTON_COORDS, DESTINATION_BUTTON_TITLE,
-    DESTINATION_BUTTON_SIZE, DESTINATION_BUTTON_COORDS,
-    OPEN_EVENT_BUTTON_COORDS, OPEN_EVENT_BUTTON_SIZE,
-    OPEN_EVENT_BUTTON_TEXT
+    BUTTON_TEXT_COLOR,
+    REMOVE_CATEGORY_BUTTON_TEXT,
+    REMOVE_CATEGORY_BUTTON_SIZE,
+    REMOVE_CATEGORY_BUTTON_COORDS,
+    OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_TEXT,
+    OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_SIZE,
+    OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_COORDS,
+    DESTINATION_BUTTON_TITLE,
+    DESTINATION_BUTTON_SIZE,
+    DESTINATION_BUTTON_COORDS,
+    OPEN_EVENT_BUTTON_TEXT,
+    OPEN_EVENT_BUTTON_SIZE,
+    OPEN_EVENT_BUTTON_COORDS
 )
 
 
-def create_remove_tab_button(cls) -> None:
+def create_remove_category_button(self) -> None:
     button = Button(
-        master=cls._window, text=REMOVE_TAB_BUTTON_TEXT,
-        width=REMOVE_TAB_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_remove_tab(cls=cls)
+        master=self._window, text=REMOVE_CATEGORY_BUTTON_TEXT,
+        width=REMOVE_CATEGORY_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        command=lambda: clicked_remove_category(self=self)
     )
-    button.grid(**REMOVE_TAB_BUTTON_COORDS)
+    button.grid(**REMOVE_CATEGORY_BUTTON_COORDS)
 
 
-def create_add_tab_button(cls) -> None:
+def create_open_add_category_toplevel_button(self) -> None:
     button = Button(
-        master=cls._window, text=ADD_TAB_BUTTON_TEXT,
-        width=ADD_TAB_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_add_tab(cls=cls)
+        master=self._window,
+        text=OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_TEXT,
+        width=OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_SIZE,
+        fg=BUTTON_TEXT_COLOR,
+        command=lambda: clicked_open_add_category_toplevel(self=self)
     )
-    button.grid(**ADD_TAB_BUTTON_COORDS)
+    button.grid(**OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_COORDS)
 
 
 def create_destination_button(
@@ -49,10 +60,10 @@ def create_destination_button(
     button.grid(**DESTINATION_BUTTON_COORDS)
 
 
-def create_open_event_button(cls, frame: Frame) -> None:
+def create_open_event_button(self, frame: Frame) -> None:
     button = Button(
         master=frame, text=OPEN_EVENT_BUTTON_TEXT,
         width=OPEN_EVENT_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_open_event(cls=cls)
+        command=lambda: clicked_open_event(self=self)
     )
     button.grid(**OPEN_EVENT_BUTTON_COORDS)
