@@ -1,6 +1,8 @@
 from tkinter import Toplevel, Button
 
-from app.ui.widgets.buttons.toplevel_clicked import clicked_save_category
+from app.ui.widgets.buttons.toplevels.for_tab_control.clicked import (
+    clicked_save_category
+)
 from settings.ui.buttons import (
     SAVE_CATEGORY_BUTTON_COORDS, SAVE_CATEGORY_BUTTON_SIZE,
     SAVE_CATEGORY_BUTTON_TEXT, BUTTON_TEXT_COLOR

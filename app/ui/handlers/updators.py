@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from app.ui.handlers.getters import get_value_without_underscore
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.getters import get_canvas
@@ -26,13 +24,10 @@ def rename_class_attributes(self, new_title: str, old_title: str) -> None:
                                  '_sex_radio']
         attributes = [*attributes, *additional_attributes]
 
-    pprint(dir(self))
     for attr in attributes:
         widget = getattr(self, f'_{old_title}{attr}')
         delattr(self, f'_{old_title}{attr}')
         setattr(self, f'_{new_title}{attr}', widget)
-
-    self._categories.pop(old_title)
 
 
 def build_widgets_by_category_type(
@@ -63,14 +58,9 @@ def build_widgets_by_category_type(
 
 
 def update_category_data(self, category: str) -> None:
-    new_title = self._category_input.get()
-    if category != new_title:
-        self._categories[new_title] = self._categories[category]
-        self._tab_control.tab(self._tab_control.select(), text=new_title)
-
     category_type = self._selected_category_type.get()
-    if category_type != self._categories[new_title]['type']:
-        self._categories[new_title]['type'] = category_type
+    if category_type != self._categories[category]['type']:
+        self._categories[category]['type'] = category_type
         category_type_canvas = getattr(
             self, f'_{category}_selected_category_type_canvas'
         )
@@ -83,8 +73,8 @@ def update_category_data(self, category: str) -> None:
         )
 
     grid_size = self._selected_grid_size.get()
-    if self._categories[new_title]['grid_size'] != grid_size:
-        self._categories[new_title]['grid_size'] = grid_size
+    if self._categories[category]['grid_size'] != grid_size:
+        self._categories[category]['grid_size'] = grid_size
         grid_size_canvas = getattr(self, f'_{category}_selected_grid_canvas')
 
         clean_grid_size = get_value_without_underscore(value=grid_size)
@@ -92,7 +82,11 @@ def update_category_data(self, category: str) -> None:
             canvas=grid_size_canvas, text=f"grid: {clean_grid_size}"
         )
 
+    new_title = self._category_input.get()
     if category != new_title:
+        self._categories[new_title] = self._categories[category]
+        self._tab_control.tab(self._tab_control.select(), text=new_title)
         rename_class_attributes(
             self=self, new_title=new_title, old_title=category
         )
+        self._categories.pop(category)

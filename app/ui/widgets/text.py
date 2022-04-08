@@ -3,12 +3,12 @@ from tkinter import Scrollbar, Frame, Text, NONE, DISABLED
 from settings.ui.const import SCROLLBAR_KWARGS, TEXT_WINDOW_KWARGS, HELVETICA
 
 
-def get_category_people_list(window: Frame) -> Text:
-    scrollbar = Scrollbar(master=window)
+def get_category_people_list(tab_frame: Frame) -> Text:
+    scrollbar = Scrollbar(master=tab_frame)
     scrollbar.grid(**SCROLLBAR_KWARGS)
 
     text = Text(
-        master=window,
+        master=tab_frame,
         width=40, heigh=18.5,
         yscrollcommand=scrollbar.set, wrap=NONE,
         font=(HELVETICA, 13), state=DISABLED
@@ -16,5 +16,5 @@ def get_category_people_list(window: Frame) -> Text:
     text.grid(**TEXT_WINDOW_KWARGS)
 
     scrollbar.config(command=text.yview)
-    window.columnconfigure(2, weight=1)
+    tab_frame.columnconfigure(2, weight=1)
     return text

@@ -17,8 +17,14 @@ SAME_EVENT_NAME_CANVAS_TEXT = 'same event title'
 
 
 # settings
-# common
+
+# defaults
+DEFAULT_GRID_SIZE = '8'
+DEFAULT_CATEGORY_TYPE = 'single'
 DEFAULT_DOWNLOAD_PATH = 'output_grids'
+DEFAULT_FONT_SIZE = 14
+
+# common
 MAIN_WINDOW_TITLE = 'battle grid'
 MAIN_WINDOW_SIZE = '800x610'
 TAB_CONTROL_WINDOW_SIZE = {'width': 746, 'height': 300}
@@ -27,14 +33,10 @@ TAB_CONTROL_WINDOW_SIZE = {'width': 746, 'height': 300}
 TEMP_INPUT_COORDS = {'column': 0, 'row': 0, 'sticky': None}
 
 # fonts
-DEFAULT_FONT_SIZE = 14
 ARIAL_BOLD = 'Arial Bold'
 HELVETICA = 'Helvetica'
 
 # main window
-DEFAULT_GRID_SIZE = '8'
-DEFAULT_CATEGORY_TYPE = 'single'
-
 MAIN_CANVAS_KWARGS = {
     'row': 1, 'column': 2, 'font_size': 24, 'padding_top': 8,
     'text': MAIN_CANVAS_TEXT, 'column_span': 20, 'bonus_width': 200,
@@ -77,9 +79,7 @@ TAB_RIGHT_SEPARATOR_KWARGS = {
 }
 
 # registration frame
-REGISTRATION_FRAME_COORDS = {
-    'row': 0, 'column': 0, 'sticky': 'wn', 'pady': 5
-}
+REGISTRATION_FRAME_COORDS = {'row': 0, 'column': 0, 'sticky': 'wn', 'pady': 5}
 
 DEFAULT_SEX = 'male'
 
@@ -105,17 +105,17 @@ CITY_CANVAS_KWARGS = {
 
 # category info frame
 CATEGORY_INFO_FRAME_COORDS = {
-    'row': 0, 'column': 2, 'sticky': 'wn', 'pady': 5, 'columnspan': 20
+    'row': 0, 'column': 2, 'sticky': 'wn', 'pady': 5, 'columnspan': None
 }
 
 SELECTED_GRID_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None, 'sticky': 'W'
+    'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
 }
 
 SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
     'row': 1, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None, 'sticky': 'W'
+    'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
 }
 
 # additional windows

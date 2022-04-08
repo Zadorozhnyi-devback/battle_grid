@@ -66,7 +66,7 @@ def create_window(self, title: str, size: str, icon: str = None) -> None:
 
     self._window.title(string=title)
     self._window.geometry(newGeometry=size)
-    self._window.resizable(False, False)
+    self._window.resizable(width=False, height=False)
 
 
 def create_registration_frame(
@@ -170,7 +170,7 @@ def create_new_tab(self) -> None:
     create_separator(frame=tab_frame, **TAB_LEFT_SEPARATOR_KWARGS)
     create_separator(frame=tab_frame, **TAB_RIGHT_SEPARATOR_KWARGS)
 
-    participants = get_category_people_list(window=tab_frame)
+    participants = get_category_people_list(tab_frame=tab_frame)
 
     self._categories[category] = {
         'grid_size': self._selected_grid_size.get(),
