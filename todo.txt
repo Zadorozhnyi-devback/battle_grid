@@ -24,16 +24,12 @@ must have:
     в after_click_creators/update_category_data менять название таба в tab_control +
     validate remove tab button for tab existing +
     validate same event name in rename input +
-    create_new_tab use in main window only. when category edition - we edit, not create!
+    create_new_tab use in main window only. when category edition - we edit, not create! +
     BUT when edit category title - then all frames/widgets have to be renamed! +
 
 
     randomizer
     список на 4 угла
-
-    Настройки:
-     чекбокс открывать последний проект или всегда новый
-     кеш на последние открытые табы
 
     Tab Info block:
         Вывод общего количества участников в категории (male/female)
@@ -48,5 +44,25 @@ must have:
 
     валидация на длину названия ивента
 
-    ! set self._tab_frame; set self._registration_frame;
-    if change category type - remove old reg_frame and create new !
+    event name add bonus width cause of event_name cut after rename event
+
+    add bonus width for grid size in category info
+
+    unregister button with input of user number
+
+    dump json after category removing
+
+    save in file empty categories also
+
+    after clicked 'create file' frame with load folder and button to change it
+    after clicked 'create' - messagebox: "Open file folder?" -> Yes, No
+
+    button to add event logo
+
+    navigation panel:
+        file:
+            open; create new;
+        settings:
+            чекбокс открывать последний проект или всегда новый
+                (кеш на последние открытые табы)
+            choose folder move in settings

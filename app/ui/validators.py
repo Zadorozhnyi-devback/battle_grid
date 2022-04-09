@@ -11,16 +11,16 @@ from settings.ui.const import (
 
 def validate_empty_category_input(self, category: str) -> bool:
     if not category:
-        change_text_canvas(
-            canvas=self._main_canvas, text="category can't be empty"
-        )
+        change_text_canvas(canvas=self._main_canvas,
+                           text="category can't be empty")
         return False
     return True
 
 
 def validate_category_exists(self, category: str) -> bool:
-    if category in self._categories.keys():
-        change_text_canvas(canvas=self._main_canvas, text='category exist')
+    if self._categories.get(category, None):
+        change_text_canvas(canvas=self._main_canvas,
+                           text=f'category {category!r} already exist')
         return False
     return True
 
@@ -48,9 +48,8 @@ def validate_create_category(self) -> bool:
 def validate_event_name_input(self) -> bool:
     event = self._event_name_input.get()
     if not event:
-        change_text_canvas(
-            canvas=self._main_canvas, text="event name can't be empty"
-        )
+        change_text_canvas(canvas=self._main_canvas,
+                           text="event name can't be empty")
         return False
     return True
 
@@ -74,9 +73,8 @@ def validate_new_event_name(self, new_event_name: str) -> bool:
 
 def validate_event_name_exists(self) -> bool:
     if not hasattr(self, '_event_name'):
-        change_text_canvas(
-            canvas=self._main_canvas, text="event name can't be empty"
-        )
+        change_text_canvas(canvas=self._main_canvas,
+                           text="event name can't be empty")
         return False
     return True
 
@@ -86,9 +84,8 @@ def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
     max_length = 16 if self._selected_grid_size.get() in (8, 16) else 21
     for field in fields:
         if len(getattr(self, f'_{category}_{field}_input').get()) > max_length:
-            change_text_canvas(
-                canvas=self._main_canvas, text=f'{field} input is too long'
-            )
+            change_text_canvas(canvas=self._main_canvas,
+                               text=f'{field} input is too long')
             return False
 
     field = 'nick' if tab_type == 'single' else 'crew'
@@ -97,10 +94,8 @@ def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
     )
     for participant in self._categories[category]['participants']:
         if participant[field] == field_value:
-            change_text_canvas(
-                canvas=self._main_canvas,
-                text=f"{field} {field_value!r} already exist"
-            )
+            change_text_canvas(canvas=self._main_canvas,
+                               text=f"{field} {field_value!r} already exist")
             return False
     return True
 
@@ -110,10 +105,8 @@ def validate_participant_required_field(
 ) -> bool:
     required_field = 'nick' if tab_type == 'single' else 'crew'
     if not participant[required_field]:
-        change_text_canvas(
-            canvas=self._main_canvas,
-            text=f"{required_field!r} field can't be empty"
-        )
+        change_text_canvas(canvas=self._main_canvas,
+                           text=f"{required_field!r} field can't be empty")
         return False
     return True
 
@@ -126,9 +119,7 @@ def validate_participant_exists(
             for participant in self._categories[category]['participants']
             if participant[field_to_remove] == value
     ]):
-        change_text_canvas(
-            canvas=self._main_canvas,
-            text=f"{field_to_remove} {value!r} doesn't exist"
-        )
+        change_text_canvas(canvas=self._main_canvas,
+                           text=f"{field_to_remove} {value!r} doesn't exist")
         return False
     return True
