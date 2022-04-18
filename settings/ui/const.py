@@ -11,6 +11,7 @@ CREW_CANVAS_TEXT = 'crew:'
 GRID_SIZE_CANVAS_TEXT = 'grid:'
 EMPTY_EVENT_INPUT_CANVAS_TEXT = 'empty event name'
 SAME_EVENT_NAME_CANVAS_TEXT = 'same event title'
+EVENT_NAME_IS_TOO_LONG_TEXT = 'event name is too long'
 
 
 # errors
@@ -122,13 +123,9 @@ SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
 # change event name
 NEW_EVENT_TITLE_INPUT_COORDS = {'row': 0, 'column': 0, 'sticky': 'W'}
 
-EMPTY_EVENT_INPUT_CANVAS_KWARGS = {
+EVENT_INPUT_CANVAS_KWARGS = {
     'row': 1, 'column': 0, 'font_size': 13, 'padding_top': 1,
-    'text': EMPTY_EVENT_INPUT_CANVAS_TEXT, 'column_span': None, 'sticky': None
-}
-SAME_EVENT_NAME_CANVAS_KWARGS = {
-    'row': 1, 'column': 0, 'font_size': 13, 'padding_top': 1,
-    'text': SAME_EVENT_NAME_CANVAS_TEXT, 'column_span': None, 'sticky': None
+    'column_span': None, 'sticky': None
 }
 
 

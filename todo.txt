@@ -26,6 +26,7 @@ must have:
     validate same event name in rename input +
     create_new_tab use in main window only. when category edition - we edit, not create! +
     BUT when edit category title - then all frames/widgets have to be renamed! +
+    валидация на длину названия ивента +
 
 
     randomizer
@@ -41,8 +42,6 @@ must have:
     много табов вылазят за пределы экрана если их много
 
     редактировать инфо участника
-
-    валидация на длину названия ивента
 
     event name add bonus width cause of event_name cut after rename event
 

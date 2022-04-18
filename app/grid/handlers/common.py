@@ -142,6 +142,7 @@ def get_icons_sizes(grid_size: int) -> List[List[Tuple[int, int]]]:
 def get_icons(
     grid_size: int, sex: str, icon_paths: List[str] = ICONS_PATHS
 ) -> List['Image']:
+    # TODO: what for is check for length of icon_paths
     if len(icon_paths) < 3:
         person = 'boy' if sex == 'm' else 'girl'
         icon_paths.insert(IntAlias.FIRST, PERSON_ICON_PATHS[person])

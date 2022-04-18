@@ -22,8 +22,8 @@ def get_boys(grid_size: int) -> List[Dict[str, str]]:  # for test
         bboys.append(
             {
                 'name': f'Vladyslav Zadorozhnyi',
-                'city': 'Cicity',
-                'crew': 'Ruffneck Attack'
+                'city': 'Breakdiansk',
+                'crew': 'Hot Sand Ceww'
             }
         )
     return bboys

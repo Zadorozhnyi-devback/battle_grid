@@ -20,9 +20,9 @@ def clicked_save_new_event_title(self) -> None:
 
             self._event_name = new_event_name
 
-            change_text_canvas(
-                canvas=self._event_name_title, text=self._event_name
-            )
+            change_text_canvas(canvas=self._event_name_title,
+                               text=self._event_name)
+            self._event_name_title.config(width=120)
 
             save_category_participants(self=self)
         self._rename_window.destroy()

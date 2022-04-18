@@ -3,10 +3,10 @@ from typing import Dict
 from app.ui.handlers.getters import get_participant_fields
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
-from settings.ui.const import (
-    EMPTY_EVENT_INPUT_CANVAS_KWARGS,
-    SAME_EVENT_NAME_CANVAS_KWARGS
-)
+from settings.ui.const import (EVENT_INPUT_CANVAS_KWARGS,
+                               EMPTY_EVENT_INPUT_CANVAS_TEXT,
+                               SAME_EVENT_NAME_CANVAS_TEXT,
+                               EVENT_NAME_IS_TOO_LONG_TEXT)
 
 
 def validate_empty_category_input(self, category: str) -> bool:
@@ -46,10 +46,14 @@ def validate_create_category(self) -> bool:
 
 
 def validate_event_name_input(self) -> bool:
-    event = self._event_name_input.get()
-    if not event:
+    event_name = self._event_name_input.get()
+    if not event_name:
         change_text_canvas(canvas=self._main_canvas,
                            text="event name can't be empty")
+        return False
+    if len(event_name) > 16:
+        change_text_canvas(canvas=self._main_canvas,
+                           text='event name is too long')
         return False
     return True
 
@@ -60,12 +64,20 @@ def validate_new_event_name(self, new_event_name: str) -> bool:
         delattr(self, '_event_frame_canvas')
     if not new_event_name:
         self._event_frame_canvas = get_canvas(
-            frame=self._rename_window, **EMPTY_EVENT_INPUT_CANVAS_KWARGS
+            frame=self._rename_window, **EVENT_INPUT_CANVAS_KWARGS,
+            text=EMPTY_EVENT_INPUT_CANVAS_TEXT
         )
         return False
     if new_event_name == self._event_name:
         self._event_frame_canvas = get_canvas(
-            frame=self._rename_window, **SAME_EVENT_NAME_CANVAS_KWARGS
+            frame=self._rename_window, **EVENT_INPUT_CANVAS_KWARGS,
+            text=SAME_EVENT_NAME_CANVAS_TEXT
+        )
+        return False
+    if len(new_event_name) > 16:
+        self._event_frame_canvas = get_canvas(
+            frame=self._rename_window, **EVENT_INPUT_CANVAS_KWARGS,
+            text=EVENT_NAME_IS_TOO_LONG_TEXT
         )
         return False
     return True
