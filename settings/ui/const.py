@@ -111,7 +111,7 @@ CATEGORY_INFO_FRAME_COORDS = {
 
 SELECTED_GRID_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
+    'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 50
 }
 
 SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {

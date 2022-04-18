@@ -4,7 +4,7 @@ from app.ui.handlers.updators import update_category_data
 from app.ui.validators import validate_update_category
 
 
-def clicked_save_category(self, frame: Toplevel, category: str) -> None:
+def clicked_save_categories(self, frame: Toplevel, category: str) -> None:
     if validate_update_category(self=self) is True:
         update_category_data(self=self, category=category)
         delattr(self, f'_{category}_toplevel_frame')

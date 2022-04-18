@@ -27,6 +27,10 @@ must have:
     create_new_tab use in main window only. when category edition - we edit, not create! +
     BUT when edit category title - then all frames/widgets have to be renamed! +
     валидация на длину названия ивента +
+    event name add bonus width cause of event_name cut after rename event +
+    save in file empty categories also +
+    dump json after category removing +
+    add bonus width for grid size in category info +
 
 
     randomizer
@@ -43,15 +47,7 @@ must have:
 
     редактировать инфо участника
 
-    event name add bonus width cause of event_name cut after rename event
-
-    add bonus width for grid size in category info
-
     unregister button with input of user number
-
-    dump json after category removing
-
-    save in file empty categories also
 
     after clicked 'create file' frame with load folder and button to change it
     after clicked 'create' - messagebox: "Open file folder?" -> Yes, No
@@ -65,3 +61,5 @@ must have:
             чекбокс открывать последний проект или всегда новый
                 (кеш на последние открытые табы)
             choose folder move in settings
+
+    if selected type is crew - remove '4 angles' from grid size

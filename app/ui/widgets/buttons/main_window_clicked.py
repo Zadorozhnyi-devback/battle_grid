@@ -5,6 +5,7 @@ from tkinter import messagebox, Tk, Label, filedialog, TclError, Toplevel
 
 from app.ui.const import BEGINNING
 from app.ui.handlers.cleaners import remove_old_categories
+from app.ui.handlers.savers import save_categories
 from app.ui.validators import (validate_event_name_input,
                                validate_event_name_exists)
 from app.ui.widgets.buttons.after_click_creators import (
@@ -45,6 +46,8 @@ def clicked_remove_category(self) -> None:
         if answer is True:
             self._tab_control.forget(selected_tab)
             self._categories.pop(category)
+
+            save_categories(self=self)
     else:
         change_text_canvas(
             canvas=self._main_canvas, text='no categories to remove'

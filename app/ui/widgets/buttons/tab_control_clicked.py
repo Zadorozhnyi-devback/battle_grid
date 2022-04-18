@@ -5,13 +5,13 @@ from app.ui.handlers.cleaners import (
     clean_participant_inputs, remove_old_saves_if_exist
 )
 from app.ui.handlers.getters import get_participant_fields
-from app.ui.handlers.savers import save_category_participants
+from app.ui.handlers.savers import save_categories
 from app.ui.validators import (
     validate_participant_inputs, validate_participant_exists,
     validate_participant_required_field, validate_event_name_exists
 )
 from app.ui.widgets.buttons.toplevels.for_tab_control.creators import (
-    create_save_category_button
+    create_save_categories_button
 )
 from app.ui.widgets.common import create_empty_strings, get_selected_tab_title
 from app.ui.widgets.events import (
@@ -51,7 +51,7 @@ def clicked_open_edit_category_toplevel(self) -> None:
                 frame=category_frame_window,
                 selected_type=self._selected_category_type
             )
-        create_save_category_button(
+        create_save_categories_button(
             self=self, frame=category_frame_window, category=category
         )
 
@@ -117,7 +117,7 @@ def unregister_participant(self) -> None:
         change_text_canvas(
             canvas=self._main_canvas, text='removed participant'
         )
-        save_category_participants(self=self)
+        save_categories(self=self)
 
 
 def register_new_participant(self) -> None:
@@ -128,9 +128,10 @@ def register_new_participant(self) -> None:
         self=self, category=category, tab_type=tab_type
     ) is True:
         participant = {
-            field: getattr(
-                self, f'_{category}_{field}_input'
-            ).get().capitalize()
+            field: (
+                getattr(self, f'_{category}_{field}_input')
+                .get().capitalize()
+            )
             for field in fields
         }
         print('categories', self._categories)
@@ -163,4 +164,4 @@ def register_new_participant(self) -> None:
             )
 
             remove_old_saves_if_exist(event_name=self._event_name)
-            save_category_participants(self=self)
+            save_categories(self=self)
