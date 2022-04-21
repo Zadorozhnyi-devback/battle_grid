@@ -12,7 +12,8 @@ from typing import (Dict,
 
 from app.ui.const import BEGINNING
 from app.ui.handlers.cleaners import clean_category_input
-from app.ui.handlers.getters import get_value_without_underscore
+from app.ui.handlers.getters import (get_value_without_underscore,
+                                     get_male_and_female_stats_text)
 from app.ui.widgets.buttons.tab_control_creators import (
     create_open_edit_category_toplevel_button,
     create_unregister_participant_button,
@@ -43,7 +44,8 @@ from settings.ui.const import (SELECTED_CATEGORY_TYPE_CANVAS_KWARGS,
                                CREW_CANVAS_KWARGS,
                                CITY_CANVAS_KWARGS,
                                TAB_LEFT_SEPARATOR_KWARGS,
-                               TAB_RIGHT_SEPARATOR_KWARGS)
+                               TAB_RIGHT_SEPARATOR_KWARGS,
+                               MALE_AND_FEMALE_CANVAS_KWARGS)
 
 
 def create_window(self, title: str, size: str, icon: str = None) -> None:
@@ -115,23 +117,28 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
     setattr(
         self,
         f'_{category}_selected_grid_canvas',
-        get_canvas(
-            frame=info_frame, text=f'grid: {grid_size}',
-            **SELECTED_GRID_CANVAS_KWARGS
-        )
+        get_canvas(frame=info_frame,
+                   text=f'grid: {grid_size}',
+                   **SELECTED_GRID_CANVAS_KWARGS)
     )
 
     setattr(
         self,
         f'_{category}_selected_category_type_canvas',
-        get_canvas(
-            frame=info_frame,
-            text=f"type: {self._categories[category]['type']}",
-            **SELECTED_CATEGORY_TYPE_CANVAS_KWARGS
-        )
+        get_canvas(frame=info_frame,
+                   text=f"type: {self._categories[category]['type']}",
+                   **SELECTED_CATEGORY_TYPE_CANVAS_KWARGS)
     )
 
-    create_empty_strings(frame=info_frame, rows=[2])
+    setattr(
+        self,
+        f'_{category}_male_and_female_canvas',
+        get_canvas(frame=info_frame,
+                   text=get_male_and_female_stats_text(),
+                   **MALE_AND_FEMALE_CANVAS_KWARGS)
+    )
+
+    create_empty_strings(frame=info_frame, rows=[4])
 
     create_open_edit_category_toplevel_button(self=self, window=info_frame)
 
@@ -149,7 +156,7 @@ def create_loaded_categories(
 
         self._categories[category]['participants'] = data['participants']
 
-        participants = [i for i in data['text_widget'].split('\n') if i]
+        participants = [p for p in data['text_widget'].split('\n') if p]
 
         text_widget = self._categories[category]['text_widget']
         text_widget.configure(state=NORMAL)

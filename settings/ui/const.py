@@ -119,6 +119,12 @@ SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
     'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
 }
 
+MALE_AND_FEMALE_CANVAS_KWARGS = {
+    'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
+    'padding_top': 5, 'column_span': None, 'sticky': 'W',
+    # 'bonus_width': 40
+}
+
 # additional windows
 # change event name
 NEW_EVENT_TITLE_INPUT_COORDS = {'row': 0, 'column': 0, 'sticky': 'W'}

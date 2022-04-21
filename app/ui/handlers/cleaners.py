@@ -1,6 +1,7 @@
 import os
 from os import listdir
 from os.path import join, isfile
+from tkinter import NORMAL, END, DISABLED
 from typing import List
 
 from app.ui.const import BEGINNING
@@ -35,3 +36,9 @@ def remove_old_saves_if_exist(event_name: str) -> None:
     ]
     for event_save in event_saves:
         os.remove(f'events/{event_save}')
+
+
+def clean_text_widget(self, category: str) -> None:
+    self._categories[category]['text_widget'].configure(state=NORMAL)
+    self._categories[category]['text_widget'].delete('1.0', END)
+    self._categories[category]['text_widget'].configure(state=DISABLED)

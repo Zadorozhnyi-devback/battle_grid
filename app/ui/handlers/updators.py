@@ -1,3 +1,5 @@
+from tkinter import NORMAL, DISABLED, END
+
 from app.ui.handlers.getters import get_value_without_underscore
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.getters import get_canvas
@@ -90,3 +92,25 @@ def update_category_data(self, category: str) -> None:
             self=self, new_title=new_title, old_title=category
         )
         self._categories.pop(category)
+
+
+def update_category_sex_stats_canvas(self,
+                                     category_info_text: str,
+                                     category: str) -> None:
+    category_info_canvas = getattr(self,
+                                   f'_{category}_male_and_female_canvas')
+
+    change_text_canvas(canvas=category_info_canvas,
+                       text=category_info_text)
+
+
+def add_new_participant_in_text_widget(self,
+                                       participant_string: str,
+                                       category: str,
+                                       index: int) -> None:
+
+    self._categories[category]['text_widget'].configure(state=NORMAL)
+    self._categories[category]['text_widget'].insert(
+        END, f'{index}. {participant_string}\n'
+    )
+    self._categories[category]['text_widget'].configure(state=DISABLED)

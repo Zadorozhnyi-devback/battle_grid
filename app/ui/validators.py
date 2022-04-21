@@ -100,38 +100,34 @@ def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
                                text=f'{field} input is too long')
             return False
 
-    field = 'nick' if tab_type == 'single' else 'crew'
+    required_field = 'nick' if tab_type == 'single' else 'crew'
     field_value = (
-        getattr(self, f'_{category}_{field}_input').get().capitalize()
+        getattr(self, f'_{category}_{required_field}_input').get().capitalize()
     )
+
+    if not field_value:
+        change_text_canvas(canvas=self._main_canvas,
+                           text=f"{required_field!r} field can't be empty")
+        return False
+
     for participant in self._categories[category]['participants']:
-        if participant[field] == field_value:
-            change_text_canvas(canvas=self._main_canvas,
-                               text=f"{field} {field_value!r} already exist")
+        if participant[required_field] == field_value:
+            change_text_canvas(
+                canvas=self._main_canvas,
+                text=f"{required_field} {field_value!r} already exist")
             return False
     return True
 
 
-def validate_participant_required_field(
-    self, tab_type: str, participant: Dict[str, str]
-) -> bool:
-    required_field = 'nick' if tab_type == 'single' else 'crew'
-    if not participant[required_field]:
-        change_text_canvas(canvas=self._main_canvas,
-                           text=f"{required_field!r} field can't be empty")
-        return False
-    return True
-
-
 def validate_participant_exists(
-    self, category: str, field_to_remove: str, value: str
+    self, category: str, required_field: str, value: str
 ) -> bool:
     if not any([
-            participant[field_to_remove]
+            participant[required_field]
             for participant in self._categories[category]['participants']
-            if participant[field_to_remove] == value
+            if participant[required_field] == value
     ]):
         change_text_canvas(canvas=self._main_canvas,
-                           text=f"{field_to_remove} {value!r} doesn't exist")
+                           text=f"{required_field} {value!r} doesn't exist")
         return False
     return True
