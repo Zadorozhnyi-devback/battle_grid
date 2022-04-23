@@ -31,15 +31,14 @@ must have:
     save in file empty categories also +
     dump json after category removing +
     add bonus width for grid size in category info +
+    Tab Info block:
+        Вывод общего количества участников в категории (male/female) +
+        edit category (grid size, title, type) +
+            если уже есть участники - то нельзя поменять тип категории +
 
 
     randomizer
     список на 4 угла
-
-    Tab Info block:
-        Вывод общего количества участников в категории (male/female)
-        edit category (grid size, title, type) +
-            если уже есть участники - то нельзя поменять тип категории +
 
     валидация на кол-во участников категории в зависимости от сетки
 

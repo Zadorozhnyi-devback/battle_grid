@@ -1,51 +1,57 @@
 import os
 from tkinter.ttk import Style
-from tkinter import (Frame,
-                     PhotoImage,
-                     Tk,
-                     NORMAL,
-                     DISABLED,
-                     END)
-from typing import (Dict,
-                    Union,
-                    List)
+from tkinter import (
+    Frame, PhotoImage, Tk, NORMAL, DISABLED, END
+)
+from typing import (
+    Dict, Union, List
+)
 
 from app.ui.const import BEGINNING
 from app.ui.handlers.cleaners import clean_category_input
-from app.ui.handlers.getters import (get_value_without_underscore,
-                                     get_male_and_female_stats_text)
+from app.ui.handlers.getters import (
+    get_value_without_underscore,
+    get_male_and_female_stats_text,
+    get_category_info_text
+)
+from app.ui.handlers.updators import update_category_sex_stats_canvas
 from app.ui.widgets.buttons.tab_control_creators import (
     create_open_edit_category_toplevel_button,
     create_unregister_participant_button,
     create_register_participant_button
 )
-
 from app.ui.widgets.common import create_empty_strings
-from app.ui.widgets.events import (press_exit_cross_signal,
-                                   main_window_closer,
-                                   bind_esc_for_close)
+from app.ui.widgets.events import (
+    press_exit_cross_signal,
+    main_window_closer,
+    bind_esc_for_close
+)
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.creators import create_canvas
 from app.ui.widgets.labels.getters import get_canvas
-from app.ui.widgets.radio import (get_sex_radio,
-                                  get_default_radio)
+from app.ui.widgets.radio import (
+    get_sex_radio,
+    get_default_radio
+)
 from app.ui.widgets.separators import create_separator
 from app.ui.widgets.text import get_category_people_list
-from settings.ui.const import (SELECTED_CATEGORY_TYPE_CANVAS_KWARGS,
-                               SELECTED_GRID_CANVAS_KWARGS,
-                               CATEGORY_INFO_FRAME_COORDS,
-                               REGISTRATION_FRAME_COORDS,
-                               DEFAULT_SEX,
-                               TEMP_INPUT_COORDS,
-                               NICK_INPUT_COORDS,
-                               CREW_INPUT_COORDS,
-                               CITY_INPUT_COORDS,
-                               NICK_CANVAS_KWARGS,
-                               CREW_CANVAS_KWARGS,
-                               CITY_CANVAS_KWARGS,
-                               TAB_LEFT_SEPARATOR_KWARGS,
-                               TAB_RIGHT_SEPARATOR_KWARGS,
-                               MALE_AND_FEMALE_CANVAS_KWARGS)
+from settings.ui.const import (
+    SELECTED_CATEGORY_TYPE_CANVAS_KWARGS,
+    SELECTED_GRID_CANVAS_KWARGS,
+    CATEGORY_INFO_FRAME_COORDS,
+    REGISTRATION_FRAME_COORDS,
+    DEFAULT_SEX,
+    TEMP_INPUT_COORDS,
+    NICK_INPUT_COORDS,
+    CREW_INPUT_COORDS,
+    CITY_INPUT_COORDS,
+    NICK_CANVAS_KWARGS,
+    CREW_CANVAS_KWARGS,
+    CITY_CANVAS_KWARGS,
+    TAB_LEFT_SEPARATOR_KWARGS,
+    TAB_RIGHT_SEPARATOR_KWARGS,
+    MALE_AND_FEMALE_CANVAS_KWARGS
+)
 
 
 def create_window(self, title: str, size: str, icon: str = None) -> None:
@@ -54,7 +60,8 @@ def create_window(self, title: str, size: str, icon: str = None) -> None:
     # binds
     bind_esc_for_close(self=self, frame_title='_window')
     kwargs = {
-        'self': self, 'func': main_window_closer,
+        'self': self,
+        'func': main_window_closer,
         'frame_title': '_window'
     }
     press_exit_cross_signal(**kwargs)
@@ -117,25 +124,31 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
     setattr(
         self,
         f'_{category}_selected_grid_canvas',
-        get_canvas(frame=info_frame,
-                   text=f'grid: {grid_size}',
-                   **SELECTED_GRID_CANVAS_KWARGS)
+        get_canvas(
+            frame=info_frame,
+            text=f'grid: {grid_size}',
+            **SELECTED_GRID_CANVAS_KWARGS
+        )
     )
 
     setattr(
         self,
         f'_{category}_selected_category_type_canvas',
-        get_canvas(frame=info_frame,
-                   text=f"type: {self._categories[category]['type']}",
-                   **SELECTED_CATEGORY_TYPE_CANVAS_KWARGS)
+        get_canvas(
+            frame=info_frame,
+            text=f"type: {self._categories[category]['type']}",
+            **SELECTED_CATEGORY_TYPE_CANVAS_KWARGS
+        )
     )
 
     setattr(
         self,
         f'_{category}_male_and_female_canvas',
-        get_canvas(frame=info_frame,
-                   text=get_male_and_female_stats_text(),
-                   **MALE_AND_FEMALE_CANVAS_KWARGS)
+        get_canvas(
+            frame=info_frame,
+            text=get_male_and_female_stats_text(),
+            **MALE_AND_FEMALE_CANVAS_KWARGS
+        )
     )
 
     create_empty_strings(frame=info_frame, rows=[4])
@@ -158,12 +171,21 @@ def create_loaded_categories(
 
         participants = [p for p in data['text_widget'].split('\n') if p]
 
+        category_info_text = get_category_info_text(
+            self=self, category=category
+        )
+        update_category_sex_stats_canvas(
+            self=self, category=category,
+            category_info_text=category_info_text
+        )
+
         text_widget = self._categories[category]['text_widget']
         text_widget.configure(state=NORMAL)
         [text_widget.insert(END, f'{string}\n') for string in participants]
         text_widget.configure(state=DISABLED)
 
         clean_category_input(self=self)
+
     self._category_input.destroy()
     delattr(self, '_category_input')
 
@@ -181,7 +203,7 @@ def create_new_tab(self) -> None:
 
     self._categories[category] = {
         'grid_size': self._selected_grid_size.get(),
-        'type': selected_category_type,  # crew or single
+        'type': selected_category_type,
         'participants': list(),
         'text_widget': participants
     }
