@@ -71,7 +71,7 @@ def update_category_data(self, category: str) -> None:
         )
 
         build_widgets_by_category_type(
-            self=self, category_type=category_type, category=category
+            self, category_type=category_type, category=category
         )
 
     grid_size = self._selected_grid_size.get()
@@ -89,26 +89,27 @@ def update_category_data(self, category: str) -> None:
         self._categories[new_title] = self._categories[category]
         self._tab_control.tab(self._tab_control.select(), text=new_title)
         rename_class_attributes(
-            self=self, new_title=new_title, old_title=category
+            self, new_title=new_title, old_title=category
         )
         self._categories.pop(category)
 
 
-def update_category_sex_stats_canvas(self,
-                                     category_info_text: str,
-                                     category: str) -> None:
-    category_info_canvas = getattr(self,
-                                   f'_{category}_male_and_female_canvas')
+def update_category_sex_stats_canvas(
+    self,
+    category_info_text: str,
+    category: str
+) -> None:
+    category_info_canvas = getattr(self, f'_{category}_male_and_female_canvas')
 
-    change_text_canvas(canvas=category_info_canvas,
-                       text=category_info_text)
+    change_text_canvas(canvas=category_info_canvas, text=category_info_text)
 
 
-def add_new_participant_in_text_widget(self,
-                                       participant_string: str,
-                                       category: str,
-                                       index: int) -> None:
-
+def add_new_participant_in_text_widget(
+    self,
+    participant_string: str,
+    category: str,
+    index: int
+) -> None:
     self._categories[category]['text_widget'].configure(state=NORMAL)
     self._categories[category]['text_widget'].insert(
         END, f'{index}. {participant_string}\n'

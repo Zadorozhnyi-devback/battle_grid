@@ -19,7 +19,7 @@ def create_make_new_event_button(self, frame: Frame) -> None:
     button = Button(
         master=frame, text=CREATE_NEW_EVENT_BUTTON_TITLE,
         width=CREATE_NEW_EVENT_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_create_new_event(self=self)
+        command=lambda: clicked_create_new_event(self)
     )
     button.grid(**CREATE_NEW_EVENT_NAME_BUTTON_COORDS)
 
@@ -28,6 +28,6 @@ def create_rename_event_button(self, frame: Frame) -> None:
     button = Button(
         master=frame, text=RENAME_EVENT_BUTTON_TEXT,
         width=RENAME_EVENT_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_open_rename_event_frame(self=self)
+        command=lambda: clicked_open_rename_event_frame(self)
     )
     button.grid(**RENAME_EVENT_BUTTON_COORDS)

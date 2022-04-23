@@ -36,11 +36,11 @@ def get_value_with_underscore(value: str) -> str:
 
 def get_male_and_female_stats(self, category: str) -> Dict[str, int]:
     total = len(self._categories[category]['participants'])
-    print('check', self._categories[category]['participants'])
+    print('category', category)
+    print('pidari', self._categories[category]['participants'])
     male = sum(
-        1 for participant
+        participant['sex'] == 'male' for participant
         in self._categories[category]['participants']
-        if participant['sex'] == 'male'
     )
     female = sum(
         participant['sex'] == 'female' for participant
@@ -52,27 +52,30 @@ def get_male_and_female_stats(self, category: str) -> Dict[str, int]:
 def get_male_and_female_stats_text(
     total: int = 0, male: int = 0, female: int = 0
 ) -> str:
-    _text = ("participants:\n"
-             "{:4}total: {}\n"
-             "{:4}male: {}\n"
-             "{:4}female: {}\n".format('', total, '', male, '', female))
-    return _text
+    return (
+        "participants:\n"
+        "{:4}total: {}\n"
+        "{:4}male: {}\n"
+        "{:4}female: {}\n"
+        .format('', total, '', male, '', female)
+    )
 
 
-def get_participant_info(self,
-                         category: str,
-                         fields: List[str]) -> Dict[str, str]:
+def get_participant_info(
+    self,
+    category: str,
+    fields: List[str]
+) -> Dict[str, str]:
     participant = {
         field: (
             getattr(self, f'_{category}_{field}_input')
-            .get().capitalize()
+            .get()
+            .capitalize()
         )
         for field in fields
     }
-    participant['sex'] = (
-        getattr(self, f'_{category}_selected_sex').get()
-        if 'nick' in fields else ...
-    )
+    if self._categories[category]['type'] == 'single':
+        participant['sex'] = getattr(self, f'_{category}_selected_sex').get()
     return participant
 
 
@@ -84,7 +87,11 @@ def get_participant_string(participant: Dict[str, str]) -> str:
     )
 
 
-def get_category_info_text(self, category:str) -> str:
-    stats = get_male_and_female_stats(self=self, category=category)
+def get_category_info_text(self, category: str) -> str:
+    stats = get_male_and_female_stats(self, category=category)
     category_info_text = get_male_and_female_stats_text(**stats)
     return category_info_text
+
+
+def get_required_field(self, category: str) -> str:
+    return 'nick' if self._categories[category]['type'] == 'single' else 'crew'

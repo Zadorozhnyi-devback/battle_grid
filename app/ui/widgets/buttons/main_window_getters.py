@@ -13,7 +13,7 @@ def get_save_event_name_button(self, frame: Frame) -> Button:
     button = Button(
         master=frame, text=SAVE_EVENT_NAME_BUTTON_TITLE,
         width=SAVE_EVENT_NAME_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_save_event_name(self=self)
+        command=lambda: clicked_save_event_name(self)
     )
     button.grid(**SAVE_EVENT_NAME_BUTTON_COORDS)
     return button

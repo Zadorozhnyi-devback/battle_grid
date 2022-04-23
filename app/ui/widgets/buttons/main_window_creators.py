@@ -27,7 +27,7 @@ def create_remove_category_button(self) -> None:
     button = Button(
         master=self._window, text=REMOVE_CATEGORY_BUTTON_TEXT,
         width=REMOVE_CATEGORY_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_remove_category(self=self)
+        command=lambda: clicked_remove_category(self)
     )
     button.grid(**REMOVE_CATEGORY_BUTTON_COORDS)
 
@@ -38,7 +38,7 @@ def create_open_add_category_toplevel_button(self) -> None:
         text=OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_TEXT,
         width=OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_SIZE,
         fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_open_add_category_toplevel(self=self)
+        command=lambda: clicked_open_add_category_toplevel(self)
     )
     button.grid(**OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_COORDS)
 
@@ -64,6 +64,6 @@ def create_open_event_button(self, frame: Frame) -> None:
     button = Button(
         master=frame, text=OPEN_EVENT_BUTTON_TEXT,
         width=OPEN_EVENT_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_open_event(self=self)
+        command=lambda: clicked_open_event(self)
     )
     button.grid(**OPEN_EVENT_BUTTON_COORDS)

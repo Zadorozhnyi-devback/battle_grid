@@ -9,7 +9,7 @@ def get_category_people_list(tab_frame: Frame) -> Text:
 
     text = Text(
         master=tab_frame,
-        width=40, heigh=18.5,
+        width=48, heigh=18.5,
         yscrollcommand=scrollbar.set, wrap=NONE,
         font=(HELVETICA, 13), state=DISABLED
     )

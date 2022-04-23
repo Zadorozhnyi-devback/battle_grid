@@ -28,7 +28,7 @@ from settings.ui.const import (
 class BattleGridUI:
     def __init__(self) -> None:
         create_window(
-            self=self, title=MAIN_WINDOW_TITLE,
+            self, title=MAIN_WINDOW_TITLE,
             size=MAIN_WINDOW_SIZE, icon='jordan.png'
         )
         self._main_canvas = get_canvas(
@@ -55,11 +55,9 @@ class BattleGridUI:
         self._buttons_frame.grid(**EVENT_FRAME_BUTTONS_COORDS)
 
         self._save_event_name_button = get_save_event_name_button(
-            self=self, frame=self._buttons_frame
+            self, frame=self._buttons_frame
         )
-        create_open_event_button(
-            self=self, frame=self._buttons_frame
-        )
+        create_open_event_button(self, frame=self._buttons_frame)
 
         self._selected_grid_size = get_default_radio(
             window=self._window, value=DEFAULT_GRID_SIZE  # noqa
@@ -72,8 +70,8 @@ class BattleGridUI:
 
         create_empty_strings(frame=self._window, rows=[3, 6, 8, 10])  # noqa
 
-        create_open_add_category_toplevel_button(self=self)
-        create_remove_category_button(self=self)
+        create_open_add_category_toplevel_button(self)
+        create_remove_category_button(self)
 
         self._tab_control = get_tab_control(main_window=self._window)  # noqa
 

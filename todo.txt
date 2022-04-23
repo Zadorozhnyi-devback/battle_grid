@@ -32,9 +32,11 @@ must have:
     dump json after category removing +
     add bonus width for grid size in category info +
     Tab Info block:
+        Сделать все рабочим и для type == group +
         Вывод общего количества участников в категории (male/female) +
         edit category (grid size, title, type) +
             если уже есть участники - то нельзя поменять тип категории +
+    move right separator to the right +
 
 
     randomizer

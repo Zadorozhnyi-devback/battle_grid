@@ -58,7 +58,7 @@ def create_window(self, title: str, size: str, icon: str = None) -> None:
     self._window = Tk()
 
     # binds
-    bind_esc_for_close(self=self, frame_title='_window')
+    bind_esc_for_close(self, frame_title='_window')
     kwargs = {
         'self': self,
         'func': main_window_closer,
@@ -109,8 +109,8 @@ def create_registration_frame(
     city_input = get_input(frame=reg_frame, **CITY_INPUT_COORDS)
     setattr(self, f'_{category}_city_input', city_input)
 
-    create_register_participant_button(self=self, window=reg_frame)
-    create_unregister_participant_button(self=self, window=reg_frame)
+    create_register_participant_button(self, window=reg_frame)
+    create_unregister_participant_button(self, window=reg_frame)
 
 
 def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
@@ -141,23 +141,25 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
         )
     )
 
-    setattr(
-        self,
-        f'_{category}_male_and_female_canvas',
-        get_canvas(
-            frame=info_frame,
-            text=get_male_and_female_stats_text(),
-            **MALE_AND_FEMALE_CANVAS_KWARGS
+    if self._categories[category]['type'] == 'single':
+        setattr(
+            self,
+            f'_{category}_male_and_female_canvas',
+            get_canvas(
+                frame=info_frame,
+                text=get_male_and_female_stats_text(),
+                **MALE_AND_FEMALE_CANVAS_KWARGS
+            )
         )
-    )
+    else:
+        create_empty_strings(frame=info_frame, rows=[2])
 
-    create_empty_strings(frame=info_frame, rows=[4])
-
-    create_open_edit_category_toplevel_button(self=self, window=info_frame)
+    create_open_edit_category_toplevel_button(self, window=info_frame)
 
 
 def create_loaded_categories(
-    self, json_data: Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]
+    self,
+    json_data: Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]
 ) -> None:
     self._category_input = get_input(frame=self._window, **TEMP_INPUT_COORDS)
     for category, data in json_data.items():
@@ -165,26 +167,27 @@ def create_loaded_categories(
         self._selected_category_type.set(data['type'])
         self._selected_grid_size.set(data['grid_size'])
 
-        create_new_tab(self=self)
+        create_new_tab(self)
 
         self._categories[category]['participants'] = data['participants']
 
         participants = [p for p in data['text_widget'].split('\n') if p]
 
-        category_info_text = get_category_info_text(
-            self=self, category=category
-        )
-        update_category_sex_stats_canvas(
-            self=self, category=category,
-            category_info_text=category_info_text
-        )
+        if self._categories[category]['type'] == 'single':
+            category_info_text = get_category_info_text(
+                self, category=category
+            )
+            update_category_sex_stats_canvas(
+                self, category=category,
+                category_info_text=category_info_text
+            )
 
         text_widget = self._categories[category]['text_widget']
         text_widget.configure(state=NORMAL)
         [text_widget.insert(END, f'{string}\n') for string in participants]
         text_widget.configure(state=DISABLED)
 
-        clean_category_input(self=self)
+        clean_category_input(self)
 
     self._category_input.destroy()
     delattr(self, '_category_input')
@@ -209,14 +212,14 @@ def create_new_tab(self) -> None:
     }
 
     create_registration_frame(
-        self=self, tab_frame=tab_frame, category=category,
+        self, tab_frame=tab_frame, category=category,
         selected_category_type=selected_category_type
     )
     create_category_info_frame(
-        self=self, tab_frame=tab_frame, category=category
+        self, tab_frame=tab_frame, category=category
     )
 
     self._tab_control.add(child=tab_frame, text=category)
     self._tab_control.select(tab_frame)
 
-    clean_category_input(self=self)
+    clean_category_input(self)

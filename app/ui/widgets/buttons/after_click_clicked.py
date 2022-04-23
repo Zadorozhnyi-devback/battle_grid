@@ -28,7 +28,7 @@ def clicked_open_rename_event_frame(self) -> None:
     self._rename_window.title(string='rename event')
     self._rename_window.resizable(False, False)
 
-    bind_esc_for_close(self=self, frame_title='_rename_window')
+    bind_esc_for_close(self, frame_title='_rename_window')
     kwargs = {
         'self': self, 'func': top_level_frame_closer,
         'frame_title': '_rename_window'
@@ -40,9 +40,7 @@ def clicked_open_rename_event_frame(self) -> None:
     self._new_event_title_input = get_input(
         frame=self._rename_window, **NEW_EVENT_TITLE_INPUT_COORDS
     )
-    create_save_new_event_title_button(
-        self=self, frame=self._rename_window
-    )
+    create_save_new_event_title_button(self, frame=self._rename_window)
 
     self._rename_window.transient(master=self._window)
     self._rename_window.grab_set()

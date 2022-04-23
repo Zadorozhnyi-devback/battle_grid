@@ -1,6 +1,6 @@
 from typing import Dict
 
-from app.ui.handlers.getters import get_participant_fields
+from app.ui.handlers.getters import get_participant_fields, get_required_field
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
 from settings.ui.const import (EVENT_INPUT_CANVAS_KWARGS,
@@ -27,7 +27,7 @@ def validate_category_exists(self, category: str) -> bool:
 
 def validate_update_category(self) -> bool:
     category = self._category_input.get()
-    if validate_empty_category_input(self=self, category=category) is False:
+    if validate_empty_category_input(self, category=category) is False:
         return False
     return True
 
@@ -35,10 +35,10 @@ def validate_update_category(self) -> bool:
 def validate_create_category(self) -> bool:
     category = self._category_input.get().lower()
 
-    if validate_empty_category_input(self=self, category=category) is False:
+    if validate_empty_category_input(self, category=category) is False:
         return False
 
-    if validate_category_exists(self=self, category=category) is False:
+    if validate_category_exists(self, category=category) is False:
         return False
 
     change_text_canvas(canvas=self._main_canvas, text='added new tab')
@@ -100,7 +100,7 @@ def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
                                text=f'{field} input is too long')
             return False
 
-    required_field = 'nick' if tab_type == 'single' else 'crew'
+    required_field = get_required_field(self, category=category)
     field_value = (
         getattr(self, f'_{category}_{required_field}_input').get().capitalize()
     )

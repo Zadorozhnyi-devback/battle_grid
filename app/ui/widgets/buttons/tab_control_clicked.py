@@ -7,7 +7,8 @@ from app.ui.handlers.cleaners import (clean_participant_inputs,
 from app.ui.handlers.getters import (get_participant_fields,
                                      get_participant_info,
                                      get_participant_string,
-                                     get_category_info_text)
+                                     get_category_info_text,
+                                     get_required_field)
 from app.ui.handlers.savers import save_categories
 from app.ui.handlers.updators import (add_new_participant_in_text_widget,
                                       update_category_sex_stats_canvas)
@@ -33,17 +34,18 @@ from settings.ui.const import (CATEGORY_TITLE_INPUT_COORDS,
 
 
 def clicked_open_edit_category_toplevel(self) -> None:
-    if validate_event_name_exists(self=self) is True:
+    if validate_event_name_exists(self) is True:
         category_frame_window = Toplevel(master=self._window)
         category_frame_window.focus_force()
         category_frame_window.resizable(False, False)
 
-        self._category_input = get_input(frame=category_frame_window,
-                                         **CATEGORY_TITLE_INPUT_COORDS)
+        self._category_input = get_input(
+            frame=category_frame_window, **CATEGORY_TITLE_INPUT_COORDS
+        )
 
         create_canvas(frame=category_frame_window, **CATEGORY_CANVAS_KWARGS)
 
-        category = get_selected_tab_title(self=self)
+        category = get_selected_tab_title(self)
         category_frame = f'_{category}_toplevel_frame'
 
         self._category_input.insert(BEGINNING, category)
@@ -55,14 +57,16 @@ def clicked_open_edit_category_toplevel(self) -> None:
                 frame=category_frame_window,
                 selected_type=self._selected_category_type)
 
-        create_save_categories_button(self=self,
-                                      frame=category_frame_window,
-                                      category=category)
+        create_save_categories_button(
+            self,
+            frame=category_frame_window,
+            category=category
+        )
 
         category_frame_window.title(string='edit category')
         setattr(self, category_frame, category_frame_window)
 
-        bind_esc_for_close(self=self, frame_title=category_frame)
+        bind_esc_for_close(self, frame_title=category_frame)
         kwargs = {'self': self,
                   'func': top_level_frame_closer,
                   'frame_title': category_frame}
@@ -80,15 +84,16 @@ def clicked_open_edit_category_toplevel(self) -> None:
 
 
 def unregister_participant(self) -> None:
-    category = get_selected_tab_title(self=self)
+    category = get_selected_tab_title(self)
     tab_type = self._categories[category]['type']
     fields = get_participant_fields(tab_type=tab_type)
-    required_field = 'nick' if tab_type == 'single' else 'crew'
+    required_field = get_required_field(self, category=category)
     value = getattr(
-        self, f'_{category}_{required_field}_input').get().capitalize()
+        self, f'_{category}_{required_field}_input'
+    ).get().capitalize()
 
     if validate_participant_exists(
-        self=self, category=category,
+        self, category=category,
         required_field=required_field, value=value
     ):
         for participant in self._categories[category]['participants']:
@@ -96,7 +101,7 @@ def unregister_participant(self) -> None:
                 self._categories[category]['participants'].remove(participant)
                 break
 
-        clean_text_widget(self=self, category=category)
+        clean_text_widget(self, category=category)
 
         for index, participant in enumerate(
             self._categories[category]['participants'],
@@ -106,57 +111,69 @@ def unregister_participant(self) -> None:
                 participant=participant)
 
             add_new_participant_in_text_widget(
-                self=self,
+                self,
                 participant_string=participant_string,
                 category=category,
                 index=index)
 
-        category_info_text = get_category_info_text(self=self,
-                                                    category=category)
-        update_category_sex_stats_canvas(self=self,
-                                         category=category,
-                                         category_info_text=category_info_text)
+        if self._categories[category]['type'] == 'single':
+            category_info_text = get_category_info_text(
+                self, category=category
+            )
+            update_category_sex_stats_canvas(
+                self,
+                category=category,
+                category_info_text=category_info_text
+            )
 
-        change_text_canvas(canvas=self._main_canvas,
-                           text=f'removed participant {value!r}')
+        change_text_canvas(
+            canvas=self._main_canvas,
+            text=f'removed participant {value!r}'
+        )
 
-        clean_participant_inputs(self=self, category=category, inputs=fields)
+        clean_participant_inputs(self, category=category, inputs=fields)
         remove_old_saves_if_exist(event_name=self._event_name)
-        save_categories(self=self)
+        save_categories(self)
 
 
 def register_new_participant(self) -> None:
-    category = get_selected_tab_title(self=self)
+    category = get_selected_tab_title(self)
     tab_type = self._categories[category]['type']
     fields = get_participant_fields(tab_type=tab_type)
 
-    if validate_participant_inputs(self=self,
-                                   category=category,
-                                   tab_type=tab_type
-                                   ) is True:
-        participant = get_participant_info(self=self,
-                                           category=category,
-                                           fields=fields)
+    if validate_participant_inputs(
+        self, category=category, tab_type=tab_type
+    ) is True:
+        participant = get_participant_info(
+            self, category=category, fields=fields
+        )
 
         self._categories[category]['participants'].append(participant)
 
         participant_string = get_participant_string(participant=participant)
         index = len(self._categories[category]['participants'])
         add_new_participant_in_text_widget(
-            self=self,
+            self,
             participant_string=participant_string,
             category=category,
             index=index)
 
-        category_info_text = get_category_info_text(self=self,
-                                                    category=category)
-        update_category_sex_stats_canvas(self=self,
-                                         category=category,
-                                         category_info_text=category_info_text)
+        if self._categories[category]['type'] == 'single':
+            category_info_text = get_category_info_text(
+                self, category=category
+            )
+            update_category_sex_stats_canvas(
+                self,
+                category=category,
+                category_info_text=category_info_text
+            )
 
-        change_text_canvas(canvas=self._main_canvas,
-                           text=f'added new participant')
+        required_field = get_required_field(self, category=category)
+        change_text_canvas(
+            canvas=self._main_canvas,
+            text=f'added new participant {participant[required_field]!r}'
+        )
 
-        clean_participant_inputs(self=self, category=category, inputs=fields)
+        clean_participant_inputs(self, category=category, inputs=fields)
         remove_old_saves_if_exist(event_name=self._event_name)
-        save_categories(self=self)
+        save_categories(self)

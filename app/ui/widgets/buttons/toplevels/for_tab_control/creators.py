@@ -14,7 +14,7 @@ def create_save_categories_button(self, frame: Toplevel, category: str) -> None:
         master=frame, text=SAVE_CATEGORIES_BUTTON_TEXT,
         width=SAVE_CATEGORIES_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
         command=lambda: clicked_save_categories(
-            self=self, frame=frame, category=category
+            self, frame=frame, category=category
         )
     )
     button.grid(**SAVE_CATEGORIES_BUTTON_COORDS)

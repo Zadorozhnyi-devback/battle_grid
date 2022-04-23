@@ -16,7 +16,7 @@ def create_add_category_button(self, frame: Toplevel) -> None:
     button = Button(
         master=frame, text=ADD_CATEGORY_BUTTON_TEXT,
         width=ADD_CATEGORY_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_add_new_category(self=self)
+        command=lambda: clicked_add_new_category(self)
     )
     button.grid(**ADD_CATEGORY_BUTTON_COORDS)
 
@@ -25,6 +25,6 @@ def create_save_new_event_title_button(self, frame: Toplevel) -> None:
     button = Button(
         master=frame, text=SAVE_NEW_EVENT_TITLE_BUTTON_TITLE,
         width=SAVE_NEW_EVENT_TITLE_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
-        command=lambda: clicked_save_new_event_title(self=self)
+        command=lambda: clicked_save_new_event_title(self)
     )
     button.grid(**SAVE_NEW_EVENT_TITLE_BUTTON_COORDS)

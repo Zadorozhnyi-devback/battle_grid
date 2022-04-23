@@ -20,7 +20,7 @@ def clean_participant_inputs(self, category: str, inputs: List[str]) -> None:
 def remove_old_categories(self) -> None:
     while self._categories:
         selected_tab = self._tab_control.select()
-        category = get_selected_tab_title(self=self)
+        category = get_selected_tab_title(self)
         self._tab_control.forget(selected_tab)
         self._categories.pop(category)
 

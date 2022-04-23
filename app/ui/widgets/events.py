@@ -19,16 +19,15 @@ def top_level_frame_closer(self, frame_title: str) -> None:
 
 def closer(_: Event, self, window_title: str) -> None:
     if window_title == '_window':  # main frame
-        if main_window_closer(self=self, frame_title=window_title) is True:
+        if main_window_closer(self, frame_title=window_title) is True:
             return
     else:
         if hasattr(self, window_title):
-            top_level_frame_closer(self=self, frame_title=window_title)
-    bind_esc_for_close(self=self, frame_title='_window')
+            top_level_frame_closer(self, frame_title=window_title)
+    bind_esc_for_close(self, frame_title='_window')
 
 
 def press_exit_cross_signal(**kwargs) -> None:
-    # print('kwargs', kwargs)
     frame = getattr(kwargs['self'], kwargs['frame_title'])
     func = kwargs.pop('func')
     frame.protocol('WM_DELETE_WINDOW', lambda: func(**kwargs))

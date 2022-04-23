@@ -37,7 +37,7 @@ from settings.ui.const import (DEFAULT_DOWNLOAD_PATH,
 
 def clicked_remove_category(self) -> None:
     selected_tab = self._tab_control.select()
-    category = get_selected_tab_title(self=self)
+    category = get_selected_tab_title(self)
     if category:
         print('category', category)
         answer = messagebox.askyesno(
@@ -47,7 +47,7 @@ def clicked_remove_category(self) -> None:
             self._tab_control.forget(selected_tab)
             self._categories.pop(category)
 
-            save_categories(self=self)
+            save_categories(self)
     else:
         change_text_canvas(
             canvas=self._main_canvas, text='no categories to remove'
@@ -75,7 +75,7 @@ def clicked_choose_dir(
 
 
 def clicked_save_event_name(self) -> None:
-    if validate_event_name_input(self=self) is True:
+    if validate_event_name_input(self) is True:
         print('alright')
         self._event_name = self._event_name_input.get()
 
@@ -86,8 +86,8 @@ def clicked_save_event_name(self) -> None:
         self._event_name_input.destroy()
         self._save_event_name_button.destroy()
 
-        create_make_new_event_button(self=self, frame=self._buttons_frame)
-        create_rename_event_button(self=self, frame=self._buttons_frame)
+        create_make_new_event_button(self, frame=self._buttons_frame)
+        create_rename_event_button(self, frame=self._buttons_frame)
 
         change_text_canvas(
             canvas=self._main_canvas,
@@ -118,7 +118,7 @@ def clicked_open_event(self) -> None:
             BEGINNING, event_json.split('/')[-1].split('_')[0]
         )
 
-        clicked_save_event_name(self=self)
+        clicked_save_event_name(self)
         change_text_canvas(
             canvas=self._main_canvas,
             text=f"event {self._event_name!r} was loaded"
@@ -127,12 +127,12 @@ def clicked_open_event(self) -> None:
         with open(file=event_json, encoding='utf-8') as event_file:
             file_data = json.load(event_file)
 
-        remove_old_categories(self=self)
-        create_loaded_categories(self=self, json_data=file_data)
+        remove_old_categories(self)
+        create_loaded_categories(self, json_data=file_data)
 
 
 def clicked_open_add_category_toplevel(self) -> None:
-    if validate_event_name_exists(self=self) is True:
+    if validate_event_name_exists(self) is True:
         add_category_toplevel = Toplevel(master=self._window)
         add_category_toplevel.focus_force()
         add_category_toplevel.resizable(False, False)
@@ -147,12 +147,12 @@ def clicked_open_add_category_toplevel(self) -> None:
             frame=add_category_toplevel,
             selected_type=self._selected_category_type
         )
-        create_add_category_button(self=self, frame=add_category_toplevel)
+        create_add_category_button(self, frame=add_category_toplevel)
 
         add_category_toplevel.title(string='add category')
         setattr(self, '_add_category_toplevel', add_category_toplevel)
 
-        bind_esc_for_close(self=self, frame_title='_add_category_toplevel')
+        bind_esc_for_close(self, frame_title='_add_category_toplevel')
         kwargs = {
             'self': self, 'func': top_level_frame_closer,
             'frame_title': '_add_category_toplevel'
