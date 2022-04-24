@@ -2,8 +2,10 @@ from tkinter import messagebox
 
 from app.ui.handlers.cleaners import remove_old_saves_if_exist
 from app.ui.handlers.savers import save_categories
-from app.ui.validators import (validate_new_event_name,
-                               validate_create_category)
+from app.ui.validators import (
+    validate_new_event_name,
+    validate_create_category
+)
 from app.ui.widgets.labels.handlers import change_text_canvas
 from app.ui.widgets.windows.creators import create_new_tab
 
@@ -19,7 +21,8 @@ def clicked_save_new_event_title(self) -> None:
             self._event_name = new_event_name
 
             change_text_canvas(
-                canvas=self._event_name_title, text=self._event_name
+                canvas=self._event_name_title,
+                text=self._event_name
             )
             self._event_name_title.config(width=120)
 

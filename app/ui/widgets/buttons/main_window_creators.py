@@ -25,8 +25,10 @@ from settings.ui.buttons import (
 
 def create_remove_category_button(self) -> None:
     button = Button(
-        master=self._window, text=REMOVE_CATEGORY_BUTTON_TEXT,
-        width=REMOVE_CATEGORY_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        master=self._window,
+        width=REMOVE_CATEGORY_BUTTON_SIZE,
+        fg=BUTTON_TEXT_COLOR,
+        text=REMOVE_CATEGORY_BUTTON_TEXT,
         command=lambda: clicked_remove_category(self)
     )
     button.grid(**REMOVE_CATEGORY_BUTTON_COORDS)
@@ -44,11 +46,15 @@ def create_open_add_category_toplevel_button(self) -> None:
 
 
 def create_destination_button(
-    main_window: Tk, current_path_label: Label, destination_path: str
+    main_window: Tk,
+    current_path_label: Label,
+    destination_path: str
 ) -> None:
     button = Button(
-        master=main_window, text=DESTINATION_BUTTON_TITLE,
-        width=DESTINATION_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        master=main_window,
+        width=DESTINATION_BUTTON_SIZE,
+        fg=BUTTON_TEXT_COLOR,
+        text=DESTINATION_BUTTON_TITLE,
         command=(
             lambda: clicked_choose_dir(
                 main_window=main_window,
@@ -62,8 +68,10 @@ def create_destination_button(
 
 def create_open_event_button(self, frame: Frame) -> None:
     button = Button(
-        master=frame, text=OPEN_EVENT_BUTTON_TEXT,
-        width=OPEN_EVENT_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        master=frame,
+        width=OPEN_EVENT_BUTTON_SIZE,
+        fg=BUTTON_TEXT_COLOR,
+        text=OPEN_EVENT_BUTTON_TEXT,
         command=lambda: clicked_open_event(self)
     )
     button.grid(**OPEN_EVENT_BUTTON_COORDS)

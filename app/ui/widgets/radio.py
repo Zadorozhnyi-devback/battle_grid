@@ -2,7 +2,8 @@ from tkinter import StringVar, Tk, Radiobutton, Frame, Toplevel
 from typing import Union
 
 from settings.ui.const import (
-    SEX_RADIO_FRAME_COORDS, CATEGORY_TYPE_RADIO_FRAME_COORDS,
+    SEX_RADIO_FRAME_COORDS,
+    CATEGORY_TYPE_RADIO_FRAME_COORDS,
     GRID_SIZE_RADIO_FRAME_COORDS
 )
 
@@ -12,28 +13,39 @@ def get_default_radio(window: Union[Tk, Frame], value: str) -> StringVar:
 
 
 def create_grid_size_radio(
-    window: Union[Tk, Toplevel], selected_size: StringVar
+    window: Union[Tk, Toplevel],
+    selected_size: StringVar
 ) -> None:
     radio_frame = Frame(master=window)
     radio_frame.grid(**GRID_SIZE_RADIO_FRAME_COORDS)
     radiobutton_8 = Radiobutton(
-        master=radio_frame, text='8', value='8',
+        master=radio_frame,
+        text='8',
+        value='8',
         variable=selected_size
     )
     radiobutton_16 = Radiobutton(
-        master=radio_frame, text='16', value='16',
+        master=radio_frame,
+        text='16',
+        value='16',
         variable=selected_size
     )
     radiobutton_32 = Radiobutton(
-        master=radio_frame, text='32', value='32',
+        master=radio_frame,
+        text='32',
+        value='32',
         variable=selected_size
     )
     radiobutton_selection = Radiobutton(
-        master=radio_frame, text='selection', value='selection',
+        master=radio_frame,
+        text='selection',
+        value='selection',
         variable=selected_size
     )
     radiobutton_4_angles = Radiobutton(
-        master=radio_frame, text='4 angles', value='4_angles',
+        master=radio_frame,
+        text='4 angles',
+        value='4_angles',
         variable=selected_size
     )
     radiobutton_8.grid(column=0, row=0, sticky='W')
@@ -44,16 +56,21 @@ def create_grid_size_radio(
 
 
 def get_sex_radio(
-    frame: Union[Tk, Frame], selected_sex: StringVar
+    frame: Union[Tk, Frame],
+    selected_sex: StringVar
 ) -> Frame:
     radio_frame = Frame(master=frame)
     radio_frame.grid(**SEX_RADIO_FRAME_COORDS, sticky='W')
     radiobutton_male = Radiobutton(
-        master=radio_frame, text='male', value='male',
+        master=radio_frame,
+        text='male',
+        value='male',
         variable=selected_sex
     )
     radiobutton_female = Radiobutton(
-        master=radio_frame, text='female', value='female',
+        master=radio_frame,
+        text='female',
+        value='female',
         variable=selected_sex
     )
     radiobutton_male.grid(column=0, row=0)
@@ -63,16 +80,21 @@ def get_sex_radio(
 
 
 def create_category_type_radio(
-    frame: Toplevel, selected_type: StringVar
+    frame: Toplevel,
+    selected_type: StringVar
 ) -> None:
     radio_frame = Frame(master=frame)
     radio_frame.grid(**CATEGORY_TYPE_RADIO_FRAME_COORDS)
     radiobutton_single = Radiobutton(
-        master=radio_frame, text='single', value='single',
+        master=radio_frame,
+        text='single',
+        value='single',
         variable=selected_type
     )
     radiobutton_crew = Radiobutton(
-        master=radio_frame, text='crew', value='crew',
+        master=radio_frame,
+        text='crew',
+        value='crew',
         variable=selected_type
     )
     radiobutton_single.grid(column=0, row=0)

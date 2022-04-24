@@ -6,8 +6,10 @@ from tkinter import messagebox, Tk, Label, filedialog, TclError, Toplevel
 from app.ui.const import BEGINNING
 from app.ui.handlers.cleaners import remove_old_categories
 from app.ui.handlers.savers import save_categories
-from app.ui.validators import (validate_event_name_input,
-                               validate_event_name_exists)
+from app.ui.validators import (
+    validate_event_name_input,
+    validate_event_name_exists
+)
 from app.ui.widgets.buttons.after_click_creators import (
     create_make_new_event_button,
     create_rename_event_button
@@ -15,31 +17,39 @@ from app.ui.widgets.buttons.after_click_creators import (
 from app.ui.widgets.buttons.toplevels.for_main_window.creators import (
     create_add_category_button
 )
-from app.ui.widgets.common import get_selected_tab_title, create_empty_strings
-from app.ui.widgets.events import (bind_esc_for_close,
-                                   top_level_frame_closer,
-                                   press_exit_cross_signal)
+from app.ui.widgets.common import (
+    get_selected_tab_title,
+    create_empty_strings
+)
+from app.ui.widgets.events import (
+    bind_esc_for_close,
+    top_level_frame_closer,
+    press_exit_cross_signal
+)
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.creators import create_canvas
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
-from app.ui.widgets.radio import (create_category_type_radio,
-                                  create_grid_size_radio)
+from app.ui.widgets.radio import (
+    create_category_type_radio,
+    create_grid_size_radio
+)
 from app.ui.widgets.windows.creators import create_loaded_categories
-from settings.ui.const import (DEFAULT_DOWNLOAD_PATH,
-                               CURRENT_PATH,
-                               EVENT_NAME_TITLE_CANVAS_KWARGS,
-                               EVENT_NAME_INPUT_COORDS,
-                               CATEGORY_TITLE_INPUT_COORDS,
-                               CATEGORY_CANVAS_KWARGS,
-                               GRID_SIZE_CANVAS_KWARGS)
+from settings.ui.const import (
+    DEFAULT_DOWNLOAD_PATH,
+    CURRENT_PATH,
+    EVENT_NAME_TITLE_CANVAS_KWARGS,
+    EVENT_NAME_INPUT_COORDS,
+    CATEGORY_TITLE_INPUT_COORDS,
+    CATEGORY_CANVAS_KWARGS,
+    GRID_SIZE_CANVAS_KWARGS
+)
 
 
 def clicked_remove_category(self) -> None:
     selected_tab = self._tab_control.select()
     category = get_selected_tab_title(self)
     if category:
-        print('category', category)
         answer = messagebox.askyesno(
             message=f"delete category {category!r}?"
         )
@@ -50,7 +60,8 @@ def clicked_remove_category(self) -> None:
             save_categories(self)
     else:
         change_text_canvas(
-            canvas=self._main_canvas, text='no categories to remove'
+            canvas=self._main_canvas,
+            text='no categories to remove'
         )
 
 
@@ -67,7 +78,8 @@ def clicked_choose_dir(
     directory = filedialog.askdirectory(
         # gonna work on mac, have to check for windows and linux
         # initialdir=os.path.normpath("C://") try on Windows
-        parent=main_window, initialdir=f'/Users/{getpass.getuser()}/'
+        parent=main_window,
+        initialdir=f'/Users/{getpass.getuser()}/'
     )
     if directory is not None:
         destination_path = str(Path(directory).resolve())
@@ -76,12 +88,12 @@ def clicked_choose_dir(
 
 def clicked_save_event_name(self) -> None:
     if validate_event_name_input(self) is True:
-        print('alright')
         self._event_name = self._event_name_input.get()
 
         self._event_name_title = get_canvas(
-            frame=self._window, **EVENT_NAME_TITLE_CANVAS_KWARGS,
-            text=self._event_name
+            frame=self._window,
+            text=self._event_name,
+            **EVENT_NAME_TITLE_CANVAS_KWARGS,
         )
         self._event_name_input.destroy()
         self._save_event_name_button.destroy()
@@ -93,7 +105,6 @@ def clicked_save_event_name(self) -> None:
             canvas=self._main_canvas,
             text=f"event {self._event_name!r} was created"
         )
-        print('finish save event name')
 
 
 def clicked_open_event(self) -> None:
@@ -105,6 +116,7 @@ def clicked_open_event(self) -> None:
     )
     if event_json:
         if hasattr(self, '_event_name_title'):
+            # TODO: get rid of try/except
             try:
                 self._event_name_title.destroy()
             except TclError:
@@ -112,10 +124,12 @@ def clicked_open_event(self) -> None:
             delattr(self, '_event_name_title')
         self._event_name_input.destroy()
         self._event_name_input = get_input(
-            frame=self._window, **EVENT_NAME_INPUT_COORDS
+            frame=self._window,
+            **EVENT_NAME_INPUT_COORDS
         )
         self._event_name_input.insert(
-            BEGINNING, event_json.split('/')[-1].split('_')[0]
+            BEGINNING,
+            event_json.split('/')[-1].split('_')[0]
         )
 
         clicked_save_event_name(self)
@@ -138,7 +152,8 @@ def clicked_open_add_category_toplevel(self) -> None:
         add_category_toplevel.resizable(False, False)
 
         self._category_input = get_input(
-            frame=add_category_toplevel, **CATEGORY_TITLE_INPUT_COORDS
+            frame=add_category_toplevel,
+            **CATEGORY_TITLE_INPUT_COORDS
         )
 
         create_canvas(frame=add_category_toplevel, **CATEGORY_CANVAS_KWARGS)
@@ -154,7 +169,8 @@ def clicked_open_add_category_toplevel(self) -> None:
 
         bind_esc_for_close(self, frame_title='_add_category_toplevel')
         kwargs = {
-            'self': self, 'func': top_level_frame_closer,
+            'self': self,
+            'func': top_level_frame_closer,
             'frame_title': '_add_category_toplevel'
         }
         press_exit_cross_signal(**kwargs)

@@ -16,7 +16,7 @@ from settings.ui.const import NEW_EVENT_TITLE_INPUT_COORDS
 def clicked_create_new_event(self) -> None:
     if messagebox.askyesno(
         message='Create new event and close current window?'
-    ):
+    ) is True:
         self._window.destroy()
         self.__init__()
     else:
@@ -30,7 +30,8 @@ def clicked_open_rename_event_frame(self) -> None:
 
     bind_esc_for_close(self, frame_title='_rename_window')
     kwargs = {
-        'self': self, 'func': top_level_frame_closer,
+        'self': self,
+        'func': top_level_frame_closer,
         'frame_title': '_rename_window'
     }
     press_exit_cross_signal(**kwargs)
@@ -38,7 +39,8 @@ def clicked_open_rename_event_frame(self) -> None:
     create_empty_strings(frame=self._rename_window, rows=[1])
 
     self._new_event_title_input = get_input(
-        frame=self._rename_window, **NEW_EVENT_TITLE_INPUT_COORDS
+        frame=self._rename_window,
+        **NEW_EVENT_TITLE_INPUT_COORDS
     )
     create_save_new_event_title_button(self, frame=self._rename_window)
 

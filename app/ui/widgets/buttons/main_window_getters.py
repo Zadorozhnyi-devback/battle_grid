@@ -11,8 +11,10 @@ from settings.ui.buttons import (
 
 def get_save_event_name_button(self, frame: Frame) -> Button:
     button = Button(
-        master=frame, text=SAVE_EVENT_NAME_BUTTON_TITLE,
-        width=SAVE_EVENT_NAME_BUTTON_SIZE, fg=BUTTON_TEXT_COLOR,
+        master=frame,
+        width=SAVE_EVENT_NAME_BUTTON_SIZE,
+        fg=BUTTON_TEXT_COLOR,
+        text=SAVE_EVENT_NAME_BUTTON_TITLE,
         command=lambda: clicked_save_event_name(self)
     )
     button.grid(**SAVE_EVENT_NAME_BUTTON_COORDS)

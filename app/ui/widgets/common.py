@@ -4,9 +4,7 @@ from typing import List
 
 def get_selected_tab_title(self) -> str:
     selected_tab = self._tab_control.select()
-    print('selected_tab', selected_tab)
     if selected_tab:
-        # print(type(selected_tab))
         category = self._tab_control.tab(selected_tab, 'text')
         return category
 

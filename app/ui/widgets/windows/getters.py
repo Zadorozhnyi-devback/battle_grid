@@ -1,8 +1,10 @@
 from tkinter import Tk
 from tkinter.ttk import Notebook
 
-from settings.ui.const import (TAB_CONTROL_WINDOW_SIZE,
-                               TAB_CONTROL_WINDOW_COORDS)
+from settings.ui.const import (
+    TAB_CONTROL_WINDOW_SIZE,
+    TAB_CONTROL_WINDOW_COORDS
+)
 
 
 def get_tab_control(main_window: Tk) -> Notebook:

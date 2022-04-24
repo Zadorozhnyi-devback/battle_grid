@@ -28,11 +28,14 @@ from settings.ui.const import (
 class BattleGridUI:
     def __init__(self) -> None:
         create_window(
-            self, title=MAIN_WINDOW_TITLE,
-            size=MAIN_WINDOW_SIZE, icon='jordan.png'
+            self,
+            title=MAIN_WINDOW_TITLE,
+            size=MAIN_WINDOW_SIZE,
+            icon='jordan.png'
         )
         self._main_canvas = get_canvas(
-            frame=self._window, **MAIN_CANVAS_KWARGS  # noqa
+            frame=self._window,  # noqa
+            **MAIN_CANVAS_KWARGS
         )
 
         self._destination_path = str(Path(DEFAULT_DOWNLOAD_PATH).resolve())
@@ -48,24 +51,28 @@ class BattleGridUI:
 
         create_canvas(frame=self._window, **EVENT_NAME_CANVAS_KWARGS)  # noqa
         self._event_name_input = get_input(
-            frame=self._window, **EVENT_NAME_INPUT_COORDS  # noqa
+            frame=self._window, # noqa
+            **EVENT_NAME_INPUT_COORDS
         )
 
         self._buttons_frame = Frame(master=self._window)  # noqa
         self._buttons_frame.grid(**EVENT_FRAME_BUTTONS_COORDS)
 
         self._save_event_name_button = get_save_event_name_button(
-            self, frame=self._buttons_frame
+            self,
+            frame=self._buttons_frame
         )
         create_open_event_button(self, frame=self._buttons_frame)
 
         self._selected_grid_size = get_default_radio(
-            window=self._window, value=DEFAULT_GRID_SIZE  # noqa
+            window=self._window,  # noqa
+            value=DEFAULT_GRID_SIZE
         )
 
         self._categories = dict()
         self._selected_category_type = get_default_radio(
-            window=self._window, value=DEFAULT_CATEGORY_TYPE  # noqa
+            window=self._window,  # noqa
+            value=DEFAULT_CATEGORY_TYPE
         )
 
         create_empty_strings(frame=self._window, rows=[3, 6, 8, 10])  # noqa

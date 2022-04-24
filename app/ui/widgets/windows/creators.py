@@ -1,11 +1,7 @@
 import os
 from tkinter.ttk import Style
-from tkinter import (
-    Frame, PhotoImage, Tk, NORMAL, DISABLED, END
-)
-from typing import (
-    Dict, Union, List
-)
+from tkinter import Frame, PhotoImage, Tk, NORMAL, DISABLED, END
+from typing import Dict, Union, List
 
 from app.ui.const import BEGINNING
 from app.ui.handlers.cleaners import clean_category_input
@@ -29,10 +25,7 @@ from app.ui.widgets.events import (
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.creators import create_canvas
 from app.ui.widgets.labels.getters import get_canvas
-from app.ui.widgets.radio import (
-    get_sex_radio,
-    get_default_radio
-)
+from app.ui.widgets.radio import get_sex_radio, get_default_radio
 from app.ui.widgets.separators import create_separator
 from app.ui.widgets.text import get_category_people_list
 from settings.ui.const import (
@@ -54,7 +47,12 @@ from settings.ui.const import (
 )
 
 
-def create_window(self, title: str, size: str, icon: str = None) -> None:
+def create_window(
+    self,
+    title: str,
+    size: str,
+    icon: str = None
+) -> None:
     self._window = Tk()
 
     # binds
@@ -79,7 +77,10 @@ def create_window(self, title: str, size: str, icon: str = None) -> None:
 
 
 def create_registration_frame(
-    self, tab_frame: Frame, selected_category_type: str, category: str
+    self,
+    tab_frame: Frame,
+    selected_category_type: str,
+    category: str
 ) -> None:
     reg_frame = Frame(master=tab_frame)
     reg_frame.grid(**REGISTRATION_FRAME_COORDS)
@@ -174,12 +175,11 @@ def create_loaded_categories(
         participants = [p for p in data['text_widget'].split('\n') if p]
 
         if self._categories[category]['type'] == 'single':
-            category_info_text = get_category_info_text(
-                self, category=category
-            )
+            info_text = get_category_info_text(self, category=category)
             update_category_sex_stats_canvas(
-                self, category=category,
-                category_info_text=category_info_text
+                self,
+                category=category,
+                category_info_text=info_text
             )
 
         text_widget = self._categories[category]['text_widget']
@@ -212,12 +212,12 @@ def create_new_tab(self) -> None:
     }
 
     create_registration_frame(
-        self, tab_frame=tab_frame, category=category,
+        self,
+        tab_frame=tab_frame,
+        category=category,
         selected_category_type=selected_category_type
     )
-    create_category_info_frame(
-        self, tab_frame=tab_frame, category=category
-    )
+    create_category_info_frame(self, tab_frame=tab_frame, category=category)
 
     self._tab_control.add(child=tab_frame, text=category)
     self._tab_control.select(tab_frame)

@@ -12,8 +12,11 @@ def create_canvas(
     canvas = Canvas(master=frame)
     canvas.grid(column=column, row=row, sticky=sticky, columnspan=column_span)
     text = canvas.create_text(
-        5, padding_top, text=text,
-        font=(ARIAL_BOLD, font_size), anchor='nw'
+        5,
+        padding_top,
+        text=text,
+        font=(ARIAL_BOLD, font_size),
+        anchor='nw'
     )
     bbox = canvas.bbox(text)
     # size without padding on y bottom and long width
