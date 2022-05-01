@@ -37,6 +37,7 @@ must have:
         edit category (grid size, title, type) +
             если уже есть участники - то нельзя поменять тип категории +
     move right separator to the right +
+    if selected type is crew - remove '4 angles' from grid size +
 
 
     randomizer
@@ -62,5 +63,3 @@ must have:
             чекбокс открывать последний проект или всегда новый
                 (кеш на последние открытые табы)
             choose folder move in settings
-
-    if selected type is crew - remove '4 angles' from grid size

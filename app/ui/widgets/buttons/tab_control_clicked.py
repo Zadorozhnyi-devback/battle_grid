@@ -75,6 +75,16 @@ def clicked_open_edit_category_toplevel(self) -> None:
                 selected_type=self._selected_category_type
             )
 
+        create_empty_strings(frame=category_frame_window, rows=[2, 4])
+
+        create_grid_size_radio(
+            self,
+            window=category_frame_window,
+            selected_size=self._selected_grid_size,
+            category=category
+        )
+        create_canvas(frame=category_frame_window, **GRID_SIZE_CANVAS_KWARGS)
+
         create_save_categories_button(
             self,
             frame=category_frame_window,
@@ -91,14 +101,6 @@ def clicked_open_edit_category_toplevel(self) -> None:
             'frame_title': category_frame
         }
         press_exit_cross_signal(**kwargs)
-
-        create_empty_strings(frame=category_frame_window, rows=[2, 4])
-
-        create_grid_size_radio(
-            window=category_frame_window,
-            selected_size=self._selected_grid_size
-        )
-        create_canvas(frame=category_frame_window, **GRID_SIZE_CANVAS_KWARGS)
 
         category_frame_window.transient(master=self._window)
         category_frame_window.grab_set()

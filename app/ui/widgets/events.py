@@ -1,13 +1,13 @@
 from tkinter import Event, messagebox
 
 
-def main_window_closer(self) -> bool:
+def main_window_closer(self, frame_title: str) -> bool:
     answer = messagebox.askyesno(message=f'close battle grid?')
     if answer is True:
-        self._window.destroy()
+        getattr(self, frame_title).destroy()
         return True
     else:
-        self._window.focus_force()
+        getattr(self, frame_title).focus_force()
         return False
 
 
@@ -17,13 +17,13 @@ def top_level_frame_closer(self, frame_title: str) -> None:
     self._window.focus_force()
 
 
-def closer(_: Event, self, window_title: str) -> None:
-    if window_title == '_window':  # main frame
-        if main_window_closer(self) is True:
+def closer(_: Event, self, frame_title: str) -> None:
+    if frame_title == '_window':  # main frame
+        if main_window_closer(self, frame_title=frame_title) is True:
             return
     else:
-        if hasattr(self, window_title):
-            top_level_frame_closer(self, frame_title=window_title)
+        if hasattr(self, frame_title):
+            top_level_frame_closer(self, frame_title=frame_title)
     bind_esc_for_close(self, frame_title='_window')
 
 
@@ -40,6 +40,6 @@ def bind_esc_for_close(self, frame_title: str) -> None:
         lambda event: closer(
             event,
             self=self,
-            window_title=frame_title
+            frame_title=frame_title
         )
     )

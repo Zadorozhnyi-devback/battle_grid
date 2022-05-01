@@ -4,7 +4,10 @@ from pathlib import Path
 from tkinter import messagebox, Tk, Label, filedialog, TclError, Toplevel
 
 from app.ui.const import BEGINNING
-from app.ui.handlers.cleaners import remove_old_categories
+from app.ui.handlers.cleaners import (
+    remove_old_categories,
+    remove_old_saves_if_exist
+)
 from app.ui.handlers.savers import save_categories
 from app.ui.validators import (
     validate_event_name_input,
@@ -57,6 +60,7 @@ def clicked_remove_category(self) -> None:
             self._tab_control.forget(selected_tab)
             self._categories.pop(category)
 
+            remove_old_saves_if_exist(event_name=self._event_name)
             save_categories(self)
     else:
         change_text_canvas(
@@ -116,7 +120,6 @@ def clicked_open_event(self) -> None:
     )
     if event_json:
         if hasattr(self, '_event_name_title'):
-            # TODO: get rid of try/except
             try:
                 self._event_name_title.destroy()
             except TclError:
@@ -178,6 +181,7 @@ def clicked_open_add_category_toplevel(self) -> None:
         create_empty_strings(frame=add_category_toplevel, rows=[2, 4])
 
         create_grid_size_radio(
+            self,
             window=add_category_toplevel,
             selected_size=self._selected_grid_size
         )

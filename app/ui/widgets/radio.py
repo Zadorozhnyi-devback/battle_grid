@@ -13,8 +13,10 @@ def get_default_radio(window: Union[Tk, Frame], value: str) -> StringVar:
 
 
 def create_grid_size_radio(
+    self,
     window: Union[Tk, Toplevel],
-    selected_size: StringVar
+    selected_size: StringVar,
+    category: str = None
 ) -> None:
     radio_frame = Frame(master=window)
     radio_frame.grid(**GRID_SIZE_RADIO_FRAME_COORDS)
@@ -42,17 +44,22 @@ def create_grid_size_radio(
         value='selection',
         variable=selected_size
     )
-    radiobutton_4_angles = Radiobutton(
-        master=radio_frame,
-        text='4 angles',
-        value='4_angles',
-        variable=selected_size
-    )
+    if (
+        not category
+        or self._categories[category]['type'] == 'single'
+    ):
+        radiobutton_4_angles = Radiobutton(
+            master=radio_frame,
+            text='4 angles',
+            value='4_angles',
+            variable=selected_size
+        )
+        radiobutton_4_angles.grid(column=1, row=1)
+
     radiobutton_8.grid(column=0, row=0, sticky='W')
     radiobutton_16.grid(column=0, row=0, sticky='E')
     radiobutton_32.grid(column=1, row=0, sticky='W')
     radiobutton_selection.grid(column=0, row=1)
-    radiobutton_4_angles.grid(column=1, row=1)
 
 
 def get_sex_radio(
