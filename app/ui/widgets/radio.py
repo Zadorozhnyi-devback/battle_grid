@@ -1,6 +1,7 @@
 from tkinter import StringVar, Tk, Radiobutton, Frame, Toplevel
 from typing import Union
 
+from app.ui.handlers.getters import get_category_type
 from settings.ui.const import (
     SEX_RADIO_FRAME_COORDS,
     CATEGORY_TYPE_RADIO_FRAME_COORDS,
@@ -44,10 +45,7 @@ def create_grid_size_radio(
         value='selection',
         variable=selected_size
     )
-    if (
-        not category
-        or self._categories[category]['type'] == 'single'
-    ):
+    if not category or get_category_type(self, category) == 'single':
         radiobutton_4_angles = Radiobutton(
             master=radio_frame,
             text='4 angles',

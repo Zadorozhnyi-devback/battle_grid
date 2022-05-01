@@ -1,6 +1,12 @@
 from tkinter import NORMAL, DISABLED, END
 
-from app.ui.handlers.getters import get_value_without_underscore
+from app.ui.handlers.getters import (
+    get_value_without_underscore,
+    get_grid_size,
+    get_text_widget,
+    get_category_type
+)
+from app.ui.handlers.setters import set_grid_size
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
@@ -61,7 +67,7 @@ def build_widgets_by_category_type(
 
 def update_category_data(self, category: str) -> None:
     category_type = self._selected_category_type.get()
-    if category_type != self._categories[category]['type']:
+    if category_type != get_category_type(self, category):
         self._categories[category]['type'] = category_type
         category_type_canvas = getattr(
             self, f'_{category}_selected_category_type_canvas'
@@ -75,8 +81,8 @@ def update_category_data(self, category: str) -> None:
         )
 
     grid_size = self._selected_grid_size.get()
-    if self._categories[category]['grid_size'] != grid_size:
-        self._categories[category]['grid_size'] = grid_size
+    if get_grid_size(self, category) != grid_size:
+        set_grid_size(self, category, grid_size)
         grid_size_canvas = getattr(self, f'_{category}_selected_grid_canvas')
 
         clean_grid_size = get_value_without_underscore(value=grid_size)
@@ -110,8 +116,7 @@ def add_new_participant_in_text_widget(
     category: str,
     index: int
 ) -> None:
-    self._categories[category]['text_widget'].configure(state=NORMAL)
-    self._categories[category]['text_widget'].insert(
-        END, f'{index}. {participant_string}\n'
-    )
-    self._categories[category]['text_widget'].configure(state=DISABLED)
+    text_widget = get_text_widget(self, category)
+    text_widget.configure(state=NORMAL)
+    text_widget.insert(END, f'{index}. {participant_string}\n')
+    text_widget.configure(state=DISABLED)

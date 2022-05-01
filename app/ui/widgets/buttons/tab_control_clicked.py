@@ -11,7 +11,9 @@ from app.ui.handlers.getters import (
     get_participant_info,
     get_participant_string,
     get_category_info_text,
-    get_required_field
+    get_required_field,
+    get_amount_of_category_participants,
+    get_grid_size, get_category_type
 )
 from app.ui.handlers.savers import save_categories
 from app.ui.handlers.updators import (
@@ -66,8 +68,8 @@ def clicked_open_edit_category_toplevel(self) -> None:
         category_frame = f'_{category}_toplevel_frame'
 
         self._category_input.insert(BEGINNING, category)
-        self._selected_category_type.set(self._categories[category]['type'])
-        self._selected_grid_size.set(self._categories[category]['grid_size'])
+        self._selected_category_type.set(get_category_type(self, category))
+        self._selected_grid_size.set(get_grid_size(self, category))
 
         if not self._categories[category]['participants']:
             create_category_type_radio(
@@ -109,8 +111,8 @@ def clicked_open_edit_category_toplevel(self) -> None:
 
 def unregister_participant(self) -> None:
     category = get_selected_tab_title(self)
-    tab_type = self._categories[category]['type']
-    fields = get_participant_fields(tab_type=tab_type)
+    category_type = get_category_type(self, category)
+    fields = get_participant_fields(tab_type=category_type)
     required_field = get_required_field(self, category=category)
     value = (
         getattr(self, f'_{category}_{required_field}_input')
@@ -144,11 +146,8 @@ def unregister_participant(self) -> None:
                 index=index
             )
 
-        if self._categories[category]['type'] == 'single':
-            category_info_text = get_category_info_text(
-                self,
-                category=category
-            )
+        if get_category_type(self, category) == 'single':
+            category_info_text = get_category_info_text(self, category)
             update_category_sex_stats_canvas(
                 self,
                 category=category,
@@ -167,13 +166,13 @@ def unregister_participant(self) -> None:
 
 def register_new_participant(self) -> None:
     category = get_selected_tab_title(self)
-    tab_type = self._categories[category]['type']
-    fields = get_participant_fields(tab_type=tab_type)
+    category_type = get_category_type(self, category)
+    fields = get_participant_fields(tab_type=category_type)
 
     if validate_participant_inputs(
         self,
         category=category,
-        tab_type=tab_type
+        tab_type=category_type
     ) is True:
         participant = get_participant_info(
             self,
@@ -184,7 +183,7 @@ def register_new_participant(self) -> None:
         self._categories[category]['participants'].append(participant)
 
         participant_string = get_participant_string(participant=participant)
-        index = len(self._categories[category]['participants'])
+        index = get_amount_of_category_participants(self, category)
         add_new_participant_in_text_widget(
             self,
             participant_string=participant_string,
@@ -192,11 +191,8 @@ def register_new_participant(self) -> None:
             index=index
         )
 
-        if self._categories[category]['type'] == 'single':
-            category_info_text = get_category_info_text(
-                self,
-                category=category
-            )
+        if get_category_type(self, category) == 'single':
+            category_info_text = get_category_info_text(self, category)
             update_category_sex_stats_canvas(
                 self,
                 category=category,

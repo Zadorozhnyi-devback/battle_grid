@@ -35,9 +35,7 @@ def get_value_with_underscore(value: str) -> str:
 
 
 def get_male_and_female_stats(self, category: str) -> Dict[str, int]:
-    total = len(self._categories[category]['participants'])
-    print('category', category)
-    print('pidari', self._categories[category]['participants'])
+    total = get_amount_of_category_participants(self, category)
     male = sum(
         participant['sex'] == 'male' for participant
         in self._categories[category]['participants']
@@ -74,7 +72,7 @@ def get_participant_info(
         )
         for field in fields
     }
-    if self._categories[category]['type'] == 'single':
+    if get_category_type(self, category) == 'single':
         participant['sex'] = getattr(self, f'_{category}_selected_sex').get()
     return participant
 
@@ -94,4 +92,20 @@ def get_category_info_text(self, category: str) -> str:
 
 
 def get_required_field(self, category: str) -> str:
-    return 'nick' if self._categories[category]['type'] == 'single' else 'crew'
+    return 'nick' if get_category_type(self, category) == 'single' else 'crew'
+
+
+def get_amount_of_category_participants(self, category: str) -> int:
+    return len(self._categories[category]['participants'])
+
+
+def get_grid_size(self, category: str) -> str:
+    return self._categories[category]['grid_size']
+
+
+def get_category_type(self, category: str) -> str:
+    return self._categories[category]['type']
+
+
+def get_text_widget(self, category) -> Text:
+    return self._categories[category]['text_widget']

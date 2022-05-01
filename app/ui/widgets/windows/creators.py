@@ -8,7 +8,10 @@ from app.ui.handlers.cleaners import clean_category_input
 from app.ui.handlers.getters import (
     get_value_without_underscore,
     get_male_and_female_stats_text,
-    get_category_info_text
+    get_category_info_text,
+    get_category_type,
+    get_text_widget,
+    get_grid_size
 )
 from app.ui.handlers.updators import update_category_sex_stats_canvas
 from app.ui.widgets.buttons.tab_control_creators import (
@@ -120,7 +123,7 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
     setattr(self, f'_{category}_info_frame', info_frame)
 
     grid_size = get_value_without_underscore(
-        value=self._categories[category]['grid_size']
+        value=get_grid_size(self, category)
     )
     setattr(
         self,
@@ -137,12 +140,12 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
         f'_{category}_selected_category_type_canvas',
         get_canvas(
             frame=info_frame,
-            text=f"type: {self._categories[category]['type']}",
+            text=f"type: {get_category_type(self, category)}",
             **SELECTED_CATEGORY_TYPE_CANVAS_KWARGS
         )
     )
 
-    if self._categories[category]['type'] == 'single':
+    if get_category_type(self, category) == 'single':
         setattr(
             self,
             f'_{category}_male_and_female_canvas',
@@ -174,7 +177,7 @@ def create_loaded_categories(
 
         participants = [p for p in data['text_widget'].split('\n') if p]
 
-        if self._categories[category]['type'] == 'single':
+        if get_category_type(self, category) == 'single':
             info_text = get_category_info_text(self, category=category)
             update_category_sex_stats_canvas(
                 self,
@@ -182,7 +185,7 @@ def create_loaded_categories(
                 category_info_text=info_text
             )
 
-        text_widget = self._categories[category]['text_widget']
+        text_widget = get_text_widget(self, category)
         text_widget.configure(state=NORMAL)
         [text_widget.insert(END, f'{string}\n') for string in participants]
         text_widget.configure(state=DISABLED)

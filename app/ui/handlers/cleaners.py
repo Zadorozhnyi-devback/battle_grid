@@ -5,6 +5,7 @@ from tkinter import NORMAL, END, DISABLED
 from typing import List
 
 from app.ui.const import BEGINNING
+from app.ui.handlers.getters import get_text_widget
 from app.ui.widgets.common import get_selected_tab_title
 
 
@@ -39,6 +40,7 @@ def remove_old_saves_if_exist(event_name: str) -> None:
 
 
 def clean_text_widget(self, category: str) -> None:
-    self._categories[category]['text_widget'].configure(state=NORMAL)
-    self._categories[category]['text_widget'].delete('1.0', END)
-    self._categories[category]['text_widget'].configure(state=DISABLED)
+    text_widget = get_text_widget(self, category)
+    text_widget.configure(state=NORMAL)
+    text_widget.delete('1.0', END)
+    text_widget.configure(state=DISABLED)

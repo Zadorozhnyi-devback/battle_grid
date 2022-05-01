@@ -1,4 +1,9 @@
-from app.ui.handlers.getters import get_participant_fields, get_required_field
+from app.ui.handlers.getters import (
+    get_participant_fields,
+    get_required_field,
+    get_amount_of_category_participants,
+    get_grid_size
+)
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
 from settings.ui.const import (
@@ -105,8 +110,18 @@ def validate_event_name_exists(self) -> bool:
 
 
 def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
+    grid_size = get_grid_size(self, category=category)
+    if grid_size.isdigit():
+        amount = get_amount_of_category_participants(self, category=category)
+        if amount >= int(grid_size):
+            change_text_canvas(
+                canvas=self._main_canvas,
+                text=f"Category is full (can't add more then {grid_size})"
+            )
+            return False
+
     fields = get_participant_fields(tab_type=tab_type)
-    max_length = 16 if self._selected_grid_size.get() in (8, 16) else 21
+    max_length = 16 if grid_size in (8, 16) else 21
     for field in fields:
         if len(getattr(self, f'_{category}_{field}_input').get()) > max_length:
             change_text_canvas(
