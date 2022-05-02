@@ -6,7 +6,7 @@ from app.ui.handlers.getters import (
     get_text_widget,
     get_category_type
 )
-from app.ui.handlers.setters import set_grid_size
+from app.ui.handlers.setters import set_grid_size, set_category_type
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
@@ -68,7 +68,7 @@ def build_widgets_by_category_type(
 def update_category_data(self, category: str) -> None:
     category_type = self._selected_category_type.get()
     if category_type != get_category_type(self, category):
-        self._categories[category]['type'] = category_type
+        set_category_type(self, category, category_type)
         category_type_canvas = getattr(
             self, f'_{category}_selected_category_type_canvas'
         )
@@ -80,12 +80,14 @@ def update_category_data(self, category: str) -> None:
             self, category_type=category_type, category=category
         )
 
-    grid_size = self._selected_grid_size.get()
-    if get_grid_size(self, category) != grid_size:
-        set_grid_size(self, category, grid_size)
+    selected_grid_size = self._selected_grid_size.get()
+    if get_grid_size(self, category) != selected_grid_size:
+        set_grid_size(self, category, selected_grid_size)
         grid_size_canvas = getattr(self, f'_{category}_selected_grid_canvas')
 
-        clean_grid_size = get_value_without_underscore(value=grid_size)
+        clean_grid_size = get_value_without_underscore(
+            value=selected_grid_size
+        )
         change_text_canvas(
             canvas=grid_size_canvas, text=f"grid: {clean_grid_size}"
         )

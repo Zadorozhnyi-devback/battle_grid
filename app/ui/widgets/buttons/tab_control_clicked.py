@@ -11,9 +11,12 @@ from app.ui.handlers.getters import (
     get_participant_info,
     get_participant_string,
     get_category_info_text,
+    get_category_type,
     get_required_field,
     get_amount_of_category_participants,
-    get_grid_size, get_category_type
+    get_grid_size,
+    get_participants,
+    get_input_value,
 )
 from app.ui.handlers.savers import save_categories
 from app.ui.handlers.updators import (
@@ -114,11 +117,7 @@ def unregister_participant(self) -> None:
     category_type = get_category_type(self, category)
     fields = get_participant_fields(tab_type=category_type)
     required_field = get_required_field(self, category=category)
-    value = (
-        getattr(self, f'_{category}_{required_field}_input')
-        .get()
-        .capitalize()
-    )
+    value = get_input_value(self, category, required_field)
 
     if validate_participant_exists(
         self,
@@ -126,17 +125,15 @@ def unregister_participant(self) -> None:
         required_field=required_field,
         value=value
     ) is True:
-        for participant in self._categories[category]['participants']:
+        participants = get_participants(self, category)
+        for participant in participants:
             if participant[required_field] == value:
-                self._categories[category]['participants'].remove(participant)
+                participants.remove(participant)
                 break
 
         clean_text_widget(self, category=category)
 
-        for index, p in enumerate(
-            self._categories[category]['participants'],
-            start=1
-        ):
+        for index, p in enumerate(participants, start=1):
             participant_string = get_participant_string(participant=p)
 
             add_new_participant_in_text_widget(

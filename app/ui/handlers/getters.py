@@ -109,3 +109,11 @@ def get_category_type(self, category: str) -> str:
 
 def get_text_widget(self, category) -> Text:
     return self._categories[category]['text_widget']
+
+
+def get_participants(self, category):
+    return self._categories[category]['participants']
+
+
+def get_input_value(self, category: str, field: str) -> str:
+    return getattr(self, f'_{category}_{field}_input').get().capitalize()

@@ -2,7 +2,8 @@ from app.ui.handlers.getters import (
     get_participant_fields,
     get_required_field,
     get_amount_of_category_participants,
-    get_grid_size
+    get_grid_size,
+    get_input_value
 )
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
@@ -34,14 +35,41 @@ def validate_category_exists(self, category: str) -> bool:
     return True
 
 
-def validate_update_category(self) -> bool:
+def validate_category_free_places(self, category: str, grid_size: str) -> bool:
+    if grid_size.isdigit():
+        amount = get_amount_of_category_participants(self, category)
+        if amount > int(grid_size):
+            change_text_canvas(
+                canvas=self._main_canvas,
+                text=f"Category is full (can't add more then {grid_size})"
+            )
+            return False
+
+
+def validate_for_update_category(self) -> bool:
     category = self._category_input.get()
-    if validate_empty_category_input(self, category=category) is False:
+    if validate_empty_category_input(self, category) is False:
         return False
+
+    grid_size = get_grid_size(self, category)
+    if self._selected_grid_size.get() != grid_size:
+        grid_size = self._selected_grid_size.get()
+        if grid_size.isdigit():
+            amount = get_amount_of_category_participants(self, category)
+            if int(grid_size) < amount:
+                change_text_canvas(
+                    canvas=self._main_canvas,
+                    text=f'Category already has {amount} participants'
+                )
+                return False
+
+    if validate_category_free_places(self, category, grid_size) is False:
+        return False
+
     return True
 
 
-def validate_create_category(self) -> bool:
+def validate_for_create_category(self) -> bool:
     category = self._category_input.get().lower()
 
     if validate_empty_category_input(self, category=category) is False:
@@ -59,13 +87,13 @@ def validate_event_name_input(self) -> bool:
     if not event_name:
         change_text_canvas(
             canvas=self._main_canvas,
-            text="event name can't be empty"
+            text=EMPTY_EVENT_INPUT_CANVAS_TEXT
         )
         return False
     if len(event_name) > 16:
         change_text_canvas(
             canvas=self._main_canvas,
-            text='event name is too long'
+            text=EVENT_NAME_IS_TOO_LONG_TEXT
         )
         return False
     return True
@@ -103,7 +131,7 @@ def validate_event_name_exists(self) -> bool:
     if not hasattr(self, '_event_name'):
         change_text_canvas(
             canvas=self._main_canvas,
-            text="event name can't be empty"
+            text=EMPTY_EVENT_INPUT_CANVAS_TEXT
         )
         return False
     return True
@@ -111,19 +139,13 @@ def validate_event_name_exists(self) -> bool:
 
 def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
     grid_size = get_grid_size(self, category=category)
-    if grid_size.isdigit():
-        amount = get_amount_of_category_participants(self, category=category)
-        if amount >= int(grid_size):
-            change_text_canvas(
-                canvas=self._main_canvas,
-                text=f"Category is full (can't add more then {grid_size})"
-            )
-            return False
+    if validate_category_free_places(self, category, grid_size) is False:
+        return False
 
     fields = get_participant_fields(tab_type=tab_type)
     max_length = 16 if grid_size in (8, 16) else 21
     for field in fields:
-        if len(getattr(self, f'_{category}_{field}_input').get()) > max_length:
+        if len(get_input_value(self, category, field)) > max_length:
             change_text_canvas(
                 canvas=self._main_canvas,
                 text=f'{field} input is too long'
@@ -131,11 +153,7 @@ def validate_participant_inputs(self, category: str, tab_type: str) -> bool:
             return False
 
     required_field = get_required_field(self, category=category)
-    field_value = (
-        getattr(self, f'_{category}_{required_field}_input')
-        .get()
-        .capitalize()
-    )
+    field_value = get_input_value(self, category, required_field)
 
     if not field_value:
         change_text_canvas(

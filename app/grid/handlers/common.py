@@ -178,7 +178,7 @@ def create_card(
 
     paste_icons_to_card(card_image=card_image, sex=sex, grid_size=grid_size)
 
-    text = '\n'.join([value.capitalize() for _, value in person.items()])
+    text = '\n'.join([value.capitalize() for value in person.values()])
     # text margin: x left, y top in TEXT_PARAMS['xy']: Tuple[int]
     my_draw.text(text=text, font=font, **text_params)
 
