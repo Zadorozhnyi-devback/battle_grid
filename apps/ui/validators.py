@@ -15,6 +15,20 @@ from app.settings.ui.const import (
 )
 
 
+__all__ = (
+    'validate_empty_category_input',
+    'validate_category_exists',
+    'validate_category_free_places',
+    'validate_for_update_category',
+    'validate_for_create_category',
+    'validate_event_name_input',
+    'validate_new_event_name',
+    'validate_event_name_exists',
+    'validate_participant_inputs',
+    'validate_participant_exists'
+)
+
+
 def validate_empty_category_input(self, category: str) -> bool:
     if not category:
         change_text_canvas(
@@ -36,10 +50,8 @@ def validate_category_exists(self, category: str) -> bool:
 
 
 def validate_category_free_places(self, category: str, grid_size: str) -> bool:
-    print(grid_size)
     if grid_size.isdigit():
         amount = get_amount_of_category_participants(self, category)
-        print(amount)
         if amount >= int(grid_size):
             change_text_canvas(
                 canvas=self._main_canvas,
