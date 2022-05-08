@@ -113,7 +113,7 @@ def clicked_open_edit_category_toplevel(self) -> None:
         self._window.wait_window(window=category_frame_window)
 
 
-def unregister_participant(self) -> None:
+def clicked_unregister_participant(self) -> None:
     category = get_selected_tab_title(self)
     category_type = get_category_type(self, category)
     fields = get_participant_fields(tab_type=category_type)
@@ -164,7 +164,7 @@ def unregister_participant(self) -> None:
         save_categories(self)
 
 
-def register_new_participant(self) -> None:
+def clicked_register_new_participant(self) -> None:
     category = get_selected_tab_title(self)
     category_type = get_category_type(self, category)
     fields = get_participant_fields(tab_type=category_type)
