@@ -1,20 +1,27 @@
 from tkinter import NORMAL, DISABLED, END
 
+from app.ui.handlers.cleaners import remove_old_saves_if_exist
 from app.ui.handlers.getters import (
     get_value_without_underscore,
     get_grid_size,
     get_text_widget,
     get_category_type
 )
+from app.ui.handlers.savers import save_categories
 from app.ui.handlers.setters import set_grid_size, set_category_type
 from app.ui.widgets.inputs import get_input
 from app.ui.widgets.labels.getters import get_canvas
 from app.ui.widgets.labels.handlers import change_text_canvas
-from app.ui.widgets.radio import (get_sex_radio,
-                                  get_default_radio)
-from settings.ui.const import (NICK_CANVAS_KWARGS,
-                               NICK_INPUT_COORDS,
-                               DEFAULT_SEX)
+from app.ui.widgets.radio import (
+    get_sex_radio,
+    get_default_radio
+)
+from settings.ui.const import (
+    NICK_CANVAS_KWARGS,
+    NICK_INPUT_COORDS,
+    DEFAULT_SEX
+)
+from shared.utils import get_current_datetime
 
 
 def rename_class_attributes(self, new_title: str, old_title: str) -> None:
@@ -65,6 +72,10 @@ def build_widgets_by_category_type(
         setattr(self, f'_{category}_sex_radio', sex_radio)
 
 
+def update_timestamp(self, category: str) -> None:
+    self._categories[category]['updated_at'] = get_current_datetime()
+
+
 def update_category_data(self, category: str) -> None:
     category_type = self._selected_category_type.get()
     if category_type != get_category_type(self, category):
@@ -100,6 +111,11 @@ def update_category_data(self, category: str) -> None:
             self, new_title=new_title, old_title=category
         )
         self._categories.pop(category)
+
+    update_timestamp(self, category=new_title)
+
+    remove_old_saves_if_exist(event_name=self._event_name)
+    save_categories(self)
 
 
 def update_category_sex_stats_canvas(

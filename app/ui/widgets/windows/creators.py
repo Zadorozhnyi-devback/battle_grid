@@ -13,7 +13,10 @@ from app.ui.handlers.getters import (
     get_text_widget,
     get_grid_size
 )
-from app.ui.handlers.updators import update_category_sex_stats_canvas
+from app.ui.handlers.updators import (
+    update_category_sex_stats_canvas,
+    update_timestamp
+)
 from app.ui.widgets.buttons.tab_control_creators import (
     create_open_edit_category_toplevel_button,
     create_unregister_participant_button,
@@ -166,7 +169,14 @@ def create_loaded_categories(
     json_data: Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]
 ) -> None:
     self._category_input = get_input(frame=self._window, **TEMP_INPUT_COORDS)
-    for category, data in json_data.items():
+    for category, data in (
+        sorted(
+            json_data.items(),
+            key=lambda x: x[1]['updated_at'],
+            reverse=True
+        )
+    ):
+        self._timestamp = data.get('updated_at', None)
         self._category_input.insert(BEGINNING, category)
         self._selected_category_type.set(data['type'])
         self._selected_grid_size.set(data['grid_size'])
@@ -194,6 +204,7 @@ def create_loaded_categories(
 
     self._category_input.destroy()
     delattr(self, '_category_input')
+    delattr(self, '_timestamp')
 
 
 def create_new_tab(self) -> None:
@@ -211,8 +222,13 @@ def create_new_tab(self) -> None:
         'grid_size': self._selected_grid_size.get(),
         'type': selected_category_type,
         'participants': list(),
-        'text_widget': participants
+        'text_widget': participants,
     }
+
+    if self._timestamp:
+        self._categories[category]['updated_at'] = self._timestamp
+    else:
+        update_timestamp(self, category=category)
 
     create_registration_frame(
         self,

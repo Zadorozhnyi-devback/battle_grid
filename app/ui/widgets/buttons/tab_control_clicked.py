@@ -21,7 +21,8 @@ from app.ui.handlers.getters import (
 from app.ui.handlers.savers import save_categories
 from app.ui.handlers.updators import (
     add_new_participant_in_text_widget,
-    update_category_sex_stats_canvas
+    update_category_sex_stats_canvas,
+    update_timestamp
 )
 from app.ui.validators import (
     validate_participant_inputs,
@@ -156,6 +157,8 @@ def unregister_participant(self) -> None:
             text=f'removed participant {value!r}'
         )
 
+        update_timestamp(self, category=category)
+
         clean_participant_inputs(self, category=category, inputs=fields)
         remove_old_saves_if_exist(event_name=self._event_name)
         save_categories(self)
@@ -201,6 +204,8 @@ def register_new_participant(self) -> None:
             canvas=self._main_canvas,
             text=f'added new participant {participant[required_field]!r}'
         )
+
+        update_timestamp(self, category=category)
 
         clean_participant_inputs(self, category=category, inputs=fields)
         remove_old_saves_if_exist(event_name=self._event_name)

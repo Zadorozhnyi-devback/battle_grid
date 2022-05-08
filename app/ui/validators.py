@@ -46,8 +46,7 @@ def validate_category_free_places(self, category: str, grid_size: str) -> bool:
             return False
 
 
-def validate_for_update_category(self) -> bool:
-    category = self._category_input.get()
+def validate_for_update_category(self, category: str) -> bool:
     if validate_empty_category_input(self, category) is False:
         return False
 

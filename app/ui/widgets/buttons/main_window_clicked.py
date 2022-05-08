@@ -9,6 +9,7 @@ from app.ui.handlers.cleaners import (
     remove_old_saves_if_exist
 )
 from app.ui.handlers.savers import save_categories
+from app.ui.handlers.updators import update_timestamp
 from app.ui.validators import (
     validate_event_name_input,
     validate_event_name_exists
@@ -59,6 +60,8 @@ def clicked_remove_category(self) -> None:
         if answer is True:
             self._tab_control.forget(selected_tab)
             self._categories.pop(category)
+
+            update_timestamp(self, category=category)
 
             remove_old_saves_if_exist(event_name=self._event_name)
             save_categories(self)
