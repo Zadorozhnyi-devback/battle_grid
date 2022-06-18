@@ -45,7 +45,7 @@ def remove_category(self) -> None:
     category = get_selected_tab_title(self)
     if category:
         answer = messagebox.askyesno(
-            message=f"delete category {category!r}?"
+            message=f'delete category {category!r}?'
         )
         if answer is True:
             self._tab_control.forget(selected_tab)

@@ -3,13 +3,15 @@ import json
 from tkinter import filedialog
 
 from app.settings.ui.const import EVENT_NAME_INPUT_COORDS
-from app.settings.ui.toplevel import EVENT_TOPLEVEL_FIELDS
+from app.settings.ui.fields.event_toplevel import EVENT_TOPLEVEL_FIELDS
 from apps.ui.const import BEGINNING
 from apps.ui.handlers.cleaners import destroy_if_exists, remove_old_categories
 from apps.ui.widgets.inputs import get_input
 from apps.ui.widgets.labels.handlers import change_text_canvas
 from apps.ui.widgets.menu.file.handlers import save_event_name
-from apps.ui.widgets.tab_control.windows import create_loaded_categories
+from apps.ui.widgets.tab_control.windows.creators import (
+    create_loaded_categories
+)
 
 
 __all__ = (

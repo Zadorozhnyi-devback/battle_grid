@@ -1,7 +1,7 @@
 from tkinter import Toplevel
 
 from app.settings.ui.const import DEFAULT_DOWNLOAD_PATH
-from app.settings.ui.toplevel import EVENT_TOPLEVEL_FIELDS
+from app.settings.ui.fields.event_toplevel import EVENT_TOPLEVEL_FIELDS
 from apps.ui.handlers.cleaners import destroy_if_exists
 
 from .buttons import create_destination_button

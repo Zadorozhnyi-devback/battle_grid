@@ -28,6 +28,7 @@ from apps.ui.widgets.tab_control.participants.buttons import (
     create_register_participant_button,
     create_unregister_participant_button
 )
+from apps.ui.widgets.tab_control.windows.getters import get_tab_control
 from apps.ui.widgets.text import get_category_people_list
 from app.settings.ui.const import (
     SELECTED_CATEGORY_TYPE_CANVAS_KWARGS,
@@ -178,12 +179,14 @@ def create_loaded_categories(
 
     self._category_input.destroy()
     delattr(self, '_category_input')
-    delattr(self, '_timestamp')
 
 
 def create_new_tab(self) -> None:
     category = self._category_input.get().lower()
     selected_category_type = self._selected_category_type.get()
+
+    if not hasattr(self, '_tab_control'):
+        self._tab_control = get_tab_control(main_window=self._window)
 
     tab_frame = Frame(master=self._window)
 

@@ -1,7 +1,7 @@
 from apps.ui.handlers.savers import save_categories
 from apps.ui.validators import validate_for_create_category
 
-from apps.ui.widgets.tab_control.windows import create_new_tab
+from apps.ui.widgets.tab_control.windows.creators import create_new_tab
 
 
 __all__ = (

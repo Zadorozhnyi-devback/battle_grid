@@ -1,4 +1,4 @@
-from app.settings.ui.toplevel import EVENT_TOPLEVEL_FIELDS
+from app.settings.ui.fields.event_toplevel import EVENT_TOPLEVEL_FIELDS
 from apps.ui.handlers.cleaners import destroy_if_exists
 from apps.ui.validators import validate_event_name_input
 from apps.ui.widgets.labels.handlers import change_text_canvas
