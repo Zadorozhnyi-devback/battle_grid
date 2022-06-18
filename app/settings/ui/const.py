@@ -40,7 +40,10 @@ HELVETICA = 'Helvetica'
 
 # main window
 MAIN_CANVAS_KWARGS = {
-    'row': 1, 'column': 0, 'font_size': 24, 'padding_top': 10,
+    'row': 1, 'column': 0,
+    'font_size': 24,
+    'padding_y': 10,
+    'x_move_to': '250',
     'text': MAIN_CANVAS_TEXT,
     'column_span': 2,
     'bonus_width': 500,
@@ -52,11 +55,11 @@ CURR_PATH_LABEL_COORDS = {
 }
 
 EVENT_NAME_CANVAS_KWARGS = {
-    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'text': EVENT_NAME_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }  # +
 EVENT_NAME_TITLE_CANVAS_KWARGS = {
-    'row': 7, 'column': 1, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 7, 'column': 1, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'column_span': None, 'sticky': 'W'
 }
 EVENT_NAME_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}  # +
@@ -91,19 +94,19 @@ SEX_RADIO_FRAME_COORDS = {'row': 1, 'column': 1}
 
 NICK_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
 NICK_CANVAS_KWARGS = {
-    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'text': NICKNAME_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 
 CREW_INPUT_COORDS = {'row': 2, 'column': 1, 'sticky': 'W'}
 CREW_CANVAS_KWARGS = {
-    'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'text': CREW_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 
 CITY_INPUT_COORDS = {'row': 3, 'column': 1, 'sticky': 'W'}
 CITY_CANVAS_KWARGS = {
-    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'text': CITY_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 
@@ -114,17 +117,17 @@ CATEGORY_INFO_FRAME_COORDS = {
 
 SELECTED_GRID_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 50
+    'padding_y': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 50
 }
 
 SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
     'row': 1, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
+    'padding_y': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
 }
 
 MALE_AND_FEMALE_CANVAS_KWARGS = {
     'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
-    'padding_top': 5, 'column_span': None, 'sticky': 'W'
+    'padding_y': 5, 'column_span': None, 'sticky': 'W'
 }
 
 # additional windows
@@ -132,7 +135,7 @@ MALE_AND_FEMALE_CANVAS_KWARGS = {
 NEW_EVENT_TITLE_INPUT_COORDS = {'row': 0, 'column': 0, 'sticky': 'W'}
 
 EVENT_INPUT_CANVAS_KWARGS = {
-    'row': 1, 'column': 0, 'font_size': 13, 'padding_top': 1,
+    'row': 1, 'column': 0, 'font_size': 13, 'padding_y': 1,
     'column_span': None, 'sticky': None
 }
 
@@ -140,13 +143,13 @@ EVENT_INPUT_CANVAS_KWARGS = {
 # category toplevel frame
 CATEGORY_TITLE_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
 CATEGORY_CANVAS_KWARGS = {
-    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'text': CATEGORY_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 1, 'column': 1}
 
 GRID_SIZE_RADIO_FRAME_COORDS = {'row': 3, 'column': 1, 'sticky': 'W'}
 GRID_SIZE_CANVAS_KWARGS = {
-    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
     'text': GRID_SIZE_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }

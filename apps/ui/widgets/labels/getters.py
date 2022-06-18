@@ -15,22 +15,23 @@ def get_canvas(
     row: int,
     font_size: int,
     column_span: int,
-    padding_top: int,
+    padding_y: int,
     text: str,
     sticky: str,
-    bonus_width: int = 0
+    bonus_width: int = 0,
+    x_move_to: str = '5'
 ) -> Canvas:
     canvas = Canvas(master=frame)
     canvas.grid(column=column, row=row, sticky=sticky, columnspan=column_span)
     text = canvas.create_text(
         5,
-        padding_top,
+        padding_y,
         text=text,
         font=(ARIAL_BOLD, font_size),
         anchor='center',
     )
 
-    canvas.moveto(text, x='250', y='0')
+    canvas.moveto(text, x=x_move_to, y='0')
 
     bbox = canvas.bbox(text)
     # size without padding on y bottom and long width
