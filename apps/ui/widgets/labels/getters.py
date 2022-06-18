@@ -1,8 +1,11 @@
 from tkinter import Frame, Tk, Toplevel, Canvas
 from typing import Union
 
-from app.settings.ui.const import (
-    ARIAL_BOLD
+from app.settings.ui.const import ARIAL_BOLD
+
+
+__alL__ = (
+    'get_canvas',
 )
 
 
@@ -24,8 +27,11 @@ def get_canvas(
         padding_top,
         text=text,
         font=(ARIAL_BOLD, font_size),
-        anchor='nw'
+        anchor='center',
     )
+
+    canvas.moveto(text, x='250', y='0')
+
     bbox = canvas.bbox(text)
     # size without padding on y bottom and long width
     canvas.configure(height=bbox[3], width=bbox[2] + bonus_width)

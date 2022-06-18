@@ -40,8 +40,10 @@ HELVETICA = 'Helvetica'
 
 # main window
 MAIN_CANVAS_KWARGS = {
-    'row': 1, 'column': 0, 'font_size': 24, 'padding_top': 8,
-    'text': MAIN_CANVAS_TEXT, 'column_span': 20, 'bonus_width': 200,
+    'row': 1, 'column': 0, 'font_size': 24, 'padding_top': 10,
+    'text': MAIN_CANVAS_TEXT,
+    'column_span': 2,
+    'bonus_width': 500,
     'sticky': None
 }
 
