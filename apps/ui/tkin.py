@@ -1,27 +1,13 @@
-from pathlib import Path
-from tkinter import Frame
-
-from apps.ui.widgets.buttons.main_window_creators import (
-    create_open_add_category_toplevel_button,
-    create_remove_category_button,
-    create_destination_button,
-    create_open_event_button
-)
-from apps.ui.widgets.buttons.main_window_getters import (
-    get_save_event_name_button
-)
-from apps.ui.widgets.common import create_empty_strings
-from apps.ui.widgets.inputs import get_input
-from apps.ui.widgets.labels.creators import create_canvas
-from apps.ui.widgets.labels.getters import get_canvas, get_curr_path_label
+from apps.ui.widgets.labels.getters import get_canvas
+from apps.ui.widgets.menu import create_menu_bar
+from apps.ui.widgets.menu.file.event.create import create_event_toplevel
 from apps.ui.widgets.radio import get_default_radio
 from apps.ui.widgets.windows.creators import create_window
-from apps.ui.widgets.windows.getters import get_tab_control
-from app.settings.ui.buttons import EVENT_FRAME_BUTTONS_COORDS
+from apps.ui.widgets.tab_control.windows import get_tab_control
 from app.settings.ui.const import (
-    MAIN_CANVAS_KWARGS, DEFAULT_DOWNLOAD_PATH,
-    DEFAULT_GRID_SIZE, DEFAULT_CATEGORY_TYPE, EVENT_NAME_INPUT_COORDS,
-    EVENT_NAME_CANVAS_KWARGS, MAIN_WINDOW_TITLE, MAIN_WINDOW_SIZE
+    MAIN_CANVAS_KWARGS,
+    DEFAULT_GRID_SIZE, DEFAULT_CATEGORY_TYPE,
+    MAIN_WINDOW_TITLE, MAIN_WINDOW_SIZE
 )
 
 
@@ -33,52 +19,28 @@ class BattleGridUI:
             size=MAIN_WINDOW_SIZE,
             icon='jordan.png'
         )
+        create_menu_bar(self)
+
+        self._categories = dict()
+
         self._main_canvas = get_canvas(
             frame=self._window,  # noqa
             **MAIN_CANVAS_KWARGS
         )
-
-        self._destination_path = str(Path(DEFAULT_DOWNLOAD_PATH).resolve())
-        self._curr_path_label = get_curr_path_label(
-            main_window=self._window,  # noqa
-            destination_path=self._destination_path
-        )
-        create_destination_button(
-            main_window=self._window,  # noqa
-            destination_path=self._destination_path,
-            current_path_label=self._curr_path_label
-        )
-
-        create_canvas(frame=self._window, **EVENT_NAME_CANVAS_KWARGS)  # noqa
-        self._event_name_input = get_input(
-            frame=self._window, # noqa
-            **EVENT_NAME_INPUT_COORDS
-        )
-
-        self._buttons_frame = Frame(master=self._window)  # noqa
-        self._buttons_frame.grid(**EVENT_FRAME_BUTTONS_COORDS)
-
-        self._save_event_name_button = get_save_event_name_button(
-            self,
-            frame=self._buttons_frame
-        )
-        create_open_event_button(self, frame=self._buttons_frame)
 
         self._selected_grid_size = get_default_radio(
             window=self._window,  # noqa
             value=DEFAULT_GRID_SIZE
         )
 
-        self._categories = dict()
         self._selected_category_type = get_default_radio(
             window=self._window,  # noqa
             value=DEFAULT_CATEGORY_TYPE
         )
 
-        create_empty_strings(frame=self._window, rows=[3, 6, 8, 10])  # noqa
+        create_event_toplevel(self)
 
-        create_open_add_category_toplevel_button(self)
-        create_remove_category_button(self)
+        # create_empty_strings(frame=self._window, rows=[3, 6, 8, 10])  # noqa
 
         self._tab_control = get_tab_control(main_window=self._window)  # noqa
 

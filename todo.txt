@@ -47,7 +47,6 @@ must have:
     много табов вылазят за пределы экрана если их много
 
     редактировать инфо участника
-
     unregister button with input of user number
 
     after clicked 'create file' frame with load folder and button to change it
@@ -55,10 +54,24 @@ must have:
 
     button to add event logo
 
+    Welcome grid image generator
+    Create tab only with first category
+
+    drag'n'drop for tabs?
+
     navigation panel:
-        file:
-            open; create new;
-        settings:
-            чекбокс открывать последний проект или всегда новый
-                (кеш на последние открытые табы)
-            choose folder move in settings
+        file: +
+            open; +
+            create file; +
+            create event +
+
+        BattleGrid:
+            settings:
+                чекбокс открывать последний проект или всегда новый
+                    (кеш на последние открытые табы)
+                choose folder
+        If event:
+            Event:
+                add_category
+                remove_category
+                rename

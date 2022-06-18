@@ -1,7 +1,14 @@
 from tkinter import Frame, Tk, Toplevel, Canvas
 from typing import Union
 
-from app.settings.ui.const import ARIAL_BOLD
+from app.settings.ui.const import (
+    ARIAL_BOLD,
+)
+
+
+__all__ = (
+    'create_canvas',
+)
 
 
 def create_canvas(

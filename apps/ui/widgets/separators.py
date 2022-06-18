@@ -3,6 +3,11 @@ from tkinter.ttk import Separator
 from typing import Tuple
 
 
+__all__ = (
+    'create_separator',
+)
+
+
 def create_separator(
     frame: Frame,
     orient: str,

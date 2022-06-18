@@ -21,7 +21,7 @@ from app.settings.ui.const import (
     NICK_INPUT_COORDS,
     DEFAULT_SEX
 )
-from shared.utils import get_current_datetime
+from shared.utils import update_timestamp
 
 
 def rename_class_attributes(self, new_title: str, old_title: str) -> None:
@@ -70,10 +70,6 @@ def build_widgets_by_category_type(
         setattr(self, f'_{category}_selected_sex', selected_sex)
         sex_radio = get_sex_radio(frame=reg_frame, selected_sex=selected_sex)
         setattr(self, f'_{category}_sex_radio', sex_radio)
-
-
-def update_timestamp(self, category: str) -> None:
-    self._categories[category]['updated_at'] = get_current_datetime()
 
 
 def update_category_data(self, category: str) -> None:

@@ -1,22 +1,9 @@
-from tkinter import Frame, Tk, Toplevel, Canvas, Label
+from tkinter import Frame, Tk, Toplevel, Canvas
 from typing import Union
 
 from app.settings.ui.const import (
-    ARIAL_BOLD,
-    CURR_PATH_LABEL_COORDS,
-    CURRENT_PATH,
-    DEFAULT_FONT_SIZE
+    ARIAL_BOLD
 )
-
-
-def get_curr_path_label(main_window: Tk, destination_path: str) -> Label:
-    curr_path_label = Label(
-        master=main_window,
-        font=(ARIAL_BOLD, DEFAULT_FONT_SIZE),
-        text=f'{CURRENT_PATH}: {destination_path}'
-    )
-    curr_path_label.grid(**CURR_PATH_LABEL_COORDS)
-    return curr_path_label
 
 
 def get_canvas(

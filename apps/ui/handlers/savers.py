@@ -4,6 +4,11 @@ import json
 from apps.ui.handlers.getters import get_serialized_categories
 
 
+__all__ = (
+    'save_categories',
+)
+
+
 def save_categories(self) -> None:
     date_time = datetime.date.today().strftime('%d_%m_%y')
     path = f'events/{self._event_name}_{date_time}.json'

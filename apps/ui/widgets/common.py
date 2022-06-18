@@ -2,11 +2,10 @@ from tkinter import Label, Tk, Frame
 from typing import List
 
 
-def get_selected_tab_title(self) -> str:
-    selected_tab = self._tab_control.select()
-    if selected_tab:
-        category = self._tab_control.tab(selected_tab, 'text')
-        return category
+__all__ = (
+    'create_empty_strings',
+    'create_empty_columns'
+)
 
 
 def create_empty_strings(frame: [Tk, Frame], rows: List[int]) -> None:

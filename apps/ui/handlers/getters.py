@@ -1,6 +1,6 @@
 from collections import defaultdict
 from tkinter import END, Text
-from typing import List, Dict, Union
+from typing import List, Dict
 
 from apps.ui.const import BEGINNING
 
@@ -11,9 +11,7 @@ def get_participant_fields(tab_type: str) -> List[str]:
     return fields
 
 
-def get_serialized_categories(
-    categories: Dict[str, Dict[str, Union[str, List[Dict[str, str]], Text]]]
-) -> Dict[str, Dict[str, Union[str, List[Dict[str, str]]]]]:
+def get_serialized_categories(categories: dict) -> dict:
     serialized_categories = defaultdict(dict)
     for cat, data in categories.items():
         for key, value in data.items():

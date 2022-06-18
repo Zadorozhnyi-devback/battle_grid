@@ -1,6 +1,15 @@
 from tkinter import Scrollbar, Frame, Text, NONE, DISABLED
 
-from app.settings.ui.const import SCROLLBAR_KWARGS, TEXT_WINDOW_KWARGS, HELVETICA
+from app.settings.ui.const import (
+    SCROLLBAR_KWARGS,
+    TEXT_WINDOW_KWARGS,
+    HELVETICA
+)
+
+
+__all__ = (
+    'get_category_people_list',
+)
 
 
 def get_category_people_list(tab_frame: Frame) -> Text:

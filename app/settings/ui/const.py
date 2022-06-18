@@ -1,4 +1,5 @@
 # canvases, labels, inputs
+from pathlib import Path
 from tkinter import VERTICAL
 
 CURRENT_PATH = 'load folder'
@@ -22,7 +23,7 @@ EVENT_NAME_IS_TOO_LONG_TEXT = 'event name is too long'
 # defaults
 DEFAULT_GRID_SIZE = '8'
 DEFAULT_CATEGORY_TYPE = 'single'
-DEFAULT_DOWNLOAD_PATH = 'output_grids'
+DEFAULT_DOWNLOAD_PATH = str(Path('output_grids').resolve())
 DEFAULT_FONT_SIZE = 14
 
 # common
@@ -39,9 +40,9 @@ HELVETICA = 'Helvetica'
 
 # main window
 MAIN_CANVAS_KWARGS = {
-    'row': 1, 'column': 2, 'font_size': 24, 'padding_top': 8,
+    'row': 1, 'column': 0, 'font_size': 24, 'padding_top': 8,
     'text': MAIN_CANVAS_TEXT, 'column_span': 20, 'bonus_width': 200,
-    'sticky': 'W'
+    'sticky': None
 }
 
 CURR_PATH_LABEL_COORDS = {
@@ -49,14 +50,14 @@ CURR_PATH_LABEL_COORDS = {
 }
 
 EVENT_NAME_CANVAS_KWARGS = {
-    'row': 7, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
     'text': EVENT_NAME_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
-}
+}  # +
 EVENT_NAME_TITLE_CANVAS_KWARGS = {
     'row': 7, 'column': 1, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
     'column_span': None, 'sticky': 'W'
 }
-EVENT_NAME_INPUT_COORDS = {'row': 7, 'column': 1, 'sticky': 'W'}
+EVENT_NAME_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}  # +
 
 # tab control
 TAB_CONTROL_WINDOW_COORDS = {
@@ -134,7 +135,7 @@ EVENT_INPUT_CANVAS_KWARGS = {
 }
 
 
-# category toplevels frame
+# category toplevel frame
 CATEGORY_TITLE_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
 CATEGORY_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_top': 5,
