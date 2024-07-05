@@ -24,6 +24,9 @@ from apps.ui.widgets.separators import create_separator
 from apps.ui.widgets.tab_control.category_info.buttons.edit import (
     create_edit_category_toplevel_button
 )
+from apps.ui.widgets.tab_control.category_info.buttons.generate_grid import (
+    create_generate_category_grid_button
+)
 from apps.ui.widgets.tab_control.participants.buttons import (
     create_register_participant_button,
     create_unregister_participant_button
@@ -31,6 +34,7 @@ from apps.ui.widgets.tab_control.participants.buttons import (
 from apps.ui.widgets.tab_control.windows.getters import get_tab_control
 from apps.ui.widgets.text import get_category_people_list
 from app.settings.ui.const import (
+    EVENT_NAME_TITLE_CANVAS_KWARGS,
     SELECTED_CATEGORY_TYPE_CANVAS_KWARGS,
     SELECTED_GRID_CANVAS_KWARGS,
     CATEGORY_INFO_FRAME_COORDS,
@@ -101,6 +105,16 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
     info_frame.grid(**CATEGORY_INFO_FRAME_COORDS)
     setattr(self, f'_{category}_info_frame', info_frame)
 
+    setattr(
+        self,
+        f'_{category}_event_name_canvas',
+        get_canvas(
+            frame=info_frame,
+            text=f'event: {self._event_name}',
+            **EVENT_NAME_TITLE_CANVAS_KWARGS
+        )
+    )
+
     grid_size = get_value_without_underscore(
         value=get_grid_size(self, category)
     )
@@ -135,9 +149,10 @@ def create_category_info_frame(self, tab_frame: Frame, category: str) -> None:
             )
         )
     else:
-        create_empty_strings(frame=info_frame, rows=[2])
+        create_empty_strings(frame=info_frame, rows=[3])
 
     create_edit_category_toplevel_button(self, window=info_frame)
+    create_generate_category_grid_button(self, window=info_frame)
 
 
 def create_loaded_categories(
