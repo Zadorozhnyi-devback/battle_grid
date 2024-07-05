@@ -1,6 +1,5 @@
 __all__ = (
     'EVENT_TOPLEVEL_FIELDS',
-    '',
 )
 
 
