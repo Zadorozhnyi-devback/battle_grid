@@ -1,6 +1,6 @@
-from apps.grid import IntAlias
-
 # 8
+from apps.grid.const import IntAlias
+
 IMAGE_8 = (340, 154)
 SMALL_IMAGE_8 = (300, 150)
 SMALL_RECTANGLE_COORDS_8 = (10, 15, 300, 150)
