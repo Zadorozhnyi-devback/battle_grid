@@ -45,7 +45,13 @@ UNREGISTER_BUTTON_COORDS = {
 OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_TITLE = 'edit'
 OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_SIZE = '6'
 OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_COORDS = {
-    'row': 4, 'column': 0, 'sticky': 'W', 'padx': (10, 0)
+    'row': 4, 'column': 0, 'sticky': 'W', 'padx': (6, 0)
+}
+
+GENERATE_CATEGORY_GRID_BUTTON_TITLE = 'generate grid'
+GENERATE_CATEGORY_GRID_BUTTON_SIZE = '7'
+GENERATE_CATEGORY_GRID_BUTTON_COORDS = {
+    'row': 5, 'column': 0, 'sticky': 'W', 'padx': (6, 0)
 }
 
 # additional windows
