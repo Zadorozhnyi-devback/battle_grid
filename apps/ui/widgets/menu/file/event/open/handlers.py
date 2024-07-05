@@ -3,6 +3,7 @@ import json
 from tkinter import filedialog
 
 from app.settings.ui.const import EVENT_NAME_INPUT_COORDS
+from app.settings.ui.fields.category_toplevel import CATEGORY_TOPLEVEL_FIELDS
 from app.settings.ui.fields.event_toplevel import EVENT_TOPLEVEL_FIELDS
 from apps.ui.const import BEGINNING
 from apps.ui.handlers.cleaners import destroy_if_exists, remove_old_categories
@@ -20,7 +21,10 @@ __all__ = (
 
 
 def open_event(self) -> None:
-    destroy_if_exists(self, fields=EVENT_TOPLEVEL_FIELDS)
+    destroy_if_exists(
+        self,
+        fields=[*EVENT_TOPLEVEL_FIELDS, *CATEGORY_TOPLEVEL_FIELDS]
+    )
 
     event_json = filedialog.askopenfilename(
         parent=self._window,
@@ -34,15 +38,14 @@ def open_event(self) -> None:
             frame=self._window,
             **EVENT_NAME_INPUT_COORDS
         )
-        self._event_name_input.insert(
-            BEGINNING,
-            event_json.split('/')[-1].split('_')[0]
-        )
+
+        event_name = event_json.split('/')[-1].split('_')[0]
+        self._event_name_input.insert(BEGINNING, event_name)
 
         save_event_name(self)
         change_text_canvas(
             canvas=self._main_canvas,
-            text=f"event {self._event_name!r} was loaded"
+            text=f"event {event_name!r} was loaded"
         )
 
         with open(file=event_json, encoding='utf-8') as event_file:
