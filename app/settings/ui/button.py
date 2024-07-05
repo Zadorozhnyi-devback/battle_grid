@@ -46,9 +46,9 @@ UNREGISTER_BUTTON_COORDS = {
 }
 
 OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_TITLE = 'edit'
-OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_SIZE = '8'
+OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_SIZE = '6'
 OPEN_EDIT_CATEGORY_TOPLEVEL_BUTTON_COORDS = {
-    'row': 3, 'column': 0, 'sticky': 'W', 'padx': (15, 0)
+    'row': 4, 'column': 0, 'sticky': 'W', 'padx': (10, 0)
 }
 
 # additional windows
