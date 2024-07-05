@@ -14,4 +14,4 @@ events
 .env
 keys
 virtualenv
-venv
+.venv
