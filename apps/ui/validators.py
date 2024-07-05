@@ -76,8 +76,14 @@ def validate_for_update_category(self, category: str) -> bool:
                 )
                 return False
 
-    if validate_category_free_places(self, category, grid_size) is False:
-        return False
+    if grid_size.isdigit():
+        amount = get_amount_of_category_participants(self, category)
+        if amount > int(grid_size):
+            change_text_canvas(
+                canvas=self._main_canvas,
+                text=f"There are already more participants than {grid_size}"
+            )
+            return False
 
     return True
 
