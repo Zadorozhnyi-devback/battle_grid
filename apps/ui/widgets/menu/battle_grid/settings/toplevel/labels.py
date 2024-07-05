@@ -21,3 +21,4 @@ def create_curr_path_label(self) -> None:
         text=f'{CURRENT_PATH}: {path}'
     )
     curr_path_label.grid(**CURR_PATH_LABEL_COORDS)
+    self._curr_path_label = curr_path_label
