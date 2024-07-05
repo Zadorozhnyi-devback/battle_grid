@@ -9,6 +9,6 @@ ICONS_PATHS = [
 ]
 
 PERSON_ICON_PATHS = {
-    'girl': 'app/static/icons/girl icon.jpg',
-    'boy': 'app/static/icons/boy icon.jpg',
+    'female': 'app/static/icons/girl icon.jpg',
+    'male': 'app/static/icons/boy icon.jpg',
 }

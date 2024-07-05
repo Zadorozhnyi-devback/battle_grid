@@ -1,3 +1,4 @@
+import random
 import os
 from typing import Dict, Union, Tuple, List
 
@@ -108,10 +109,9 @@ def create_blank(
 
 
 def create_blanks(
-    people: List[Dict[str, str]], grid_size: int,
-    main_image: Image, squares: str = 'blanks'
+    grid_size: int, main_image: Image, squares: str = 'blanks'
 ) -> None:
-    for index in range(len(people) - 1):
+    for index in range(grid_size - 1):
         coords = get_coords(index=index, grid_size=grid_size, squares=squares)
         create_blank(
             main_image=main_image, squares=squares,
@@ -144,8 +144,7 @@ def get_icons(
 ) -> List['Image']:
     # TODO: what for is check for length of icon_paths
     if len(icon_paths) < 3:
-        person = 'boy' if sex == 'm' else 'girl'
-        icon_paths.insert(IntAlias.FIRST, PERSON_ICON_PATHS[person])
+        icon_paths.insert(IntAlias.FIRST, PERSON_ICON_PATHS[sex])
     icons_sizes = get_icons_sizes(grid_size=grid_size)
     sizes_and_paths = list()
     for index, path in enumerate(icon_paths):
@@ -166,7 +165,7 @@ def paste_icons_to_card(card_image: Image, sex: str, grid_size: int) -> None:
 
 def create_card(
     main_image: Image, font: ImageFont, squares: str,
-    person: Dict[str, str], coords: Dict[str, int], grid_size: int, sex: str
+    person: Dict[str, str], coords: Dict[str, int], grid_size: int
 ) -> None:
     image_params, rectangle_params, text_params = get_params(
         grid_size=grid_size, squares=squares
@@ -176,9 +175,12 @@ def create_card(
     # angles:  x left, y top, x right, y bottom
     my_draw.rounded_rectangle(**rectangle_params)
 
+    sex = person.get('sex', 'male')
     paste_icons_to_card(card_image=card_image, sex=sex, grid_size=grid_size)
 
-    text = '\n'.join([value.capitalize() for value in person.values()])
+    text = '\n'.join([
+        value.capitalize() for key, value in person.items() if key != 'sex'
+    ])
     # text margin: x left, y top in TEXT_PARAMS['xy']: Tuple[int]
     my_draw.text(text=text, font=font, **text_params)
 
@@ -188,17 +190,27 @@ def create_card(
 
 
 def create_cards(
-    people: List[Dict[str, str]], grid_size: int, main_image: Image,
-    font: ImageFont, sex: str, squares: str = 'cards'
+    participants: List[Dict[str, str]],
+    grid_size: int, main_image: Image,
+    font: ImageFont, squares: str = 'cards'
 ) -> None:
-    for index, person in enumerate(people):
+    random.shuffle(participants)
+
+    participants_amount = len(participants)
+    for index in range(grid_size):
         coords = get_coords(index=index, grid_size=grid_size, squares=squares)
-        create_card(
-            main_image=main_image, font=font, squares=squares,
-            person=person, coords=coords, grid_size=grid_size, sex=sex
-        )
-        # maybe don't need
-        # setattr(self, f"_{person.get('name')}_card", card)
+
+        if index + 1 <= participants_amount:
+            person = participants[index]
+            create_card(
+                main_image=main_image, font=font, squares=squares,
+                person=person, coords=coords, grid_size=grid_size
+            )
+            # maybe don't need
+            # setattr(self, f"_{person.get('name')}_card", card)
+        else:
+            create_blank(main_image, coords, grid_size, squares)
+
         indent = get_indent(index=index, grid_size=grid_size, squares=squares)
         coords[StrAlias.Y_AXIS] += indent
 
