@@ -33,16 +33,15 @@ def get_value_with_underscore(value: str) -> str:
 
 
 def get_male_and_female_stats(self, category: str) -> Dict[str, int]:
-    total = get_amount_of_category_participants(self, category)
-    male = sum(
-        participant['sex'] == 'male' for participant
-        in self._categories[category]['participants']
-    )
-    female = sum(
-        participant['sex'] == 'female' for participant
-        in self._categories[category]['participants']
-    )
-    return {'total': total, 'male': male, 'female': female}
+    participants = self._categories[category]['participants']
+    male, female = 0, 0
+    for participant in participants:
+        if participant['sex'] == 'male':
+            male += 1
+        elif participant['sex'] == 'female':
+            female += 1
+
+    return {'total': len(participants), 'male': male, 'female': female}
 
 
 def get_male_and_female_stats_text(
