@@ -51,16 +51,13 @@ MAIN_CANVAS_KWARGS = {
 }
 
 CURR_PATH_LABEL_COORDS = {
-    'row': 4, 'column': 0, 'sticky': 'W', 'columnspan': 100
+    'row': 4, 'column': 0, 'sticky': 'W', 'columnspan': 100,
+    'padx': (4, 4), 'pady': (4, 4)
 }
 
 EVENT_NAME_CANVAS_KWARGS = {
-    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 10,
     'text': EVENT_NAME_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
-}  # +
-EVENT_NAME_TITLE_CANVAS_KWARGS = {
-    'row': 7, 'column': 1, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
-    'column_span': None, 'sticky': 'W'
 }
 EVENT_NAME_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}  # +
 
@@ -115,18 +112,23 @@ CATEGORY_INFO_FRAME_COORDS = {
     'row': 0, 'column': 2, 'sticky': 'wn', 'pady': 5, 'columnspan': None
 }
 
-SELECTED_GRID_CANVAS_KWARGS = {
+EVENT_NAME_TITLE_CANVAS_KWARGS = {
     'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
     'padding_y': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 50
 }
 
-SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
+SELECTED_GRID_CANVAS_KWARGS = {
     'row': 1, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
+    'padding_y': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 50
+}
+
+SELECTED_CATEGORY_TYPE_CANVAS_KWARGS = {
+    'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
     'padding_y': 5, 'column_span': None, 'sticky': 'W', 'bonus_width': 40
 }
 
 MALE_AND_FEMALE_CANVAS_KWARGS = {
-    'row': 2, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
+    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE,
     'padding_y': 5, 'column_span': None, 'sticky': 'W'
 }
 
@@ -143,13 +145,13 @@ EVENT_INPUT_CANVAS_KWARGS = {
 # category toplevel frame
 CATEGORY_TITLE_INPUT_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
 CATEGORY_CANVAS_KWARGS = {
-    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
+    'row': 0, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 10,
     'text': CATEGORY_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
 CATEGORY_TYPE_RADIO_FRAME_COORDS = {'row': 1, 'column': 1}
 
 GRID_SIZE_RADIO_FRAME_COORDS = {'row': 3, 'column': 1, 'sticky': 'W'}
 GRID_SIZE_CANVAS_KWARGS = {
-    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 5,
+    'row': 3, 'column': 0, 'font_size': DEFAULT_FONT_SIZE, 'padding_y': 10,
     'text': GRID_SIZE_CANVAS_TEXT, 'column_span': None, 'sticky': 'W'
 }
