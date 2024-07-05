@@ -11,7 +11,7 @@ OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_TEXT = 'add category'
 REMOVE_CATEGORY_BUTTON_TEXT = 'remove category'
 
 DESTINATION_BUTTON_SIZE = '12'
-DESTINATION_BUTTON_COORDS = {'row': 5, 'column': 1, 'sticky': 'W'}
+DESTINATION_BUTTON_COORDS = {'row': 5, 'column': 1, 'sticky': 'W', 'padx': (5, 0)}
 
 EVENT_BUTTON_FRAME_COORDS = {
     'row': 2, 'column': 0, 'columnspan': 2, 'pady': (0, 10)
@@ -25,9 +25,6 @@ CREATE_NEW_EVENT_NAME_BUTTON_COORDS = {'row': 0, 'column': 1, 'sticky': 'W'}
 
 RENAME_EVENT_BUTTON_SIZE = '7'
 RENAME_EVENT_BUTTON_COORDS = {'row': 0, 'column': 2, 'sticky': 'W'}
-
-# OPEN_EVENT_BUTTON_SIZE = '8'
-# OPEN_EVENT_BUTTON_COORDS = {'row': 0, 'column': 3, 'sticky': 'W'}
 
 OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_SIZE = '10'
 OPEN_ADD_CATEGORY_TOPLEVEL_BUTTON_COORDS = {
