@@ -14,10 +14,9 @@ def main_window_closer(self, frame_title: str) -> bool:
     answer = messagebox.askyesno(message=f'close battle grid?')
     if answer is True:
         getattr(self, frame_title).destroy()
-        return True
     else:
         getattr(self, frame_title).focus_force()
-        return False
+    return answer
 
 
 def top_level_closer(self, frame_title: str) -> None:
