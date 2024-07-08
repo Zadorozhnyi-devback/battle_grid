@@ -2,12 +2,16 @@
 __pycache__
 
 # Files to ignore
+cache.json
+
+# Dirs to ignore
 test
-downloads
+output_grids
+events
 
 
 # Environment files
 .env
 keys
 virtualenv
-venv
+.venv
