@@ -54,17 +54,17 @@ Battle Grid is a Python-based application that allows you to manage events, crea
 
 ## Example Screenshots
 
-*Event "test event", category "category1", generated grid for 8 participants*
+*Event "test event", category "category1" edit popup*
 ![1.jpeg](screenshots/1.jpeg)
+
+*Event "test event", category "category1", generated grid for 8 participants*
+![4.jpeg](screenshots/4.jpeg)
 
 *Event "test event", category "category1", generated grid for 16 participants*
 ![2.jpeg](screenshots/2.jpeg)
 
 *Event "test event", category "category1", generated grid for 32 participants*
 ![3.jpeg](screenshots/3.jpeg)
-
-*Event "test event", category "category1" edit popup*
-![4.jpeg](screenshots/4.jpeg)
 
 ## Dependencies
 
