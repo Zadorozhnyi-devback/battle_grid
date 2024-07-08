@@ -25,6 +25,8 @@ def create_canvas(
         font=(ARIAL_BOLD, font_size),
         anchor='nw'
     )
+    # TODO: category info try to change data. should looks good
+    # canvas.moveto(text, x='5', y='0')
     bbox = canvas.bbox(text)
     # size without padding on y bottom and long width
     canvas.configure(height=bbox[3], width=bbox[2] + bonus_width)
