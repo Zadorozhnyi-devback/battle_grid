@@ -61,7 +61,7 @@ def get_params(grid_size: int, squares: str) -> (
         return get_params_for_8(squares=squares)
 
 
-def get_event_image_size(grid_size: int) -> Tuple[int]:
+def get_event_image_size(grid_size: int) -> Tuple[int, int]:
     if grid_size == 32:
         image_size = EVENT_IMAGE_SIZE_32
     elif grid_size == 16:
@@ -139,10 +139,9 @@ def get_icons_sizes(grid_size: int) -> List[List[Tuple[int, int]]]:
         return ICON_SIZES_8
 
 
-def get_icons(
-    grid_size: int, sex: str, icon_paths: List[str] = ICONS_PATHS
-) -> List['Image']:
+def get_icons(grid_size: int, sex: str) -> List['Image']:
     # TODO: what for is check for length of icon_paths
+    icon_paths: List[str] = ICONS_PATHS.copy()
     if len(icon_paths) < 3:
         icon_paths.insert(IntAlias.FIRST, PERSON_ICON_PATHS[sex])
     icons_sizes = get_icons_sizes(grid_size=grid_size)
