@@ -15,7 +15,7 @@ Battle Grid is a Python-based application that allows you to manage events, crea
 
 1. **Clone the repository:**
     ```sh
-    git clone https://github.com/yourusername/battle-grid.git
+    git clone https://github.com/Zadorozhnyi-devback/battle-grid.git
     cd battle-grid
     ```
 
