@@ -41,21 +41,21 @@ must have:
     валидация на кол-во участников категории в зависимости от сетки +
 
 
-    randomizer
+    + randomizer
     список на 4 угла
 
-    много табов вылазят за пределы экрана если их много
+    - много табов вылазят за пределы экрана если их много
 
-    редактировать инфо участника
-    unregister button with input of user number
+    - редактировать инфо участника
+    - unregister button with input of user number
 
-    after clicked 'create file' frame with load folder and button to change it
-    after clicked 'create' - messagebox: "Open file folder?" -> Yes, No
+    - after clicked 'create file' frame with load folder and button to change it
+    - after clicked 'create' - messagebox: "Open file folder?" -> Yes, No
 
-    button to add event logo
+    - button to add event logo
 
-    Welcome grid image generator
-    Create tab only with first category
+    - Welcome grid image generator
+    - Create tab only with first category
 
     drag'n'drop for tabs?
 
@@ -67,11 +67,11 @@ must have:
 
         BattleGrid:
             settings:
-                чекбокс открывать последний проект или всегда новый
+                ! чекбокс открывать последний проект или всегда новый
                     (кеш на последние открытые табы)
                 choose folder
         If event:
             Event:
                 add_category
-                remove_category
+                !remove_category
                 rename
