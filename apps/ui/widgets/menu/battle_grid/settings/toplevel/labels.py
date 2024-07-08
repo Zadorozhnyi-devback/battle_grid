@@ -14,7 +14,7 @@ __all__ = (
 
 
 def create_curr_path_label(self) -> None:
-    path = self._destination_path.split('/')[-1]
+    path = self._destination_path
     curr_path_label = Label(
         master=self._settings_toplevel,
         font=(ARIAL_BOLD, DEFAULT_FONT_SIZE),

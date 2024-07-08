@@ -1,6 +1,5 @@
 from tkinter import Toplevel
 
-from app.settings.ui.const import DEFAULT_DOWNLOAD_PATH
 from app.settings.ui.fields.event_toplevel import EVENT_TOPLEVEL_FIELDS
 from apps.ui.handlers.cleaners import destroy_if_exists
 
@@ -19,10 +18,7 @@ def create_settings_toplevel(self) -> None:
     self._settings_toplevel = Toplevel(master=self._window)
     self._settings_toplevel.resizable(False, False)
     self._settings_toplevel.title(string='settings')
-    self._settings_toplevel.geometry(newGeometry='300x300')
-
-    if not hasattr(self, '_destination_path'):
-        self._destination_path = DEFAULT_DOWNLOAD_PATH
+    self._settings_toplevel.geometry(newGeometry='500x300')
 
     create_curr_path_label(self)
     create_destination_button(self)

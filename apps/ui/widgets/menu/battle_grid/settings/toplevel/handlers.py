@@ -19,5 +19,8 @@ def clicked_choose_dir(self) -> None:
     )
     if directory is not None:
         self._destination_path = str(Path(directory).resolve())
-    path = self._destination_path.split('/')[-1]
+    # path = self._destination_path.split('/')[-1]
+    path = self._destination_path
+    self.add_path_in_cache(path)
+
     self._curr_path_label.configure(text=f'{CURRENT_PATH}: {path}')

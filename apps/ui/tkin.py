@@ -8,8 +8,11 @@ from app.settings.ui.const import (
     DEFAULT_GRID_SIZE,
     DEFAULT_CATEGORY_TYPE,
     MAIN_WINDOW_TITLE,
-    MAIN_WINDOW_SIZE
+    MAIN_WINDOW_SIZE,
+    DEFAULT_DOWNLOAD_PATH
 )
+
+from shared.utils import CacherMixin
 
 
 __all__ = (
@@ -17,14 +20,20 @@ __all__ = (
 )
 
 
-class BattleGridUI:
-    def __init__(self) -> None:
+class BattleGridUI(
+    CacherMixin,
+):
+    def __init__(self, entry_point_path: str) -> None:
+        self._entry_point_path = entry_point_path
+
         create_window(
             self,
             title=MAIN_WINDOW_TITLE,
             size=MAIN_WINDOW_SIZE,
             icon='jordan.png'
         )
+        cache = self.get_cache()
+        self._destination_path = cache.get('download_path') or DEFAULT_DOWNLOAD_PATH
         create_menu_bar(self)
 
         self._categories = dict()

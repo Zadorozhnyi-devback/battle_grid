@@ -8,12 +8,15 @@ __all__ = (
 
 
 def generate_category_grid(self) -> None:
-    category = get_selected_tab_title(self)
+    category: str = get_selected_tab_title(self)
 
-    category_data = self._categories[category]
+    category_data: dict = self._categories[category]
 
     bg = BattleGrid(
         participants=category_data['participants'],
-        grid_size=category_data['grid_size']
+        grid_size=category_data['grid_size'],
+        destination_path=self._destination_path,
+        event=self._event_name,
+        category=category
     )
     bg.generate()

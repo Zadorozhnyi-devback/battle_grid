@@ -2,7 +2,7 @@
 __pycache__
 
 # Files to ignore
-cache.txt
+cache.json
 
 # Dirs to ignore
 test

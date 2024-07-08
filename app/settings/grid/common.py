@@ -1,6 +1,5 @@
 # settings
 DEFAULT_EVENT_IMAGE_PATH = 'app/static/5p logo.jpg'
-IMAGE_PATH = 'output_grids/output.jpg'
 FONT_PATH = 'app/static/fonts/Gidole-Regular.ttf'
 
 ICONS_PATHS = [
